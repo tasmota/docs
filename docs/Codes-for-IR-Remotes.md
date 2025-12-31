@@ -89,7 +89,58 @@ Feel free to contribute this list.
 | Back     | 0x0D8F27 |
 | NetFlix  | 0x010FEF |
 | Source   | 0x05CFA3 |
- 
+
+### TCL 55T8B TV (with remote RC833 P/N GUB1)
+
+**Example IRsend Command:**
+
+`IRsend {"Protocol":"NIKAI","Bits":24,"Data":"0xD5F2A","DataLSB":"0xB0FA54","Repeat":0}`
+
+| button        | code                                                                            |
+| ------------- | --------------------------------------------------------------------------------|
+| TOGGLE ON/OFF | {"Protocol":"NIKAI","Bits":24,"Data":"0xD5F2A","DataLSB":"0xB0FA54","Repeat":0} |
+| MUTE          | {"Protocol":"NIKAI","Bits":24,"Data":"0xC0F3F","DataLSB":"0x30F0FC","Repeat":0} |
+| 1             | {"Protocol":"NIKAI","Bits":24,"Data":"0xCEF31","DataLSB":"0x30F78C","Repeat":0} |
+| 2             | {"Protocol":"NIKAI","Bits":24,"Data":"0xCDF32","DataLSB":"0x30FB4C","Repeat":0} |
+| 3             | {"Protocol":"NIKAI","Bits":24,"Data":"0xCCF33","DataLSB":"0x30F3CC","Repeat":0} |
+| 4             | {"Protocol":"NIKAI","Bits":24,"Data":"0xCBF34","DataLSB":"0x30FD2C","Repeat":0} |
+| 5             | {"Protocol":"NIKAI","Bits":24,"Data":"0xCAF35","DataLSB":"0x30F5AC","Repeat":0} |
+| 6             | {"Protocol":"NIKAI","Bits":24,"Data":"0xC9F36","DataLSB":"0x30F96C","Repeat":0} |
+| 7             | {"Protocol":"NIKAI","Bits":24,"Data":"0xC8F37","DataLSB":"0x30F1EC","Repeat":0} |
+| 8             | {"Protocol":"NIKAI","Bits":24,"Data":"0xC7F38","DataLSB":"0x30FE1C","Repeat":0} |
+| 9             | {"Protocol":"NIKAI","Bits":24,"Data":"0xC6F39","DataLSB":"0x30F69C","Repeat":0} |
+| 0             | {"Protocol":"NIKAI","Bits":24,"Data":"0xCFF30","DataLSB":"0x30FF0C","Repeat":0} |
+| SOURCE        | {"Protocol":"NIKAI","Bits":24,"Data":"0x5CFA3","DataLSB":"0xA0F3C5","Repeat":0} |
+| MENU          | {"Protocol":"NIKAI","Bits":24,"Data":"0x13FEC","DataLSB":"0x80FC37","Repeat":0} |
+| RED           | {"Protocol":"NIKAI","Bits":24,"Data":"0xFFF00","DataLSB":"0xF0FF00","Repeat":0} |
+| GREEN         | {"Protocol":"NIKAI","Bits":24,"Data":"0x17FE8","DataLSB":"0x80FE17","Repeat":0} |
+| YELLOW        | {"Protocol":"NIKAI","Bits":24,"Data":"0x1BFE4","DataLSB":"0x80FD27","Repeat":0} |
+| BLUE          | {"Protocol":"NIKAI","Bits":24,"Data":"0x27FD8","DataLSB":"0x40FE1B","Repeat":0} |
+| ACCOUNT       | {"Protocol":"NIKAI","Bits":24,"Data":"0x7CF83","DataLSB":"0xE0F3C1","Repeat":0} |
+| GOOGLE MIC    | {"Protocol":"NIKAI","Bits":24,"Data":"0xA3F5C","DataLSB":"0x50FC3A","Repeat":0} |
+| SETTINGS      | {"Protocol":"NIKAI","Bits":24,"Data":"0x30FCF","DataLSB":"0xC0F0F3","Repeat":0} |
+| UP            | {"Protocol":"NIKAI","Bits":24,"Data":"0xA6F59","DataLSB":"0x50F69A","Repeat":0} |
+| DOWN          | {"Protocol":"NIKAI","Bits":24,"Data":"0xA7F58","DataLSB":"0x50FE1A","Repeat":0} |
+| LEFT          | {"Protocol":"NIKAI","Bits":24,"Data":"0xA9F56","DataLSB":"0x50F96A","Repeat":0} |
+| RIGHT         | {"Protocol":"NIKAI","Bits":24,"Data":"0xA8F57","DataLSB":"0x50F1EA","Repeat":0} |
+| OK            | {"Protocol":"NIKAI","Bits":24,"Data":"0xBFF4","DataLSB":"0xFD2F","Repeat":0}    |
+| BACK          | {"Protocol":"NIKAI","Bits":24,"Data":"0xD8F27","DataLSB":"0xB0F1E4","Repeat":0} |
+| HOME          | {"Protocol":"NIKAI","Bits":24,"Data":"0xF7F08","DataLSB":"0xF0FE10","Repeat":0} |
+| TV            | {"Protocol":"NIKAI","Bits":24,"Data":"0xE5F1A","DataLSB":"0x70FA58","Repeat":0} |
+| VOL+          | {"Protocol":"NIKAI","Bits":24,"Data":"0xD0F2F","DataLSB":"0xB0F0F4","Repeat":0} |
+| VOL-          | {"Protocol":"NIKAI","Bits":24,"Data":"0xD1F2E","DataLSB":"0xB0F874","Repeat":0} |
+| CH +          | {"Protocol":"NIKAI","Bits":24,"Data":"0xD2F2D","DataLSB":"0xB0F4B4","Repeat":0} |
+| CH -          | {"Protocol":"NIKAI","Bits":24,"Data":"0xD3F2C","DataLSB":"0xB0FC34","Repeat":0} |
+| LIST          | {"Protocol":"NIKAI","Bits":24,"Data":"0x9EF61","DataLSB":"0x90F786","Repeat":0} |
+| INFO          | {"Protocol":"NIKAI","Bits":24,"Data":"0xC3F3C","DataLSB":"0x30FC3C","Repeat":0} |
+| NETFLIX       | {"Protocol":"NIKAI","Bits":24,"Data":"0x10FEF","DataLSB":"0x80F0F7","Repeat":0} |
+| PRIME VIDEO   | {"Protocol":"NIKAI","Bits":24,"Data":"0x3EFC1","DataLSB":"0xC0F783","Repeat":0} |
+| YOUTUBE       | {"Protocol":"NIKAI","Bits":24,"Data":"0x1DFE2","DataLSB":"0x80FB47","Repeat":0} |
+| TCL CHANNEL   | {"Protocol":"NIKAI","Bits":24,"Data":"0x1CFE3","DataLSB":"0x80F3C7","Repeat":0} |
+| TCL HOME      | {"Protocol":"NIKAI","Bits":24,"Data":"0x80F7F","DataLSB":"0x10F0FE","Repeat":0} |
+| WEB           | {"Protocol":"NIKAI","Bits":24,"Data":"0x9CF63","DataLSB":"0x90F3C6","Repeat":0} |
+
+
 ### Panasonic TX65FXW784 TV
 
 **Example received Code:**
@@ -575,6 +626,26 @@ Common buttons should work across multiple models
 | DVD          | {"Protocol":"NEC","Bits":32,"Data":"0x00FFDB24","DataLSB":"0x00FFDB24","Repeat":0} |
 
 ## BD/DVD players
+
+## Panasonic DP-UB424EGK/ Remote n2qayb001185
+
+| button         | code                                                                                            |
+| -------------- | ------------------------------------------------------------------------------------------------|
+| TOGGLE ON/OFF  | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00BCB1","DataLSB":"0x220B0003D8D","Repeat":0} |
+| OPEN/CLOSE     | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00808D","DataLSB":"0x220B00001B1","Repeat":0} |
+| SEARCH BACK    | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00202D","DataLSB":"0x220B00004B4","Repeat":0} |
+| SEARCH FORWARD | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00A0AD","DataLSB":"0x220B00005B5","Repeat":0} |
+| SKIP BACK      | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00929F","DataLSB":"0x220B00049F9","Repeat":0} |
+| SKIP FORWARD   | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00525F","DataLSB":"0x220B0004AFA","Repeat":0} |
+| PLAY           | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00505D","DataLSB":"0x220B0000ABA","Repeat":0} |
+| PAUSE          | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00606D","DataLSB":"0x220B00006B6","Repeat":0} |
+| STOP           | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00000D","DataLSB":"0x220B00000B0","Repeat":0} |
+| TOP MENU       | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00D9D4","DataLSB":"0x220B0009B2B","Repeat":0} |
+| POPUP MENU     | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D800A87","DataLSB":"0x220B00150E1","Repeat":0} |
+| HOME           | {"Protocol":"PANASONIC","Bits":48,"Data":"0x40040D00EAE7","DataLSB":"0x220B00057E7","Repeat":0} |
+
+There are more buttons on the control, which I don't use, therefore not listed
+
 
 ### Sony BD-S1500
 
