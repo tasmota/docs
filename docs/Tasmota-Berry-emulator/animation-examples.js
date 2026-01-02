@@ -1,7 +1,7 @@
 /**
  * Animation Examples for Browser UI
  * 
- * Total examples: 46
+ * Total examples: 33
  * 
  * This file provides example animations for the Berry Animation Simulator.
  * Each example includes a name, description, category, and DSL code.
@@ -14,36 +14,12 @@
 
     const examples = [
         {
-            id: "chap_1_00_plain",
-            number: "1.00",
-            name: "Plain",
-            description: "Solid red background - the simplest animation",
-            category: "1. Getting Started",
-            code: "# @desc Solid red background - the simplest animation\n\nanimation back = solid(color=red)\nrun back"
-        },
-        {
-            id: "chap_1_10_palette_rotation",
-            number: "1.10",
-            name: "Palette Rotation",
-            description: "Rainbow colors cycling through the entire strip over time",
-            category: "1. Getting Started",
-            code: "# @desc Rainbow colors cycling through the entire strip over time\n\n# define a palette of rainbow colors including white with constant brightness\npalette rainbow_with_white = [\n  0xFC0000        # Red\n  0xFF8000        # Orange\n  0xFFFF00        # Yellow\n  0x00FF00        # Green\n  0x00FFFF        # Cyan\n  0x0080FF        # Blue\n  0x8000FF        # Violet\n  0xCCCCCC        # White\n]\n\n# define a color attribute that cycles over time, cycle is 5 seconds\ncolor eye_color = color_cycle(colors=rainbow_with_white, period=5s)\n\nanimation back = solid(color=eye_color)\n\nrun back"
-        },
-        {
             id: "chap_1_10_plain",
             number: "1.10",
             name: "Plain",
             description: "Solid red background - the simplest animation",
             category: "1. Getting Started",
             code: "# @desc Solid red background - the simplest animation\n\nanimation back = solid(color=red)\nrun back"
-        },
-        {
-            id: "chap_1_20_color_transition",
-            number: "1.20",
-            name: "Color Transition",
-            description: "Smooth color transitions using rich_palette with sine interpolation",
-            category: "1. Getting Started",
-            code: "# @desc Smooth color transitions using rich_palette with sine interpolation\n\n# define a palette of rainbow colors including white with constant brightness\npalette rainbow_with_white = [\n  0xFC0000        # Red\n  0xFF8000        # Orange\n  0xFFFF00        # Yellow\n  0x00FF00        # Green\n  0x00FFFF        # Cyan\n  0x0080FF        # Blue\n  0x8000FF        # Violet\n  0xCCCCCC        # White\n  0xFC0000        # Red - need to add the first color at last position to ensure roll-over\n]\n\n# define a color attribute that cycles over time, cycle is 10 seconds\ncolor rainbow_rich_color = rich_palette(colors=rainbow_with_white, period=10s, transition_type=SINE)\n\nanimation back = solid(color=rainbow_rich_color)\n\nrun back\n\n"
         },
         {
             id: "chap_1_20_plain_custom_color",
@@ -54,14 +30,6 @@
             code: "# @desc Solid dark clue - using a custom color\n\ncolor space_blue = 0x000066    # Note: opaque 0xFF alpha channel is implicitly added\nanimation back = solid(color=space_blue)\nrun back"
         },
         {
-            id: "chap_1_30_color_pattern",
-            number: "1.30",
-            name: "Color Pattern",
-            description: "Rainbow gradient pattern across the LED strip",
-            category: "1. Getting Started",
-            code: "# @desc Rainbow gradient pattern across the LED strip\n\n# define a palette of rainbow colors including white with constant brightness\npalette rainbow_with_white = [\n  0xFC0000        # Red\n  0xFF8000        # Orange\n  0xFFFF00        # Yellow\n  0x00FF00        # Green\n  0x00FFFF        # Cyan\n  0x0080FF        # Blue\n  0x8000FF        # Violet\n  0xCCCCCC        # White\n]\n\n# define a color attribute that cycles over time, cycle is 10 seconds\ncolor rainbow_rich_color = rich_palette(colors=rainbow_with_white, period=10s, transition_type=SINE)\n\n# define a gradient across the whole strip\nanimation back_pattern = palette_gradient_animation(color_source = rainbow_rich_color)\n\nrun back_pattern\n"
-        },
-        {
             id: "chap_1_30_twinkle",
             number: "1.30",
             name: "Twinkle",
@@ -70,52 +38,12 @@
             code: "# @desc Twinkle stars - using predefined animations\n\nanimation stars = twinkle_animation()\nrun stars"
         },
         {
-            id: "chap_1_31_color_pattern_spatial_2",
-            number: "1.31",
-            name: "Color Pattern Spatial 2",
-            description: "Rainbow gradient with 2 repetitions across the strip",
-            category: "1. Getting Started",
-            code: "# @desc Rainbow gradient with 2 repetitions across the strip\n\n# define a palette of rainbow colors including white with constant brightness\npalette rainbow_with_white = [\n  0xFC0000        # Red\n  0xFF8000        # Orange\n  0xFFFF00        # Yellow\n  0x00FF00        # Green\n  0x00FFFF        # Cyan\n  0x0080FF        # Blue\n  0x8000FF        # Violet\n  0xCCCCCC        # White\n  0xFC0000        # Red - need to add the first color at last position to ensure roll-over\n]\n\n# define a color attribute that cycles over time, cycle is 10 seconds\ncolor rainbow_rich_color = rich_palette(colors=rainbow_with_white, period=10s, transition_type=SINE)\n\n# since strip_length is dynamic, we need to map it to a variable\nset strip_len = strip_length()\n\n# define a gradient across the whole strip\nanimation back_pattern = palette_gradient_animation(color_source = rainbow_rich_color, spatial_period = strip_len / 2)\n\nrun back_pattern\n"
-        },
-        {
-            id: "chap_1_32_color_pattern_spatial_osc",
-            number: "1.32",
-            name: "Color Pattern Spatial Osc",
-            description: "Rainbow gradient with oscillating spatial period (breathing effect)",
-            category: "1. Getting Started",
-            code: "# @desc Rainbow gradient with oscillating spatial period (breathing effect)\n\n# define a palette of rainbow colors including white with constant brightness\npalette rainbow_with_white = [\n  0xFC0000        # Red\n  0xFF8000        # Orange\n  0xFFFF00        # Yellow\n  0x00FF00        # Green\n  0x00FFFF        # Cyan\n  0x0080FF        # Blue\n  0x8000FF        # Violet\n  0xCCCCCC        # White\n  0xFC0000        # Red - need to add the first color at last position to ensure roll-over\n]\n\n# define a color attribute that cycles over time, cycle is 10 seconds\ncolor rainbow_rich_color = rich_palette(colors=rainbow_with_white, period=0, transition_type=SINE)\n\n# since strip_length is dynamic, we need to map it to a variable\nset strip_len = strip_length()\n\n# define the oscillator for spatial period between 1/2 strip_len and 3/2\nset period = sine_osc(min_value = strip_len / 2, max_value = (3 * strip_len) / 2, duration = 5s)\n\n# define a gradient across the whole strip\nanimation back_pattern = palette_gradient_animation(color_source = rainbow_rich_color, spatial_period = period)\n\nrun back_pattern\n"
-        },
-        {
-            id: "chap_1_33_color_pattern_spatial_rotate",
-            number: "1.33",
-            name: "Color Pattern Spatial Rotate",
-            description: "Rainbow gradient rotating along the strip over 5 seconds",
-            category: "1. Getting Started",
-            code: "# @desc Rainbow gradient rotating along the strip over 5 seconds\n\n# define a palette of rainbow colors including white with constant brightness\npalette rainbow_with_white = [\n  0xFC0000        # Red\n  0xFF8000        # Orange\n  0xFFFF00        # Yellow\n  0x00FF00        # Green\n  0x00FFFF        # Cyan\n  0x0080FF        # Blue\n  0x8000FF        # Violet\n  0xCCCCCC        # White\n  0xFC0000        # Red - need to add the first color at last position to ensure roll-over\n]\n\n# define a color attribute cycles color in space\ncolor rainbow_rich_color = rich_palette(colors=rainbow_with_white, period=0, transition_type=SINE)\n\n# define a gradient across the whole strip\nanimation back_pattern = palette_gradient_animation(color_source = rainbow_rich_color, shift_period = 5s)\n\nrun back_pattern\n"
-        },
-        {
-            id: "chap_1_40_color_pattern_meter",
-            number: "1.40",
-            name: "Color Pattern Meter",
-            description: "VU-meter style animation with green-yellow-red gradient at 85%",
-            category: "1. Getting Started",
-            code: "# @desc VU-meter style animation with green-yellow-red gradient at 85%\n\n# define a palette of rainbow colors including white with constant brightness\npalette vue_meter_palette = [\n  (  0, 0x00FF00)     # Green\n  (143, 0x00FF00)\n\n  (164, 0xFFFF00)     # Yellow\n  (207, 0xFFFF00)\n\n  (228, 0xFF0000)     # Red\n  (255, 0xFF0000)\n]\n\n# define a color palette pattern for 'vue_meter_palette'\ncolor rainbow_rich_color = rich_palette(colors=vue_meter_palette, period=0, transition_type=LINEAR)\n\n# define a vue-meter based on all elements above\nanimation back_pattern = palette_meter_animation(color_source = rainbow_rich_color, level = 85%)\n\nrun back_pattern\n"
-        },
-        {
             id: "chap_1_40_twinke_params",
             number: "1.40",
             name: "Twinke Params",
             description: "Twinkle stars with parameters - using animation parameters",
             category: "1. Getting Started",
             code: "# @desc Twinkle stars with parameters - using animation parameters\n\n# Note: when parameters are in separate lines, you don't need a comma ','\nanimation stars = twinkle_animation(\n  color=0xFFFFAA        # Light yellow sparkles\n  density=8             # density (moderate sparkles)\n  twinkle_speed=100ms   # twinkle speed\n  fade_speed=50         # when no unit, time unit is 'ms'  \n)\nrun stars"
-        },
-        {
-            id: "chap_1_41_color_pattern_meter_random",
-            number: "1.41",
-            name: "Color Pattern Meter Random",
-            description: "VU-meter with random level using custom Berry function",
-            category: "1. Getting Started",
-            code: "# @desc VU-meter with random level using custom Berry function\n\nberry \"\"\"\n# define a pseudo-random generator, returns value in range 0..255\ndef rand_meter(engine)\n  return (engine.time_ms * 2654435761) & 0xFF\nend\n\"\"\"\n\nextern function rand_meter      # declare the external function\n\n# define a palette of rainbow colors including white with constant brightness\npalette vue_meter_palette = [\n  (  0, 0x00FF00)     # Green\n  (143, 0x00FF00)\n\n  (164, 0xFFFF00)     # Yellow\n  (207, 0xFFFF00)\n\n  (228, 0xFF0000)     # Red\n  (255, 0xFF0000)\n]\n\n# define a color palette pattern for 'vue_meter_palette'\ncolor rainbow_rich_color = rich_palette(colors=vue_meter_palette, period=0, transition_type=LINEAR)\n\n# define a vue-meter based on all elements above\nanimation back_pattern = palette_meter_animation(color_source = rainbow_rich_color, level = rand_meter())\n\nrun back_pattern\n"
         },
         {
             id: "chap_1_50_twinke_night",
@@ -132,14 +60,6 @@
             description: "Rainbow colors cycling through the entire strip over time",
             category: "2. Color Cycling",
             code: "# @desc Rainbow colors cycling through the entire strip over time\n\n# Define a color attribute that cycles over time, cycle is 5 seconds\n# PALETTE_RAINBOW defines 7 rainbow colors at roughly the same brightness\n# PALETTE_RAINBOW_W adds 8th color white\ncolor rainbow_color = color_cycle(colors=PALETTE_RAINBOW_W, period=5s)\nanimation back = solid(color=rainbow_color)\nrun back"
-        },
-        {
-            id: "chap_2_10_sky",
-            number: "2.10",
-            name: "Sky",
-            description: "Night sky with twinkling stars on dark blue background",
-            category: "2. Color Cycling",
-            code: "# @desc Night sky with twinkling stars on dark blue background\n\n# Dark blue background\ncolor space_blue = 0x000066    # Note: opaque 0xFF alpha channel is implicitly added\nanimation background = solid(color=space_blue)\n\n# Add sparkle trail behind comets but on top of blue background\nanimation stars = twinkle_animation(\n  color=0xFFFFAA  # Light blue sparkles\n  density=8       # density (moderate sparkles)\n  twinkle_speed=400ms # twinkle speed (quick sparkle)\n  priority = 8\n)\n\n# Start all animations\nrun background\nrun stars\n"
         },
         {
             id: "chap_2_20_palette_rotation",
@@ -222,14 +142,6 @@
             code: "# @desc Static beacon\n\n# Simple beacon starting at pixel 6 with size of 7 pixels, no border\nanimation back = beacon_animation(back_color = blue, color = red,\n                                  pos = 5, beacon_size = 7)\nrun back"
         },
         {
-            id: "chap_5_10_template_cylon_simple",
-            number: "5.10",
-            name: "Template Cylon Simple",
-            description: "Cylon-style scanning eye using template with customizable color",
-            category: "5. Beacons & Moving",
-            code: "# @desc Cylon-style scanning eye using template with customizable color\n\ntemplate animation cylon_eye {\n  param eye_color type color default red\n  param back_color type color default transparent\n  param period type time default 5s\n\n  set strip_len = strip_length()\n\n  animation eye_animation = beacon_animation(\n    color = eye_color\n    back_color = back_color\n    pos = cosine_osc(min_value = -1, max_value = strip_len - 2, duration = period)\n    beacon_size = 3       # small 3 pixels eye\n    slew_size = 2         # with 2 pixel shading around\n    priority = 5\n  )\n\n  run eye_animation\n}\n\nanimation eye = cylon_eye()\nrun eye\n"
-        },
-        {
             id: "chap_5_15_beacon_slew",
             number: "5.15",
             name: "Beacon Slew",
@@ -244,22 +156,6 @@
             description: "Static beacon with oscillating slew",
             category: "5. Beacons & Moving",
             code: "# @desc Static beacon with oscillating slew\n\n# Define an oscillating value from 0 to 4 and back to 0 in 2 seconds\nset slew = cosine_osc(min_value = 0, max_value = 4, duration = 2s)\n\n# Simple beacon starting at pixel 6 with size of 7 pixels, no border\nanimation back = beacon_animation(back_color = blue, color = red,\n                                  pos = 5, beacon_size = 7, slew_size = slew)\nrun back"
-        },
-        {
-            id: "chap_5_21_template_shutter_bidir_flags",
-            number: "5.21",
-            name: "Template Shutter Bidir Flags",
-            description: "Bidirectional shutter effect with rainbow colors",
-            category: "5. Beacons & Moving",
-            code: "# @desc Bidirectional shutter effect with rainbow colors\n\ntemplate animation shutter_bidir {\n  param colors type palette\n  param period default 5s\n\n  set strip_len = strip_length()\n  set shutter_size = sawtooth(min_value = 0, max_value = strip_len, duration = period)\n\n  color col1 = color_cycle(colors=colors, period=0)\n  color col2 = color_cycle(colors=colors, period=0)\n  col2.next = 1\n\n  # shutter moving from left to right\n  animation shutter_lr_animation = beacon_animation(\n    color = col2\n    back_color = col1\n    pos = 0\n    beacon_size = shutter_size\n    slew_size = 0\n    priority = 5\n  )\n\n  # shutter moving from right to left\n  animation shutter_rl_animation = beacon_animation(\n    color = col1\n    back_color = col2\n    pos = 0\n    beacon_size = strip_len - shutter_size\n    slew_size = 0\n    priority = 5\n  )\n\n  sequence shutter_seq repeat forever {\n    repeat col1.palette_size times {\n      restart shutter_size\n      play shutter_lr_animation for period\n      col1.next = 1\n      col2.next = 1\n    }\n    repeat col1.palette_size times {\n      restart shutter_size\n      play shutter_rl_animation for period\n      col1.next = 1\n      col2.next = 1\n    }\n  }\n  \n  run shutter_seq\n}\n\n# define a palette of rainbow colors including white with constant brightness\npalette rainbow_with_white = [\n  0xFC0000        # Red\n  0xFF8000        # Orange\n  0xFFFF00        # Yellow\n  0x00FF00        # Green\n  0x00FFFF        # Cyan\n  0x0080FF        # Blue\n  0x8000FF        # Violet\n  0xCCCCCC        # White\n]\n\nanimation main = shutter_bidir(colors = rainbow_with_white, period = 1.5s)\nrun main\n"
-        },
-        {
-            id: "chap_5_22_template_shutter_bidir",
-            number: "5.22",
-            name: "Template Shutter Bidir",
-            description: "Advanced shutter template with ascending/descending flags",
-            category: "5. Beacons & Moving",
-            code: "# @desc Advanced shutter template with ascending/descending flags\n\ntemplate animation shutter_bidir {\n  param colors type palette\n  param period default 2s\n  param ascending type bool default true    # define to true to enable 'ascending' part\n  param descending type bool default true   # define to true to enable 'descending' part\n\n  # since 'strip_length()' is a value provider, it must be assigned to a variable before being used\n  set strip_len = strip_length()\n\n  # animated value for the size of the shutter, evolving linearly in time (sawtooth from 0% to 100%)\n  set shutter_size = sawtooth(min_value = 0, max_value = strip_len, duration = period)\n\n  # define two rotating palettes, shifted by one color\n  color col1 = color_cycle(colors=colors, period=0)\n  color col2 = color_cycle(colors=colors, period=0)\n  col2.next = 1     # move 'col2' to the next color so it's shifte by one compared to 'col1'\n\n  # shutter moving in ascending\n  animation shutter_lr_animation = beacon_animation(\n    color = col2\n    back_color = col1\n    pos = 0\n    beacon_size = shutter_size\n    slew_size = 0\n    priority = 5\n  )\n\n  # shutter moving in descending\n  animation shutter_rl_animation = beacon_animation(\n    color = col1\n    back_color = col2\n    pos = 0\n    beacon_size = strip_len - shutter_size\n    slew_size = 0\n    priority = 5\n  )\n\n  # this is the overall sequence composed of two sub-sequences\n  # the first in ascending mode, the second in descending\n  sequence shutter_seq repeat forever {\n    if ascending {                              # un only if 'ascending' is true\n      repeat col1.palette_size times {          # run the shutter animation\n        restart shutter_size                    # resync all times for this animation, to avoid temporal drift\n        play shutter_lr_animation for period    # run the animation\n        col1.next = 1                           # then move to next color for both palettes\n        col2.next = 1\n      }\n    }\n    if descending {                             # run only if 'descending' is true\n      repeat col1.palette_size times {\n        restart shutter_size\n        play shutter_rl_animation for period\n        col1.next = 1\n        col2.next = 1\n      }\n    }\n  }\n  \n  run shutter_seq\n}\n\n# define a palette of rainbow colors including white with constant brightness\npalette rainbow_with_white = [\n  0xFC0000        # Red\n  0xFF8000        # Orange\n  0xFFFF00        # Yellow\n  0x00FF00        # Green\n  0x00FFFF        # Cyan\n  0x0080FF        # Blue\n  0x8000FF        # Violet\n  0xCCCCCC        # White\n]\n\nanimation main = shutter_bidir(colors = rainbow_with_white, period = 1.5s)\nrun main\n"
         },
         {
             id: "chap_5_30_cylon",
