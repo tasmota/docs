@@ -866,8 +866,8 @@ MQT: stat/%topic%/RESULT = {"ZbLight":{"Kitchen_Light":{"Device":"0x5ADF","Light
 
 ## Specific Device Configuration
 
-If your device pairs successfully with Zigbee2Tasmota but doesn't report on standardised endpoints you will see messages similar to:
-`{"ZbReceived":{"0x099F":{"0500!00":"010000FF0000","LinkQuality":70}}}`
+If your device pairs successfully with Zigbee2Tasmota but doesn't report on standardised endpoints you will see messages similar to:  
+`{"ZbReceived":{"0x099F":{"0500!00":"010000FF0000","LinkQuality":70}}}`  
 `{"ZbReceived":{"0x7596":{"0006!01":"","LinkQuality":65}}}`
 
 In this case you will have to use rules or an external home automation solution to parse those messages. The following section will focus only on rules to utilize the device inside Tasmota ecosystem.
