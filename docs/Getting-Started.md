@@ -347,7 +347,7 @@ Choose an installation method:
 
      * **[Termite](https://www.compuphase.com/software_termite.htm)** - simple terminal for windows
      * **[Termie](http://termie.sourceforge.net/)** - open source clone of Termite
-     * **[Putty](https://www.putty.org/)** - popular client available on every platform
+     * **[Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/)** - popular client available on every platform
      * **[Minicom](https://www.acmesystems.it/minicom)** - one of many Linux terminals
 
     !!! tip 
