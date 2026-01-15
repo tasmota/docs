@@ -123,6 +123,7 @@ pmem = used script permanent memory
 tmem = used script memory total  
 
 if the script init fails an error code is reported:    
+-1 = syntax error in section >D
 -4 = not enough memory  
 -5 = variable name length too long in total  
 -6 = too many arrays defined  
