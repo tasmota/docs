@@ -409,11 +409,12 @@ remark: state variable names used for IO in the web interface may not contain an
  `pd(vn label (xs) txt1 txt2 ... txtn)`  
  `vn` = name of variable to hold selected state  
  `label` = label text  
- `xs` = optional xs (default 200) 
+ `xs` = optional width (default 200)  
  `txt1` = text of 1. entry  
  `txt2` = text of 2. entry and so on  
- if txt1 text is "#g" a list of GPIOs ist presented, those already used greyed out  
- if txt1 starts with # and a number range like "#5-10" an number range from 5 to 10 ist presented  
+ if `txt1` = "#g" fill list with GPIOs (used or not available ones are greyed out)  
+ if `txt1` = "#gr" same as "#g" + few more GPIOs (maybe not available on your module)  
+ if `txt1` starts with # and a number range like "#5-10" an number range from 5 to 10 ist presented  
  
  special selector for SML descriptor files  
  `smlpd(json_url label sel)`  
@@ -426,7 +427,7 @@ remark: state variable names used for IO in the web interface may not contain an
  `rb(vn label (xs) txt1 txt2 ... txtn)`  
  `vn` = name of variable to hold selected state  
  `label` = label text  
- `xs` = optional xs (default 200) 
+ `xs` = optional width (default 200) 
  `txt1` = text of 1. entry  
  `txt2` = text of 2. entry and so on  
     
@@ -435,7 +436,7 @@ remark: state variable names used for IO in the web interface may not contain an
  `ck(vn txt (xs))`  
  `vn` = name of variable to hold checkbox state  
  `txt` = label text   
- `xs` = optional xs (default 200) 
+ `xs` = optional width (default 200) 
 
 #### Slider
 
@@ -458,7 +459,7 @@ remark: state variable names used for IO in the web interface may not contain an
  `tm(vn lbl (xs))`  
  `vn` = name of number variable to hold time HHMM as number e.g. 1900 means 19:00  
  `lbl` = label text  
- `xs` = optional xs (default 70)  
+ `xs` = optional width (default 70)  
   
 #### Number Input  
  `nm(min max step vn txt (xs) (prec))`  
@@ -467,7 +468,7 @@ remark: state variable names used for IO in the web interface may not contain an
  `step` = number step value for up/down arrows  
  `vn` = name of number variable to hold number  
  `txt` = label text  
- `xs` = optional xs (default 200)  
+ `xs` = optional width (default 200)  
  `prec` = optional number precision (default 1)  
   
 #### special html options  
@@ -902,6 +903,7 @@ A Tasmota MQTT RESULT message invokes the script's `E` section. Add `print` stat
   if dstoffset is flagged by 0x1000, 2 values 16 bits each in an array are used for 32 bit RGBW pixels
 `hsvrgb(h s v)` converts hue (0..360), saturation (0..100) and value (0..100) to RGB color  
 `dt` display text command (if #define USE_DISPLAY)  
+`sota(url)` set OTA URL (same as command OtaUrl). If `url` is empty "", set internal defined url (#define OTA_URL)  
 
 ### Subroutines and Parameters
 
@@ -1085,7 +1087,7 @@ A maximum of four files may be open at a time
 e.g., allows for logging sensors to a tab delimited file and then downloading the file ([see Sensor Logging example](#sensor-logging))   
 The script itself is also stored on the file system with a default size of 8192 characters  
 
-`fr=fo("fname" m)` open file fname, mode 0=read, 1=write, 2=append (returns file reference (0-3) or -1 for error (alternatively m may be: r=read, w=write, a=append). For files on SD card, filename must be preceded with / e.g. fr=fo("/fname.txt" 0)  
+`fr=fo("fname" m)` open file fname, mode 0=read, 1=write, 2=append (returns file reference (0-3) or -1 for error (alternatively m may be: r=read, w=write, a=append). For files on SD card, filename must be preceded with / e.g. fr=fo("/fname.txt" 0).  
 `res=fw("text" fr)` writes text to (the end of) file fr, returns number of bytes written  
 `res=fr(svar fr)` reads a string into svar, returns bytes read. String is read until delimiter (\\t \\n \\r) or eof  
 `fc(fr)` close file  
