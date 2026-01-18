@@ -104,8 +104,8 @@ Or click on the link for the region you have chosen:
 Region| Code | Launch
 ------|------|-------
 US East (N. Virginia) | `us-east-1` | [**Launch Stack**](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=TasmotaMqttPolicy&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-MqttPolicy.yaml)
-EU (Frankfurt) | <span style="font-family:'Courier';">eu-central-1</span> | [![Launch IotThingGenerator in eu-central-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=TasmotaMqttPolicy&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-MqttPolicy.yaml)
-EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch IotThingGenerator in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-3#/stacks/new?stackName=TasmotaMqttPolicy&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-MqttPolicy.yaml)
+EU (Frankfurt) | `eu-central-1` | [**Launch Stack**](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=TasmotaMqttPolicy&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-MqttPolicy.yaml)
+EU (Paris) | `eu-west-3` | [**Launch Stack**](https://console.aws.amazon.com/cloudformation/home?region=eu-west-3#/stacks/new?stackName=TasmotaMqttPolicy&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-MqttPolicy.yaml)
 
 1. At the **Create Stack** screen, click **Next**.
    ![MqttPolicy01](https://user-images.githubusercontent.com/49731213/79642169-46be9d80-819c-11ea-8875-55248707c0a2.png)
@@ -146,9 +146,9 @@ Or click on the link for the region you have chosen:
 
 Region| Code | Launch
 ------|------|-------
-US East (N. Virginia) | <span style="font-family:'Courier';">us-east-1</span> | [![Launch IotThingGenerator in us-east-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Tasmota-01&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-Thing.yaml)
-EU (Frankfurt) | <span style="font-family:'Courier';">eu-central-1</span> | [![Launch IotThingGenerator in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=Tasmota-01&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-Thing.yaml)
-EU (Paris) | <span style="font-family:'Courier';">eu-west-3</span> | [![Launch IotThingGenerator in eu-west-1](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/images/cloudformation-launch-stack-button.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-3#/stacks/new?stackName=Tasmota-01&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-Thing.yaml)
+US East (N. Virginia) | `us-east-1` | [**Launch Stack**](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=Tasmota-01&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-Thing.yaml)
+EU (Frankfurt) | `eu-central-1` | [**Launch Stack**](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=Tasmota-01&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-Thing.yaml)
+EU (Paris) | `eu-west-3` | [**Launch Stack**](https://console.aws.amazon.com/cloudformation/home?region=eu-west-3#/stacks/new?stackName=Tasmota-01&templateURL=https://tasmota-eu-central-1.s3.eu-central-1.amazonaws.com/Tasmota-Thing.yaml)
 
 
 1. At the **Create Stack** screen, click **Next**.
