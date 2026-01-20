@@ -4,11 +4,11 @@ This power strip has Tuya TYWE2S module (ESP8285 chip). Successfully flashed Tas
 
 Model purchased: <https://www.aliexpress.com/item/Wifi-Smart-Power-Strip-4-EU-Outlets-Plug-Socket-with-USB-4-Charging-Port-App-Voice/32864686078.html>
 
-![](https://github.com/TSparkas/zoota-powestrip-tasmota-flash/blob/master/IMG_20181230_161009.jpg)
+![](https://github.com/TSparkas/zoota-powestrip-tasmota-flash/blob/master/IMG_20181230_161009.jpg?raw=true)
 
-![](https://github.com/TSparkas/zoota-powestrip-tasmota-flash/blob/master/IMG_20181230_161402.jpg)
+![](https://github.com/TSparkas/zoota-powestrip-tasmota-flash/blob/master/IMG_20181230_161402.jpg?raw=true)
 
-![](https://github.com/TSparkas/zoota-powestrip-tasmota-flash/blob/master/IMG_20181230_161418.jpg)
+![](https://github.com/TSparkas/zoota-powestrip-tasmota-flash/blob/master/IMG_20181230_161418.jpg?raw=true)
 
 Used this connection for flashing (just connect GPIO0 on the back side of the module to GND before USB connection to enter flash mode):
 
@@ -16,7 +16,7 @@ Used this connection for flashing (just connect GPIO0 on the back side of the mo
 
 Module configuration:
 
-![](https://github.com/TSparkas/zoota-powestrip-tasmota-flash/blob/master/Zeoota%20Sonoff%20config.png)
+![](https://github.com/TSparkas/zoota-powestrip-tasmota-flash/blob/master/Zeoota%20Sonoff%20config.png?raw=true)
 
 
 
