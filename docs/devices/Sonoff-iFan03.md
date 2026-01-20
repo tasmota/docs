@@ -8,7 +8,7 @@ Next, please see the [Flashing](../Getting-Started#flashing) page for general in
 Flash the latest version of [`tasmota.bin`](http://ota.tasmota.com/tasmota/release/tasmota.bin):
 
 1. Connect your serial flashing device pins to the iFan03 (for connection locations see the pin out on the left hand side of the picture below).  
-   ![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155847511_HDR.jpg)
+   ![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155847511_HDR.jpg?raw=true)
 
 2. When you are ready to flash your device, hold down the large white tipped button on the iFan03 while connecting the serial adapter to your computer. This will power the serial adapter as well as the iFan03. Usually, you can release the button on the iFan03 once it has fully booted - after 3-5 seconds once the lights have flashed. If the device does not enter programming mode successfully, cycle power but this time continue to hold the button during the entire firmware upload process (i.e., step 4 below).
 
@@ -31,9 +31,9 @@ Flash the latest version of [`tasmota.bin`](http://ota.tasmota.com/tasmota/relea
 ## US Ceiling Fans
 
 The capacitors in the iFan03 do not set the speed of US fans correctly. To correct the speeds for US ceiling fans, you need to remove the existing capacitors from the iFan03 and replace them with equivalently electrically rated 5uF (microfarad) capacitors. **Do NOT do this if you are not comfortable using a soldering iron as improperly performing this action could increase the risk of bodily injury or property damage.**
-![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155903267.jpg)
-![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155910936_HDR.jpg)
-![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155853950_HDR.jpg)
+![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155903267.jpg?raw=true)
+![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155910936_HDR.jpg?raw=true)
+![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155853950_HDR.jpg?raw=true)
 
 ## RF Remote Control Pairing
 
