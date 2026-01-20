@@ -9,7 +9,7 @@ I ordered on Aliexpress some 2.5 mm jacks and when I received it after some work
 The schematic reports that 2.5 mm jack is configured as following (jack on right side, ESP8285 on the left side:
 
 <p align="center">
-  <img src="https://github.com/arendst/arendst.github.io/blob/master/media/4chjack/sf4ch-schematic.png">
+  <img src="https://github.com/arendst/arendst.github.io/blob/master/media/4chjack/sf4ch-schematic.png?raw=true">
 </p>
 
 3.3V and GND are very welcome for sensors expansions but GPIO7 and GPIO8 are not usable because they are used internally by ESP8285 for flash memory connection (sigh!)
