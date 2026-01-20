@@ -18,10 +18,10 @@ GPIO 13 - Led1 (not Led1i like the Sonoff Basic) Green LED
 [Amazon Link of KULED Branded Switches](https://www.amazon.com/Required-Wireless-Requires-Schedule-Compatible/dp/B079FDTG7T)
 
 ## Unboxing
-![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0282.jpg)
-![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0285.jpg)
-![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0286.jpg)
-![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0287.jpg)
+![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0282.jpg?raw=true)
+![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0285.jpg?raw=true)
+![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0286.jpg?raw=true)
+![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0287.jpg?raw=true)
 
 Some revisions of the switch have the header marked GND, RXD, TXD, 3V3. Some revisions do not.  It has been reported that some boxes have mixed revisions.  If you are ever in doubt, double check with a meter to determine your pins.  Flashing process and hardware revision without the labels can be seen on the following [video link](https://www.youtube.com/watch?v=4nX90vhAniQ).
 
@@ -31,11 +31,11 @@ Ground and 3.3vdc to power unit during flash.
 
 You do not need to solder a header to flash the board, an empty 4 pin header connected to 4 dupont jumper wires held into the empty header location works fine with a little pressure to ensure connectivity.
 
-![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0289.jpg)
+![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0289.jpg?raw=true)
 
 Hold the button(GPIO0) and plug in programmer.
 **Note for newer / touch button devices (as of March 2021):** If you have the newer version without a physical switch, you will not be able to hold down a button to ender programming mode! The only way to enter programming mode is to physically short GPIO0 and GND (a picture of the GPIO0 location is here: <https://raw.githubusercontent.com/tasmota/docs/master/docs/\_media/gpio0.png>). Make the connection, plug in the device, let go of the connection, and you should be in programming mode.
 
 Device works perfectly as a Sonoff Basic but the LED will be backwards as designed.  The Red LED is hardwired to the relay and the green is controllable over GPIO pins.  If you wish to change the functionality to have the green LED when the device is off, you can utilize or change the template to a generic device type and map the suggested names except you will choose Led1 instead of Led1i. 
 
-![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0298.jpg)
+![](https://github.com/lvgeek/KS-602S/blob/master/images/IMG_0298.jpg?raw=true)
