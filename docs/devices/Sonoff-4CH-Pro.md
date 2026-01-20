@@ -75,5 +75,5 @@ WARNING
 The Sonoff CH4 PRO is subject to radio frequency disturbances with random activation of the buttons. 
 To eliminate interference due to the U7 (SYN470RU7 RF-433  module) you can cut the wire between U7 and U8 (MCU STM32f030c6). This line starts from pin 10 of U7, the part towards MCU can be soldered to ground (surrounding area). It is also possible to set the RF module (U7) in shutdown-mode by unsoldering or cutting pin 11.
 
-<img title="Disable RF433 interference" src="https://github.com/forty76/ch4_pro/blob/main/Disabilitare%20RF%20ch4_pro.jpg" align="middle" />
+<img title="Disable RF433 interference" src="https://github.com/forty76/ch4_pro/blob/main/Disabilitare%20RF%20ch4_pro.jpg?raw=1" align="middle" />
 
