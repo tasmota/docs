@@ -7,8 +7,7 @@ Next, please see the [Flashing](../Getting-Started#flashing) page for general in
 
 Flash the latest version of [`tasmota.bin`](http://ota.tasmota.com/tasmota/release/tasmota.bin):
 
-1. Connect your serial flashing device pins to the iFan03 (for connection locations see the pin out on the left hand side of the picture below).  
-   ![](https://github.com/tim-dcl/BRUH3-Home-Assistant-Configuration/blob/master/IMG_20190817_155847511_HDR.jpg?raw=true)
+1. Connect your serial flashing device pins to the iFan03, for connection locations see this page [Tasmotized Sonoff IFan03 and HASS](https://at.r4smus.com/ifan03-hass.html)
 
 2. When you are ready to flash your device, hold down the large white tipped button on the iFan03 while connecting the serial adapter to your computer. This will power the serial adapter as well as the iFan03. Usually, you can release the button on the iFan03 once it has fully booted - after 3-5 seconds once the lights have flashed. If the device does not enter programming mode successfully, cycle power but this time continue to hold the button during the entire firmware upload process (i.e., step 4 below).
 
