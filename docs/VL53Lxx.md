@@ -183,7 +183,14 @@ or
 
 ### VL53L1X options
 
-* **Distance range** can be changed between *Long*, *Medium* or *Short* by copying one (and only one) of the below lines in `user_config_override.h`. The default value is **Long**. For details on those range, please refer to the [datasheet](#the-devices) of the device.
+* **Distance range** can be changed between *Long*, *Medium* or *Short* by copying one (and only one) of the below lines in `user_config_override.h`. The default value is **Long**. From the datasheet:
+
+| Distance Mode  | Max (Dark) | Max (Ambient Light) | Unit |
+|-----------------|---------|---------|------|
+| Short    | 136    | 135    | cm   |
+| Medium | 290      | 76      | cm    |
+| Long | 360      | 73      | cm    |
+
 ```cpp
 #define VL53L1X_DISTANCE_MODE Long
 #define VL53L1X_DISTANCE_MODE Medium
