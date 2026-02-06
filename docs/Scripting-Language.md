@@ -763,7 +763,8 @@ support for onewire either directly or via serial port with onewire bus driver D
 `wsrs()` return a string read from tcp stream  
 `wsws(string)` writes a string to tcp stream  
 `wsra(array)` reads a tcp stream into array  
-`wswa(array num (type))` writes num bytes of array to tcp stream, type: 0 = uint8 (default), 1 = uint16, 2 = sint16, 3 = float    
+`wswa(array num (type))` writes num bytes of array to tcp stream, type: 0 = uint8 (default), 1 = uint16, 2 = sint16, 3 = float  
+`wsf()` flush tcp stream data  
 
 `ttget(TNUM SEL)` get tasmota timer setting from timer TNUM (1 .. 16)  
 SEL:  
