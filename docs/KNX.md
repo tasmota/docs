@@ -127,6 +127,7 @@ Example: ``rule on event#knxrx_val1 do var1 %value% endon`` to store the value r
 Also, if a Read request is received from KNX Network, we can use that in a rule as for example: ``rule on event#knxrx_req1 do knxtx_val1 %var3% endon``
 
 NOTE: KnxTX_valn command, KNXRX_Reqn trigger and sensors' telegrams, uses KNX DPT14 (32 bits float) since 9.1.0.2 . Old versions use DPT9 (16 bits float). Old and new versions can not send values between each other. Only commands. It is recommended to have all devices on the same version.
+You can send DPT9 float values with rules.
 
 *SCENES*
 
@@ -149,3 +150,24 @@ rule1 on tele-BH1750#Illuminance do knxtx_val1 %value% endon
 rule1 1
 rule1 on system#boot do backlog var1 0; var2 0 endon on BH1750#Illuminance>%var1% do backlog var1 %value%; knxtx_val1 %value%; var2 %value%; add1 5; sub2 5 endon on BH1750#Illuminance<%var2% do backlog var2 %value%; knxtx_val1 %value%; var1 %value%; add1 5; sub2 5 endon
 ```
+
+### 7) Sending other types of data: ###
+
+If you want to send other types of data you can use the following commands:
+
+* knxtx_byte<x> - send a byte
+* knxtx_float<x> - send a 16bit float (DPT9)
+
+Sending BME680 values in DPT9 **every teleperiod time**
+```
+ON Tele-BME680#Temperature DO KnxTx_float1 %value% ENDON
+ON Tele-BME680#Humidity DO KnxTx_float2 %value% ENDON
+```
+
+Sending correct dimmer status to the GA when it gets a bool switch on/off command:
+```
+Rule2 ON Power1#State=0 DO KNXTX_byte1 0 ENDON
+ON Dimmer#State DO backlog Var1 %value%; Var2 =Var1*255/100 ENDON
+ON Power1#State=1 DO KNXTX_byte1 %Var2% ENDON
+```
+Tasmota stores the dimmer value in 0-100%, while KNX needs it in a byte (0-255). Tasmota won't update the dimmer value if it gets an off command, however KNX devices might display the on/off status by comparing the brightness with 0. When the device receives an on command it will go back the previuos state, but still without updating the GA hence it isn't changed. Without the update KNX devices might display its status 0.
