@@ -591,7 +591,7 @@ SetOption85<a class="cmnd" id="setoption85"></a>|[Device group](Device-Groups) s
 SetOption86<a class="cmnd" id="setoption86"></a>|**PWM Dimmer only!** Turn brightness LED's off 5 seconds after last change<BR>`0` = disable _(default)_<BR>`1` = enable
 SetOption87<a class="cmnd" id="setoption87"></a>|**PWM Dimmer only!** Turn red LED on when powered off<BR>`0` = disable _(default)_<BR>`1` = enable
 SetOption88<a class="cmnd" id="setoption88"></a>|Make each relay part of a separate device group. Relay 1 updates are sent to/received from device group 1, relay 2 updates are sent to/received from device group 2, etc. For the PWM Dimmer module, make each button be associated with a different device group.<BR>`0` = disable _(default)_<BR>`1` = enable
-SetOption90<a class="cmnd" id="setoption90"></a>|Disable sending MQTT with non-JSON messages<BR>`0` = send all MQTT _(default)_ <BR>`1` = send only MQTT messages with JSON payloads
+SetOption90<a class="cmnd" id="setoption90"></a>|Disable sending MQTT with non-JSON messages<BR>`0` = publish all MQTT _(default)_ <BR>`1` = publish only MQTT messages with JSON payloads
 SetOption93<a class="cmnd" id="setoption93"></a>|Control caching of compressed rules<BR>`0` = Disable memory caching of uncompressed rules <BR>`1` = Keep uncompressed rules in memory to avoid CPU load of uncompressing at each tick _(default)_
 SetOption94<a class="cmnd" id="setoption94"></a>|Select MAX31855 or MAX6675 thermocouple support<BR>`0` = Use MAX31855 protocol _(default)_ <BR>`1` = Use simpler MAX6675 protocol instead of MAX31855
 SetOption97<a class="cmnd" id="setoption97"></a>|Set TuyaMCU serial baudrate<BR>`0` = 9600 bps _(default)_ <BR>`1` = 115200 bps
