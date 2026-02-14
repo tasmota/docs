@@ -135,6 +135,7 @@ Note: the `minimal` variant is not listed as it shouldn't be used outside of the
 | USE_SGP40                 | -     | - / x | -     | x     | -     | -     |
 | USE_SGP4X                 | -     | - / x | -     | -     | -     | -     |
 | USE_SEN5X                 | -     | - / x | -     | x     | -     | -     |
+| USE_SEN6X                 | -     | - / x | -     | -     | -     | -     |
 | USE_SI1145                | -     | - / - | -     | -     | -     | -     |
 | USE_LM75AD                | -     | - / x | -     | x     | -     | -     |
 | USE_APDS9960              | -     | - / - | -     | -     | -     | -     |
