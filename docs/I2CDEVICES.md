@@ -137,5 +137,6 @@ Index | Define              | Driver   | Device   | Address(es) | Bus2 | Descrip
   94  | USE_RV3028          | xdrv_56  | RV3028    | 0x52       | Yes  | RV-3028-C7 RTC Controller
   95  | USE_AGS02MA         | xsns_118 | AGS02MA   | 0x1A       |      | TVOC Gas sensor
   96  | USE_RX8025          | xdrv_56  | RX8025    | 0x32       | Yes  | RX8025 RTC
+  97  | USE_SEN6X           | xsns_119 | SEN6X     | 0x6B       | Yes  | Gas (CO2/VOC/NOx index) and air quality (PPM <1,<2.5,<4,<10)
 
   NOTE: Bus2 supported on ESP32 only.
