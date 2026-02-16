@@ -1,5 +1,14 @@
 # LoRaWan Decoders
 
+* [Introduction](#introduction)
+* [Adding Payload Data Decoding](#adding-payload-data-decodingadding_payload_data_decoding)
+  * [Example LwDecoded MQTT message](#example-lwdecoded-mqtt-message)
+* [Files](#files)
+* [How to use the Device Decoder feature](#how-to-use-the-device-decoder-feature)
+* [Write your own Device Decoder file](#write-your-own-device-decoder-file)
+* [Home Assistant Discovery](#home-assistant-ha-discovery)
+
+## Introduction
 LoRaWan end devices transmit packets containing raw _Payload Data_. The Tasmota _LoRaWan Bridge_ feature normally passes the raw _Payload Data_ onto an MQTT server.
 ```
 {
@@ -87,3 +96,52 @@ Alternatively, find the manufacturer's datasheet/User Guide/User Manual/etc. to 
 6. Submit a [PR](https://github.com/arendst/Tasmota/pulls) to share your new decoder with the Tasmota community.
  
 
+## Home Assistant (HA) Discovery
+Tasmota has a built-in feature that reports device info to the [HA Tasmota Integration](https://www.home-assistant.io/integrations/tasmota/) at bootup.
+
+![tasmota discovery](image.png)
+
+Optionally, the LoRaWAN sensors can also be reported to HA using  [MQTT Discovery](https://www.home-assistant.io/integrations/mqtt/#mqtt-discovery)
+
+![mqtt discovery](image-1.png)
+
+To add HA LoRaWAN sensor discovery 
+1. Edit the Decoder file to add these two functions. [Example](https://github.com/arendst/Tasmota/blob/development/tasmota/berry/lorawan/decoders/vendors/dragino/LHT52.be)
+  1. `deviceInfo()`
+  2. `HAssSensors()`
+
+### How it works
+If [SetOption19](https://tasmota.github.io/docs/Commands/#setoptions) is 0 (default) then:
+1. `Device discovery` to the HA Tasmota Integration is enabled
+1. `LoRaWAN sensor discovery` to HA is enabled
+
+
+When the first LoRaWAN data packet from a paired device is received and decoded after bootup, and if the associated decoder file has the optional functions (above), a series of HA discovery MQTT messages are sent. One for each sensor.
+
+
+Example 
+
+![HA Discovery messages](image-2.png)
+```
+{
+"dev":{
+  "mdl":"LHT52",
+  "ids":"5390B0",
+  "name":"T3S3",
+  "mf":"Dragino"},
+"o":{
+  "name":
+  "T3S3"},
+"name":"Battery Voltage",
+"ic":"mdi:current-dc",
+"uniq_id":"tasmota_34B7DA5390B0_BattV",
+"pl_not_avail":"Offline",
+"val_tpl":"{{value_json['LwDecoded']['LHT52']['BattV']}}",
+"unit_of_meas":"V",
+"stat_t":"tele/LWG-T3S3_5390B0/SENSOR/A840414E4F5CAE3D",
+"device_cla":"voltage",
+"pl_avail":"Online",
+"avty_t":"tele/LWG-T3S3_5390B0/LWT",
+"state_cla":"measurement"
+}
+```
