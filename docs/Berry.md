@@ -526,8 +526,8 @@ tasmota.wire\_scan<a class="cmnd" id="tasmota_wire_scan"></a>|`(addr:int [, inde
 tasmota.i2c\_enabled<a class="cmnd" id="tasmota_i2c_enabled"></a>|`(index:int) -> bool`<br>Returns true if the I^2^C module is enabled, see I^2^C page.
 tasmota.arch<a class="cmnd" id="tasmota_arch"></a>|`() -> string`<br>Returns the name of the architecture. Currently can be `esp32`, `esp32s2`, `esp32s3`, `esp32c3`
 tasmota.read\_sensors<a class="cmnd" id="tasmota_read_sensors"></a>|`([show_sensor:bool]) -> string`<br>Returns the value of sensors as a JSON string similar to the teleperiod. The response is a string, not a JSON object. The reason is that some sensors might produce invalid JSON. It's your code's responsibility to try parsing as JSON.<br>An optional boolean parameter (false by default) can be set to trigger a display of the new values (i.e. sends a FUNC_SHOW_SENSOR` event to drivers).
-tasmota.wifi<a class="cmnd" id="tasmota_wifi"></a>|`() -> map` or `(key:string) -> any`<br>Retrieves Wi-Fi connection info or empty map.<br>Example: `{'mac': 'aa:bb:cc:22:11:03', 'quality': 100, 'rssi': -47, 'ip': '192.168.1.102'}`<br>If a `key` is passed, the value is returned without allocating a new `map`, or `nil` if no value matches the `key`.
-tasmota.eth<a class="cmnd" id="tasmota_eth"></a>|`() -> map` or `(key:string) -> any`<br>Retrieves Ethernet connection info or empty map.<br>Example: `{'mac': 'aa:bb:cc:22:11:00', 'ip': '192.168.1.101'}`<br>If a `key` is passed, the value is returned without allocating a new `map`, or `nil` if no value matches the `key`.
+tasmota.wifi<a class="cmnd" id="tasmota_wifi"></a>|`() -> map` or `(key:string) -> any`<br>Retrieves Wi-Fi connection info or empty map.<br>Example: `{'up': true, 'mac': 'aa:bb:cc:22:11:03', 'ssid': 'JohnDoeNetwork', 'quality': 100, 'rssi': -47, 'ip': '192.168.1.102'}`<br>If a `key` is passed, the value is returned without allocating a new `map`, or `nil` if no value matches the `key`.
+tasmota.eth<a class="cmnd" id="tasmota_eth"></a>|`() -> map` or `(key:string) -> any`<br>Retrieves Ethernet connection info or empty map.<br>Example: `{'up': true, 'mac': 'aa:bb:cc:22:11:00', 'ip': '192.168.1.101'}`<br>If a `key` is passed, the value is returned without allocating a new `map`, or `nil` if no value matches the `key`.
 tasmota.webcolor<a class="cmnd" id="tasmota_webcolor"></a>|`() -> map` or `(index:integer) -> string`<br>Dump all webcolors from the Tasmota configuratio, or retrieve a specific color by index number.<br>Colors are expressed in `#RRGGBB` hex format and ready to use for HASPmota<br>Note: indices are 0-based so `1` less than in `WebColor` command<br>`0`: Global text, default `"#eaeaea"`<br>`1`: Global background, default `"#252525"`<br>`2`: Form background, default `"#4f4f4f"`<br>`3`: Input text, default `"#000000"`<br>`4`: Input background, default `"#dddddd"`<br>`5`: Console text, default `"#65c115"`<br>`6`: Console background, default `"#1f1f1f"`<br>`7`: Warning text, default `"#ff5661"`<br>`8`: Success text, default `"#008000"`<br>`9`: Button text, default `"#faffff"`<br>`10`: Button, default `"#1fa3ec"`<br>`11`: Button hovered over, default `"#0e70a4"`<br>`12`: Restart/Reset/Delete button, default `"#d43535"`<br>`13`: Restart/Reset/Delete button hover, default `"#931f1f"`<br>`14`: Save button, default `"#47c266"`<br>`15`: Save button hover, default `"#5aaf6f"`<br>`16`: Config timer tab text, default `"#faffff"`<br>`17`: Config timer tab background, default `"#999999"`<br>`18`: Module title and FriendlyName text, default `"#eaeaea"`<br>`19`: Button color when off, default `"#08405e"`
 
 #### Functions for time, timers or cron
@@ -635,7 +635,7 @@ light.gamma8<a class="cmnd" id="light_gamma8"></a>|`(channel) -> int`<br>Compute
 
 ### `gpio` module
 
-This module allows to retrieve the GPIO configuration set in the templates. You need to distinguish between **logical GPIO** (like PWM, or I2C) and **physical GPIO** which represent the GPIO number of the physical pin. `gpio.pin()` transforms a logical GPIO to a physical GPIO, or `-1` if the logical GPIO is not set.
+This module allows to retrieve the GPIO configuration set in the templates. You need to distinguish between **logical GPIO** (like PWM, or I^2^C) and **physical GPIO** which represent the GPIO number of the physical pin. `gpio.pin()` transforms a logical GPIO to a physical GPIO, or `-1` if the logical GPIO is not set.
 
 Currently there is limited support for GPIO: you can only read/write in digital mode and set the GPIO mode.
 
@@ -679,9 +679,9 @@ DAC is limited to specific GPIOs:
     ```
     The function returns the closest voltage found. In this case it's 1255 for setting to 1250.
 
-### I2S
+### I^2^S
 
-DAC can also be used via `Esp8266Audio` through the ESP32 I2S -> DAC bridge.
+DAC can also be used via `Esp8266Audio` through the ESP32 I^2^S -> DAC bridge.
 
 ??? example
     ```berry
@@ -846,7 +846,7 @@ You generally use `tasmota.wire_scan()` to find a device and the corresponding I
 Wire Function|Parameters and details
 :---|:---
 bus<a class="cmnd" id="wire_bus"></a>|`read only attribute, 1 or 2`<br>Bus number for this wire instance.
-enabled<a class="cmnd" id="wire_enabled"></a>|`() -> bool`<br>Returns `true` is the I2C bus is initialized (i.e. GPIOs are defined)
+enabled<a class="cmnd" id="wire_enabled"></a>|`() -> bool`<br>Returns `true` is the I^2^C bus is initialized (i.e. GPIOs are defined)
 scan<a class="cmnd" id="wire_scan"></a>|`() -> array of int`<br>Scan the bus and return all responding addresses. Note: addresses are displayed as decimal ints, not hex.
 scan<a class="cmnd" id="wire_scan"></a>|`() -> array of int`<br>Scan the bus and return all responding addresses. Note: addresses are displayed as decimal ints, not hex.
 detect<a class="cmnd" id="wire_detect"></a>|`(addr:int) -> bool`<br>Returns `true` if the device of address `addr` is connected to this bus.
@@ -1491,7 +1491,7 @@ get_log<a class="cmnd" id="tasmota_log_reader_get_log"></a>|`get_log(log_level:i
 
 ### `ULP` module
 
-The `ULP` module exposes the third computing unit of the ESP32, which is a simple finite state machine (FSM) that is designed to perform measurements using the ADC, temperature sensor and even external I2C sensors.
+The `ULP` module exposes the third computing unit of the ESP32, which is a simple finite state machine (FSM) that is designed to perform measurements using the ADC, temperature sensor and even external I^2^C sensors.
 This small ultra low power coprocessor can run in parallel to the main cores and in deep sleep mode, where it is capable to wake up the system, i.e. in reaction to sensor measurements.
 The binding to Berry consists of some lightweight wrapper functions and the communication with the main cores works by accessing the RTC_SLOW_MEM from both sides, which is the same way as in any other ESP32 ULP project.
 
