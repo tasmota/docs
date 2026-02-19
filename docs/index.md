@@ -15,13 +15,16 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v15.2.0">Tasmota v15.2.0 Stephan</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v15.3.0">Tasmota v15.3.0 Susan</a></span>
 
 ## New Features
 
 - Added support for:
-  - DALI RGBWAF Color control
-  - Berry animation framework
+  - Adafruit I2C QT Rotary Encoder 
+  - Sensirion SEN6x indoor air quality sensor
+  - TCA9554 8-bit I/O expander mutually exclusive with PCA9557
+  - RX8025T Real Time Clock
+  - ESP32 SPI bus2 for Ethernet and SDCard
 - Many ESP32 berry fixes and enhancements
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
