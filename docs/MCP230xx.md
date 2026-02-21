@@ -18,6 +18,15 @@ You will need to pick an I2C address in either of the above scenario's using the
 
 ![MCP23008 / MCP23017 I2C Address Map](https://github.com/andrethomas/images/raw/master/mcp230xx/i2c_address_map.png)
 
+
+!!! warning "MCP23017 Hardware Bug"
+    Avoid using pins **GPA7** (pin 8) and **GPB7** (pin 28) as inputs. 
+    Due to a design flaw in the MCP23x17 series, these pins are highly 
+    sensitive to noise and can cause I2C bus corruption or false triggers. 
+    In the latest version of the datashee, Microchip officially recommends
+    using them only as **outputs**.
+
+
 ### Supporting modes
 
 Starting with Tasmota v12.4.0.2 there are two different modes to use MCP23xxx.
