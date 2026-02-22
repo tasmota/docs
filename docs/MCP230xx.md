@@ -75,7 +75,53 @@ Buttons, relays, buttons and relays                         B1 B2 B3 B4 B5 B6 B7
 {"NAME":"MCP23017 A=B1-8, B=R1-8, C=B9-16, D=R9-16","GPIO":[32,33,34,35,36,37,38,39,224,225,226,227,228,229,230,231,40,41,42,43,44,45,46,47,232,233,234,235,236,237,238,239]}
 ```
 
+#### Interrupt Pins
+
 In Mode 2 you can choose to connect the interrupt pins from the MCP230xx to native GPIOs on the ESP. You will then need to configure the used GPIOs as "MCP23xxx Int" in the Web UI. This way, upon a change in an input, the corresponding interrupt pin will gererate a flag that will be scanned at every program cycle, making the detection as fast as possible. If not using the interrupt pins the detection will be triggered every 50ms.
+
+The MCP23017 has two interrupt pins, one for each I/O bank. By default they are configured as mirrored: both interrupt pins will activate whenever an input changes state in either bank A or bank B. Starting from Tasmota v14.4.1, different behaviour for the interrupt pins can be achieved by changing the configuration of the IOCON configuration registes. For this, the optional key pair "IOCON" must be added to the MCP23017 template. See the example below:
+
+```
+ * Buttons and relays with open-drain INT    B1 B2 B3 B4 B5 B6 B7 B8 R1  R2  R3  R4  R5  R6  R7  R8
+ * {"NAME":"MCP23017 A=B1-8, B=R1-8","GPIO":[32,33,34,35,36,37,38,39,224,225,226,227,228,229,230,231],"IOCON":0x5C}
+```
+
+Configurable options are (* indicates the default):
+
+```
+bit 7: 0 (not configurable)
+
+bit 6
+MIRROR: INT Pins Mirror bit
+1* = The INT pins are internally connected
+0 = The INT pins are not connected. INTA is associated with PORTA and INTB is associated with
+PORTB
+
+bit 5: 0 (not configurable)
+
+bit 4
+1* = Slew rate disabled
+0 = Slew rate enabled
+
+bit 3
+HAEN: Hardware Address Enable bit (MCP23S17 only) (Note 1)
+1* = Enables the MCP23S17 address pins.
+0 = Disables the MCP23S17 address pins.
+
+bit 2
+ODR: Configures the INT pin as an open-drain output
+1 = Open-drain output (overrides the INTPOL bit.)
+0* = Active driver output (INTPOL bit sets the polarity.)
+
+bit 1
+INTPOL: This bit sets the polarity of the INT output pin
+1 = Active-high
+0* = Active-low
+
+bit 0: 0 (not configurable)
+```
+
+Default configuration is 0b01011000 = 0x58. For more information refer to the MCP23017/MCP23S17 datasheet.
 
 ### Mode 1
 
