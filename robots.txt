@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tasmota.github.io/docs/sitemap.xml
