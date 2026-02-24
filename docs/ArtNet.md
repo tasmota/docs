@@ -37,7 +37,7 @@ For BTF Lighting 8x8 or 16x16 matrix, with alternate lines:
 Step 3. Download [LED Lab](http://appstore.com/ledlab) from [Christopher Schardt](http://schardt.org) for MacOS or iOS
 
 Step 4. Launch `LED Lab`, click on the `Settings` icon (wheel), select `LED Setup...`
-<img src="../_media/artnet/LED_Lab_Menu1.png">
+<img src="../_media/artnet/LED_Lab_Menu1.png?raw=true">
 
 
 In the LED Setup:
@@ -50,11 +50,11 @@ In the LED Setup:
 - Set `Channel Values for Each Pixel` to `GRB`. NOTE: for ESP32 you should use `RGB` instead.
 - Click `OK` in upper right corner
 
-<img src="../_media/artnet/LED_Lab_Setup.png">
+<img src="../_media/artnet/LED_Lab_Setup.png?raw=true">
 
 Step 5. Back to the Settings, click on `LED Display` to start streaming. Your device should start to show LED animations.
 
-<img src="../_media/artnet/LED_Lab_Menu2.png">
+<img src="../_media/artnet/LED_Lab_Menu2.png?raw=true">
 
 
 ## Operating modes
