@@ -14,7 +14,7 @@ When enabling ArtNet mode, Tasmota listens to UDP port 6454 on local address and
 
 ![ezgif-3-5d1d4b87d0](https://user-images.githubusercontent.com/49731213/201535653-3bb395b8-f84c-4083-93d7-a54782933ebf.gif)
 
-Important: DMX/ArtNet payload must be sent in `GBR` format, i.e. 3 bytes in Green/Red/Blue order.
+Important: DMX/ArtNet payload must be sent in `GRB` format, i.e. 3 bytes in Green/Red/Blue order.
 
 While in ArtNet mode, you can control the brightness with `Dimmer` and turn off light/display with `Power`; or with the Web UI. Changing the color has no effect until you stop ArtNet mode.
 
