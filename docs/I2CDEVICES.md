@@ -42,8 +42,8 @@ Index | Define              | Driver   | Device   | Address(es) | Bus2 | Descrip
   19  | USE_SI1145          | xsns_24  | SI1147   | 0x60        | Yes  | Ultra violet index and light sensor
   20  | USE_LM75AD          | xsns_26  | LM75AD   | 0x48 - 0x4F | Yes  | Temperature sensor
   21  | USE_APDS9960        | xsns_27  | APDS9960 | 0x39        |      | Proximity ambient light RGB and gesture sensor
-  22  | USE_MCP230xx        | xsns_29  | MCP23008 | 0x20 - 0x26 |      |  8-bit I/O expander
-  22  | USE_MCP230xx        | xsns_29  | MCP23017 | 0x20 - 0x26 |      | 16-bit I/O expander
+  22  | USE_MCP230xx        | xsns_29  | MCP23008 | 0x20 - 0x26 | Yes  |  8-bit I/O expander
+  22  | USE_MCP230xx        | xsns_29  | MCP23017 | 0x20 - 0x26 | Yes  | 16-bit I/O expander
   23  | USE_MPR121          | xsns_30  | MPR121   | 0x5A - 0x5D |      | Proximity capacitive touch sensor
   24  | USE_CCS811          | xsns_31  | CCS811   | 0x5A        |      | Gas (TVOC) and air quality sensor
   24' | USE_CCS811_V2       | xsns_31  | CCS811   | 0x5A - 0x5B |      | Gas (TVOC) and air quality sensor
