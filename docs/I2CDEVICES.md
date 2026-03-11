@@ -45,7 +45,7 @@ Index | Define              | Driver   | Device   | Address(es) | Bus2 | Descrip
   22  | USE_MCP230xx        | xsns_29  | MCP23008 | 0x20 - 0x26 | Yes  |  8-bit I/O expander
   22  | USE_MCP230xx        | xsns_29  | MCP23017 | 0x20 - 0x26 | Yes  | 16-bit I/O expander
   23  | USE_MPR121          | xsns_30  | MPR121   | 0x5A - 0x5D |      | Proximity capacitive touch sensor
-  24  | USE_CCS811          | xsns_31  | CCS811   | 0x5A        |      | Gas (TVOC) and air quality sensor
+  24  | USE_CCS811          | xsns_31  | CCS811   | 0x5A        | Yes  | Gas (TVOC) and air quality sensor
   24' | USE_CCS811_V2       | xsns_31  | CCS811   | 0x5A - 0x5B |      | Gas (TVOC) and air quality sensor
   25  | USE_MPU6050         | xsns_32  | MPU6050  | 0x68 - 0x69 |      | 3-axis gyroscope and temperature sensor
   26  | USE_DS3231          | xsns_33  | DS1307   | 0x68        |      | Real time clock
@@ -104,10 +104,10 @@ Index | Define              | Driver   | Device   | Address(es) | Bus2 | Descrip
   63  | USE_HM330X          | xsns_93  | HM330X   | 0x40        |      | Particule sensor
   64  | USE_HDC2010         | xsns_94  | HDC2010  | 0x40        |      | Temperature and Humidity sensor
   65  | USE_ADE7880         | xnrg_23  | ADE7880  | 0x38        |      | Energy monitor
-  66  | USE_PCF85363        | xsns_99  | PCF85363 | 0x51        |      | Real time clock
+  66  | USE_PCF85363        | xsns_99  | PCF85363 | 0x51        | Yes  | Real time clock
   67  | USE_DS3502          | xdrv_61  | DS3502   | 0x28 - 0x2B |      | Digital potentiometer
   68  | USE_HYT             | xsns_97  | HYTxxx   | 0x28        | Yes  | Temperature and Humidity sensor
-  69  | USE_SGP40           | xsns_98  | SGP40    | 0x59        |      | Gas (TVOC) and air quality
+  69  | USE_SGP40           | xsns_98  | SGP40    | 0x59        | Yes  | Gas (TVOC) and air quality
   70  | USE_LUXV30B         | xsns_99  | LUXV30B  | 0x4A        |      | DFRobot SEN0390 V30B lux sensor
   71  | USE_QMC5883L        | xsns_33  | QMC5883L | 0x0D        |      | Magnetic Field Sensor
   72  | USE_INA3221         | xsns_100 | INA3221  | 0x40-0x43   |      | 3-channels Voltage and Current sensor
@@ -132,7 +132,7 @@ Index | Define              | Driver   | Device   | Address(es) | Bus2 | Descrip
   90  | USE_RX8010          | xdrv_56  | RX8010    | 0x32       | Yes  | RX8010 RTC from IOTTIMER
   90  | USE_RX8030          | xdrv_56  | RX8030    | 0x32       | Yes  | RX8030 RTC from #23855
   91  | USE_MS5837          | xsns_116 | MS5837    | 0x76       |      | Pressure and temperature sensor
-  92  | USE_PCF85063        | xdrv_56  | PCF85063  | 0x51       |      | PCF85063 Real time clock
+  92  | USE_PCF85063        | xdrv_56  | PCF85063  | 0x51       | Yes  | PCF85063 Real time clock
   93  | USE_AS33772S        | xdrv_119 | AS33772S  | 0x52       | Yes  | AS33772S USB PD Sink Controller
   94  | USE_RV3028          | xdrv_56  | RV3028    | 0x52       | Yes  | RV-3028-C7 RTC Controller
   95  | USE_AGS02MA         | xsns_118 | AGS02MA   | 0x1A       |      | TVOC Gas sensor
