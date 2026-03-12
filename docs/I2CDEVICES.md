@@ -12,7 +12,7 @@ Index | Define              | Driver   | Device   | Address(es) | Bus2 | Descrip
    1  | USE_PCA9685_V2      | xdrv_15  | PCA9685  | 0x40 - 0x47 |      | 16-channel 12-bit pwm driver
    2  | USE_PCF8574         | xdrv_28  | PCF8574  | 0x20 - 0x26 |      | 8-bit I/O expander (address range overridable)
    2  | USE_PCF8574         | xdrv_28  | PCF8574A | 0x39 - 0x3F |      | 8-bit I/O expander (address range overridable)
-   3  | USE_DISPLAY_LCD     | xdsp_01  |          | 0x27, 0x3F  |      | LCD display
+   3  | USE_DISPLAY_LCD     | xdsp_01  |          | 0x27, 0x3F  | Yes  | LCD display
    4  | REMOVED             |          |          |             |      | USE_DISPLAY_SSD1306 - REMOVED
    5  | USE_DISPLAY_MATRIX  | xdsp_03  | HT16K33  | 0x70 - 0x77 |      | 8x8 led matrix
    6  | REMOVED             |          | SH1106   | 0x3C - 0x3D |      | USE_DISPLAY_SH1106 - REMOVED
