@@ -1379,7 +1379,6 @@ mdns.add_service("_matterc","_udp", 5540, {"VP":"65521+32768", "SII":5000, "SAI"
 General Function|Parameters and details
 :---|:---
 start<a class="cmnd" id="mdns_start"></a>|`mdns.start([hostname: string]) -> nil`<br>Start or restart mDNS, specify a new hostname if needed or implicitly use `tasmota.hostname()` if none provided (default)
-stop<a class="cmnd" id="mdns_stop"></a>|`mdns.stop() -> nil`<br>Free all mDNS resources
 set_hostname<a class="cmnd" id="mdns_set_hostname"></a>|`mdsn.set_hostname(hostname:string) -> nil`<br>Change the hostname
 add_service<a class="cmnd" id="mdns_add_service"></a>|`mdns.add_service(service:string, proto:string, port:int, txt:map) -> nil`<br>Add a service declaration using the current hostname as instance name, and specify TXT fields as a `map`
 
