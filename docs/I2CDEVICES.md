@@ -52,7 +52,7 @@ Index | Define              | Driver   | Device   | Address(es) | Bus2 | Descrip
   26  | USE_DS3231          | xsns_33  | DS3231   | 0x68        | Yes  | Real time clock
   27  | USE_MGC3130         | xsns_36  | MGC3130  | 0x42        |      | Electric field sensor
   28  | USE_MAX44009        | xsns_41  | MAX44009 | 0x4A - 0x4B |      | Ambient light intensity sensor
-  29  | USE_SCD30           | xsns_42  | SCD30    | 0x61        |      | CO2 sensor
+  29  | USE_SCD30           | xsns_42  | SCD30    | 0x61        | Yes  | CO2 sensor
   30  | USE_SPS30           | xsns_44  | SPS30    | 0x69        |      | Particle sensor
   31  | USE_VL53L0X         | xsns_45  | VL53L0X  | 0x29        |      | Time-of-flight (ToF) distance sensor
   32  | USE_MLX90614        | xsns_46  | MLX90614 | 0x5A        |      | Infra red temperature sensor
@@ -141,4 +141,4 @@ Index | Define              | Driver   | Device   | Address(es) | Bus2 | Descrip
   98  | USE_FM24CXX         | xdrv_93  | FM24CXX   | 0x50 - 0x57| Yes  | FM24CXX - External FRAM with console / berry R/W operations
   99  | USE_STCC4           | xsns_120 | STCC4     | 0x64, 0x65 | Yes  | CO2 and optional temperature and humidity sensor
 
-  NOTE: Bus2 supported on ESP32 only.
+  NOTE: Bus2 is supported on ESP8266, ESP32, ESP32-C6, ESP32-H2, ESP32-P4, ESP32-S2 and ESP32-S3
