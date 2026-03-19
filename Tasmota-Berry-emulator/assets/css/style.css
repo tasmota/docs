@@ -1,0 +1,83 @@
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #e8e8e8;
+  color: #727779;
+}
+
+a {
+  color: #00AD4E;
+  text-decoration: none;
+  transition: all 0.2s ease 0s;
+}
+a:hover {
+  color: #007a37;
+}
+a:focus {
+  outline: none;
+}
+
+
+.hero {
+  display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.hero p {
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  width: 1000px;
+  min-height: 800px;
+  background-color: #fff;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.description {
+  max-width: 50%;
+  margin: 40px;
+}
+
+.terminal {
+border: #1a2d2d solid 4px;
+font-family: monospace;
+font-size: 10pt;
+float: none;
+}
+
+.terminal-cursor {
+background: #d0d0d0;
+}
+
+.container > .footer {
+  margin-top: 20px;
+  text-align: center;
+}
+.container > .footer .social-media {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.container > .footer .social-media a i {
+  font-size: 25px;
+}
+.container > .footer .social-media a + a {
+  margin: 0 5px;
+}
+.container > .footer .social-media + p {
+  margin-top: 10px;
+}
