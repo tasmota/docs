@@ -304,9 +304,8 @@ Publish2<a class="cmnd" id="publish2"></a>|`<topic> <payload>` = MQTT publish an
 Publish3<a class="cmnd" id="publish3"></a>|`<topic> <payload>` = MQTT publish any topic and optional binary payload encoded in Hex (disabled in MINIMAL and SAFEBOOT)
 SensorRetain<a class="cmnd" id="sensorretain"></a>|`0` = disable use of sensor MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/SENSOR`
 StateRetain<a class="cmnd" id="stateretain"></a>|`0` = disable use of state MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/STATE`
-StatusRetain<a class="cmnd" id="statusretain"></a>|`0` = disable use of status MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on message `tele/%topic%/STATUS`
 StateText<x\><a class="cmnd" id="statetext"></a>|`<value>` = set state text  (`<x>` = `1..4`)<BR>1 = `OFF` state text<BR>2 = `ON` state text<BR>3 = `TOGGLE` state text<BR>4 = `HOLD` state text<BR>
-StatusRetain<a class="cmnd" id="statusretain"></a>|`0` = disable use of status MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on status messages `tele/%topic%/STATUS[n]`
+StatusRetain<a class="cmnd" id="statusretain"></a>|`0` = disable use of status MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on status messages `stat/%topic%/STATUS[n]`
 SwitchRetain<a class="cmnd" id="switchretain"></a>|`0` = disable use of MQTT retain flag *(default)*<BR>`1` = enable MQTT retain flag on switch press
 Subscribe<a class="cmnd" id="subscribe"></a>|Subscribes to an MQTT topic, append `/#` if not already present, and assigns an Event name to it.<BR>`<eventName>, <mqttTopic> [, <key>]` = [Read more...](MQTT#subscribeunsubscribe)<br>`  ` = list all topics currently subscribed
 Subscribe2<a class="cmnd" id="subscribe2"></a>|Subscribes to an MQTT topic and assigns an Event name to it.<BR>`<eventName>, <mqttTopic> [, <key>]` = [Read more...](MQTT#subscribeunsubscribe)<br>`  ` = list all topics currently subscribed
