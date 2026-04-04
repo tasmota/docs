@@ -134,7 +134,7 @@ Sensor data is sent via the Tasmota topic `tele/%topic%/SENSOR` in JSON format e
   "NeoPool": {
     "Time": "2021-06-01T11:00:00",
     "Type": "Oxilife",
-    "Module": {
+    "Modules": {
       "pH": 1,
       "Redox": 1,
       "Hydrolysis": 1,
@@ -312,11 +312,11 @@ Connection.MBRegData|(Int) Err 13: Register data not specified
 Connection.MBTooManyReg|(Int) Err 14: To many registers
 Connection.MBUnknownErr|(Int) Unknown errors occured
 
-The JSON values `pH`, `Redox`, `Hydrolysis`, `Chlorine`, `Conductivity` and `Ionization` are only available if the corresponding module is installed in the device (the corresponding "Module" subkey must be `1`).
+The JSON values `pH`, `Redox`, `Hydrolysis`, `Chlorine`, `Conductivity` and `Ionization` are only available if the corresponding module is installed in the device (the corresponding "Modules" subkey must be `1`).
 
 The `Relay` subkeys `Acid`, `Base`, `Redox`, `Chlorine`, `Conductivity`, `Heating`, `UV` and `Valve` are only available if the related function is assigned to a relay.
 
-To check which modules are installed use the `Module` value from SENSOR topic or query it manually by using the [NPControl](#npcontrol) command:
+To check which modules are installed use the `Modules` value from SENSOR topic or query it manually by using the [NPControl](#npcontrol) command:
 
 ```json
 {
