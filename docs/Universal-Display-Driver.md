@@ -342,8 +342,19 @@ single entry defines a delay in milliseconds
     
 `:I`  
 Initial register setup for the display controller. (`IC` marks that the controller is using command mode even with command parameters)
-All values are in hex. On SPI the first value is the command, then the number of arguments and the the arguments itself.
-`Bit 7` on the number of arguments set indicate a wait of 150 ms. On I^2^C all hex values are sent to I^2^C.
+All values are in hex.
+
+On I^2^C all hex values are sent to I^2^C.
+
+On SPI the first value is the command, then the number of arguments and the the arguments itself (lower 4 bits: 0..F).
+High 4 bits are used to add a pause after the command:
+
+Second byte|Pause
+:---|:---
+`0x` or `x`|No pause
+`Ax`|10 ms
+`8x`|150 ms
+`Ex`|500 ms
 
 !!! example
 
