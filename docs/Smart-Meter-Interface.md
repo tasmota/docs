@@ -1302,7 +1302,7 @@ For the counter value precision 1 is used for the rest i only took the numbers w
 	1,77070100340700ff@1,U2,V,Spannung_L2,0
 	1,77070100480700ff@1,U3,V,Spannung_L3,0
 	#
-	...
+	```
  
 ### EasyMeter Q1D (ASCII OBIS)
 
@@ -4295,7 +4295,7 @@ script to emulate a shelly pro 3em to use with solar storage devices e.g. marste
 
 ### Sorel LTDC (CANBus)
 
-Compile firmware with #define ```USE_SML_CANBUS```. Use a proper CAN transceiver. You need a 120Ohms resistor in the second CAN port of the controller, otherwise ESP32 device will not decode anything on the bus, the baudrate is 250 KBITS.
+Compile firmware with #define `USE_SML_CANBUS`. Use a proper CAN transceiver. You need a 120Ohms resistor in the second CAN port of the controller, otherwise ESP32 device will not decode anything on the bus, the baudrate is 250 KBITS.
 
 ??? summary "View script"
     ```
@@ -4318,7 +4318,7 @@ Compile firmware with #define ```USE_SML_CANBUS```. Use a proper CAN transceiver
 
 ### Sorel XHCC (CANBus)
 
-Compile firmware with #define ```USE_SML_CANBUS```. Use a proper CAN transceiver. You need a 120Ohms resistor in the second CAN port of the controller, otherwise ESP32 device will not decode anything on the bus, the baudrate is 250 KBITS.
+Compile firmware with #define `USE_SML_CANBUS`. Use a proper CAN transceiver. You need a 120Ohms resistor in the second CAN port of the controller, otherwise ESP32 device will not decode anything on the bus, the baudrate is 250 KBITS.
 
 ??? summary "View script"
     ```
