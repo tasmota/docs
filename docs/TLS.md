@@ -81,17 +81,11 @@ If you are using LetsEncrypt to generate your server certificates, you should ac
 
 ## Limitations
 
-On ESP8266, starting with 6.5.0.15, AxTLS has been replaced with [BearSSL](https://bearssl.org/). This uses less memory, typically 6.0k constantly, and an additional 6.8k during TLS connection.
-
-On ESP32, BearSSL provides a much lighter footprint than MbedTLS (~45kB instead of ~150kB) and continues to be used by Tasmota.
-
 Main limitations are:
 
-- Your SSL/TLS server must support TLS 1.2 and the `ECDHE_
-` cipher - which is the case with the default Mosquitto configuration
-- The server certificate must have an RSA private key (max 2048 bits) and the certificate must be signed with RSA and SHA256 hash. This is the case with default LetsEncrypt certificates. ESP32 supports by default RSA private keys up to 4096 bits, ESP8266 must be compiled with option `-DUSE_4K_RSA` to support 4096 private keys.
+- Your SSL/TLS server must support TLS 1.2 and the `ECDHE_` cipher - which is the case with the default Mosquitto configuration
+- The server certificate must have an RSA private key (max 2048 bits for ESP8266) or ECDSA private key and the certificate must be signed with RSA or ECDSA and SHA256 hash. This is the case with default LetsEncrypt certificates. ESP32 supports by default RSA private keys up to 4096 bits, ESP8266 must be compiled with option `-DUSE_4K_RSA` to support 4096 private keys.
 - Your SSL/TLS should support TLS 1.2 MFLN to limit buffer to 1024 bytes. If MFLN is not supported, it will still work well, as long as the server does not send any message above 1024 bytes. On ESP32 buffers are raised to 2048 bytes.
-- If you are using **certbot** with Letsencrypt: starting with v2.0.0 certbot requests ECDSA certificates by default. Make sure you explicitly add `--key-type rsa` and `--rsa-key-size 2048` (or `--rsa-key-size 4096`).
 
 
 -----------
