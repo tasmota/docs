@@ -280,7 +280,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |Asia/Istanbul|`Timezone +3:00`|
 |Asia/Jakarta|`Timezone +7:00`|
 |Asia/Jayapura|`Timezone +9:00`|
-|Asia/Jerusalem|This timezone uses a DST start/end rule that Tasmota does not support.|
+|Asia/Jerusalem|`Backlog0 Timezone 2; TimeStd 1,10,7,7,2,120; TimeDst 1,3,5,7,2,180`|
 |Asia/Kabul|`Timezone +4:30`|
 |Asia/Kamchatka|`Timezone +12:00`|
 |Asia/Karachi|`Timezone +5:00`|
@@ -323,7 +323,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |Asia/Tashkent|`Timezone +5:00`|
 |Asia/Tbilisi|`Timezone +4:00`|
 |Asia/Tehran|`Timezone +3:30`|
-|Asia/Tel_Aviv|This timezone uses a DST start/end rule that Tasmota does not support.|
+|Asia/Tel_Aviv|`Backlog0 Timezone 2; TimeStd 1,10,7,7,2,120; TimeDst 1,3,5,7,2,180`|
 |Asia/Thimbu|`Timezone +6:00`|
 |Asia/Thimphu|`Timezone +6:00`|
 |Asia/Tokyo|`Timezone +9:00`|
@@ -518,7 +518,7 @@ Use this table to look up the correct `Timezone`, `TimeStd`, and `TimeDst` comma
 |Indian/Mayotte|`Timezone +3:00`|
 |Indian/Reunion|`Timezone +4:00`|
 |Iran|`Timezone +3:30`|
-|Israel|This timezone uses a DST start/end rule that Tasmota does not support.|
+|Israel|`Backlog0 Timezone 2; TimeStd 1,10,7,7,2,120; TimeDst 1,3,5,7,2,180`|
 |Jamaica|`Timezone -5:00`|
 |Japan|`Timezone +9:00`|
 |Kwajalein|`Timezone +12:00`|
