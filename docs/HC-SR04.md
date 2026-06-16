@@ -50,3 +50,55 @@ Sensor sends a  `tele/%topic%/SENSOR` JSON response:
 ```json
 {"Time":"2019-01-01T22:42:35","SR04":{"Distance":16.754}}
 ```
+
+## ESP32 Example with MQTT
+
+The HC-SR04 can be used with ESP32 devices running Tasmota.
+
+### Example Wiring
+
+| HC-SR04 | ESP32                          |
+| ------- | ------------------------------ |
+| Vcc     | 5V                             |
+| GND     | GND                            |
+| Trig    | GPIO5                          |
+| Echo    | GPIO18 through voltage divider |
+
+!!! warning
+Standard HC-SR04 modules output a 5V Echo signal. ESP32 GPIO pins are 3.3V only, so the Echo pin must be connected through a voltage divider or level shifter.
+
+### Tasmota Configuration
+
+Assign:
+
+* GPIO5 → `SR04 Tri`
+* GPIO18 → `SR04 Ech`
+
+Then save and restart the device.
+
+### MQTT Telemetry
+
+Distance measurements are published to:
+
+```text
+tele/%topic%/SENSOR
+```
+
+Example payload:
+
+```json
+{"Time":"2026-06-16T12:00:00","SR04":{"Distance":42.6}}
+```
+
+### Troubleshooting
+
+| Problem                    | Possible Fix                             |
+| -------------------------- | ---------------------------------------- |
+| No distance value shown    | Check Trig and Echo GPIO assignments     |
+| Unstable readings          | Use a stable 5V supply and shorter wires |
+| ESP32 behaves unexpectedly | Ensure Echo voltage is reduced to 3.3V   |
+| MQTT data not received     | Verify MQTT settings and TelePeriod      |
+
+```
+```
+
