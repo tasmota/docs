@@ -257,7 +257,7 @@ Common buttons should work across multiple models
 | 8                   | {"Protocol":"SONY","Bits":12,"Data":"0xE10"}  |
 | 9                   | {"Protocol":"SONY","Bits":12,"Data":"0x110"}  |
 | Text                | {"Protocol":"SONY","Bits":12,"Data":"0xFD0"}  |
-| 0                   | {"Protocol":"SONY","Bits":12,"Data":"0x110"}  |
+| 0                   | {"Protocol":"SONY","Bits":12,"Data":"0x910"}  |
 | Subtitles           | {"Protocol":"SONY","Bits":15,"Data":"0x0AE9"} |
 | Audio Track         | {"Protocol":"SONY","Bits":12,"Data":"0xE90"}  |
 | HDMI 1              | {"Protocol":"SONY","Bits":15,"Data":"0x2D58"} |
