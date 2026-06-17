@@ -102,6 +102,8 @@ Includes ESP32-WROVER-B and ESP32-WROVER-BI
 ### JW-02-8285
 ![JW-02-8285 Pinout](_media/pinouts/JW-02-8285.png)
 
+"GP0" is a silkcreen abbreviation for GPIO0 (strapping pin).
+
 ### JW-03-8285
 ![JW-02-8285 Pinout](_media/pinouts/JW-03-8285.png)
 
@@ -126,6 +128,8 @@ Includes ESP32-WROVER-B and ESP32-WROVER-BI
 ### JW-2S-ESP32C3
 
 ![JW-2S-ESP32C3 Pinout](_media/pinouts/JW-2S-ESP32C3.png)
+
+"GP9" is a silkcreen abbreviation for GPIO9 (the ESP32 C3 strapping pin).
 
 ## Devices
 ### Sonoff Mini
