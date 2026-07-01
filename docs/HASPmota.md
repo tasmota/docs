@@ -60,8 +60,7 @@ haspmota.start("my_template.jsonl")
 [![HASPmota cpicker](_media/lvgl/HASPmota_24.png){width="160"}](#cpicker)
 [![HASPmota tabview](_media/lvgl/HASPmota_25.png){width="160"}](#tabview)
 
-
-The `jsonl` file used to display the widgets can be found [widget demo JSONL file](_media/lvgl/haspmota_demo.jsonl)
+The `jsonl` file used to display the widgets can be found [widget demo JSONL file](_media/lvgl/pages.jsonl)
 
 ## Minimal requirements
 
@@ -409,11 +408,11 @@ Example:
 ![HASPmota btn](_media/lvgl/HASPmota_03.png)
 
 ```json
-{"id":11,"obj":"btn","x":0,"y":60,"w":80,"h":30,"bg_color":"#4f4f4f","text_color":"#FFFF44","radius":10,"text":"Disabled","border_width":3,"border_side":15,"border_color":"#FFFF44","border_opa":210,"enabled":false}
-{"id":12,"obj":"btn","x":100,"y":60,"w":80,"h":30,"bg_color":"#4f4f4f","text_color":"#FFFF44","radius":10,"text":"Enabled","border_width":3,"border_side":15,"border_color":"#FFFF44","border_opa":210}
+{"id":11,"obj":"btn","x":5,"y":60,"w":80,"h":30,"radius":10,"text":"Disabled","enabled":false}
+{"id":12,"obj":"btn","x":100,"y":60,"w":80,"h":30,"radius":10,"text":"Enabled"}
 
-{"id":13,"obj":"btn","x":0,"y":100,"w":80,"h":30,"text_color":"#FFFF44","radius":0,"text":"Disabled","border_width":3,"border_side":15,"border_opa":210,"enabled":false,"bg_color":"#884488","border_color":"#DD3300"}
-{"id":14,"obj":"btn","x":100,"y":100,"w":80,"h":30,"text_color":"#FFFF44","radius":0,"text":"Enabled","border_width":3,"border_side":15,"bg_color":"#884488","border_color":"#DD3300"}
+{"id":13,"obj":"btn","x":5,"y":100,"w":80,"h":30,"radius":0,"text":"Disabled","enabled":false,"bg_color":"#DD0000"}
+{"id":14,"obj":"btn","x":100,"y":100,"w":80,"h":30,"radius":0,"text":"Enabled","bg_color":"#DD0000"}
 ```
 
 ### `switch`
@@ -423,13 +422,13 @@ Example:
 ![HASPmota switch](_media/lvgl/HASPmota_05.png)
 
 ```json
-{"id":11,"obj":"switch","x":0,"y":60,"w":60,"h":30,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
-{"id":12,"obj":"switch","x":80,"y":60,"w":60,"h":30,"toggle":true,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
-{"id":13,"obj":"switch","x":160,"y":60,"w":60,"h":30,"enabled":false,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
-{"id":14,"obj":"switch","x":240,"y":60,"w":60,"h":30,"toggle":true,"enabled":false,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
+{"id":11,"obj":"switch","x":0,"y":60,"w":60,"h":30}
+{"id":12,"obj":"switch","x":80,"y":60,"w":60,"h":30,"toggle":true}
+{"id":13,"obj":"switch","x":160,"y":60,"w":60,"h":30,"enabled":false}
+{"id":14,"obj":"switch","x":240,"y":60,"w":60,"h":30,"toggle":true,"enabled":false}
 
-{"id":21,"obj":"switch","x":0,"y":100,"w":130,"h":30,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400","text":"On","text_color":"#FFFF44","text_color01":"#000000"}
-{"id":22,"obj":"switch","x":140,"y":100,"w":130,"h":30,"toggle":true,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400","text":"Off","text_color":"#FFFF44","text_color01":"#000000"}
+{"id":21,"obj":"switch","x":0,"y":100,"w":130,"h":30,"text":"On"}
+{"id":22,"obj":"switch","x":140,"y":100,"w":130,"h":30,"toggle":true,"text":"Off"}
 ```
 
 Attribute name|LVGL equivalent|Details
@@ -449,10 +448,10 @@ Example:
 ![HASPmota checkbox](_media/lvgl/HASPmota_06.png)
 
 ```json
-{"id":11,"obj":"checkbox","x":0,"y":60,"w":60,"h":30,"text":"","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
-{"id":12,"obj":"checkbox","x":80,"y":60,"w":60,"h":30,"toggle":true,"text":"","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
-{"id":13,"obj":"checkbox","x":160,"y":60,"w":60,"h":30,"text":"","enabled":false,"border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
-{"id":14,"obj":"checkbox","x":240,"y":60,"w":60,"h":30,"text":"","toggle":true,"enabled":false,"border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
+{"id":11,"obj":"checkbox","x":0,"y":60,"w":60,"h":30,"text":""}
+{"id":12,"obj":"checkbox","x":80,"y":60,"w":60,"h":30,"toggle":true,"text":""}
+{"id":13,"obj":"checkbox","x":160,"y":60,"w":60,"h":30,"text":"","enabled":false}
+{"id":14,"obj":"checkbox","x":240,"y":60,"w":60,"h":30,"text":"","toggle":true,"enabled":false}
 ```
 
 Attribute name|Details
@@ -470,9 +469,9 @@ Example:
 ![HASPmota slider](_media/lvgl/HASPmota_14.png)
 
 ```json
-{"id":11,"obj":"slider","x":0,"y":60,"w":100,"h":10,"bg_color":"#FFFF88","bg_color10":"#FFFF88","bg_color20":"#FF4400","val":65}
-{"id":12,"obj":"slider","x":0,"y":90,"w":180,"h":20,"bg_color":"#4F4F4F","bg_color10":"#00FF00","bg_color20":"#FF4400","val":40,"bg_opa":255,"border_color":"#FFFF88","border_width":2,"pad_all":6,"radius":6}
-{"id":13,"obj":"slider","x":0,"y":120,"w":180,"h":15,"bg_color":"#4F4F4F","bg_opa":255,"bg_color10":"#4444FF","bg_color20":"#FF4400","val":26,"min":-20,"max":30,"bg_grad_color10":"#FF4400","bg_grad_dir10":2}
+{"id":11,"obj":"slider","x":0,"y":60,"w":100,"h":10,"val":65}
+{"id":12,"obj":"slider","x":0,"y":90,"w":180,"h":20,"bg_color":"#000044","bg_color10":"#00FF00","bg_color20":"#FFFFFF","val":40,"bg_opa":255,"border_color":"#1FA3EC","border_width":2,"pad_all":6,"radius":6}
+{"id":13,"obj":"slider","x":0,"y":130,"w":180,"h":15,"bg_color":"#4F4F4F","bg_opa":255,"bg_color10":"#00FF00","bg_color20":"#FFFFFF","val":26,"min":-20,"max":30,"bg_grad_color10":"#FF4400","bg_grad_dir10":2}
 ```
 
 Attribute name|LVGL equivalent|Details
@@ -495,7 +494,7 @@ Example:
 ![HASPmota bar](_media/lvgl/HASPmota_08.png)
 
 ```json
-{"id":11,"obj":"bar","x":0,"y":60,"w":100,"h":10,"bg_color":"#FFFF88","bg_color10":"#FFFF88","val":65}
+{"id":11,"obj":"bar","x":0,"y":60,"w":100,"h":10,"val":65}
 {"id":12,"obj":"bar","x":0,"y":90,"w":180,"h":20,"bg_color":"#4F4F4F","bg_color10":"#00FF00","val":40,"bg_opa":255,"border_color":"#FFFF88","border_width":2,"pad_all":6,"radius":6}
 {"id":13,"obj":"bar","x":0,"y":120,"w":180,"h":15,"bg_color":"#4F4F4F","bg_opa":255,"bg_color10":"#4444FF","val":26,"min":-20,"max":30,"bg_grad_color10":"#FF4400","bg_grad_dir10":2}
 ```
@@ -519,24 +518,24 @@ Example:
 ![HASPmota scale 1](_media/lvgl/HASPmota_16.png)
 
 ```json
-{"id":11,"obj":"scale","x":10,"y":60,"w":200,"h":30,"min":10,"max":40,"total_tick_count":31,"major_tick_every":5,"label_show":true,"line_color":"#FFFF88","line_color10":"#00FF00","line_color30":"#00FF00","line_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5,"pad_top":10}
-  {"id":12,"obj":"bar","parentid":11,"y":-8,"w%":100,"h":6,"radius":0,"radius10":0,"bg_color":"#4F4F4F","bg_color10":"#FFFF88","val":27}
+{"id":11,"obj":"scale","x":10,"y":60,"w":200,"h":30,"min":10,"max":40,"total_tick_count":31,"major_tick_every":5,"label_show":true,"line_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5,"pad_top":10}
+  {"id":12,"obj":"bar","parentid":11,"y":-8,"w%":100,"h":6,"val":27}
 
-{"id":22,"obj":"scale","x":240,"y":35,"w":74,"h":140,"min":0,"max":100,"mode":4,"total_tick_count":21,"major_tick_every":5,"label_show":true,"line_color":"#4444FF","line_color10":"#4444FF","line_color30":"#AAAAFF","line_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5,"text_src":["0 °C", "25 °C", "50 °C", "75 °C", "100 °C"],"bg_color":"#607D8B","bg_opa":127,"pad_left":16,"radius":8,"pad_ver":12}
+{"id":22,"obj":"scale","x":240,"y":35,"w":74,"h":140,"min":0,"max":100,"mode":4,"total_tick_count":21,"major_tick_every":5,"label_show":true,"line_color":"#4444FF","line_color10":"#4444FF","line_color30":"#AAAAFF","line_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5,"text_src":["0 °C", "25 °C", "50 °C", "75 °C", "100 °C"],"bg_color":"#000044","bg_opa":127,"pad_left":16,"radius":8,"pad_ver":12}
   {"id":23,"obj":"scale_section","parentid":22,"min":75,"max":100,"line_color":"#FF4400","line_width":3,"line_color10":"#FF4400","line_width10":4,"text_color10":"#FF4400","line_color30":"#FF4400","line_width30":3}
-  {"id":24,"obj":"bar","parentid":22,"x":-10,"h%":100,"w":6,"radius":0,"radius10":0,"bg_color":"#4F4F4F","bg_color10":"#AAAAFF","val":27}
+  {"id":24,"obj":"bar","parentid":22,"x":-10,"h%":100,"w":6,"radius":0,"radius10":0,"bg_color":"#4F4F4F","bg_color10":"#FFFFFF","val":27}
 ```
 
 ![HASPmota scale 2](_media/lvgl/HASPmota_17.png)
 
 ```json
-{"id":21,"obj":"scale","x":10,"y":60,"w":120,"h":120,"min":10,"max":40,"mode":8,"bg_opa":255,"bg_color":"#662222","radius":32767,"clip_corner":true,"label_show":true,"total_tick_count":31,"major_tick_every":5,"length10":10,"length30":5,"angle_range":270,"rotation":135,"arc_color":"#FFFF88","line_color10":"#FFFF88","line_color30":"#FFFF88","arc_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5}
+{"id":21,"obj":"scale","x":10,"y":60,"w":120,"h":120,"min":10,"max":40,"mode":8,"bg_opa":255,"radius":32767,"clip_corner":true,"label_show":true,"total_tick_count":31,"major_tick_every":5,"length10":10,"length30":5,"angle_range":270,"rotation":135,"arc_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5}
   {"id":22,"obj":"scale_line","parentid":21,"line_color":"#00FF00","line_width":4,"line_rounded":true,"needle_length":50,"val":22}
   {"id":23,"obj":"scale_line","parentid":21,"line_color":"#FF4400","line_width":6,"line_rounded":true,"needle_length":30,"val":33}
 
 {"id":31,"obj":"scale","x":180,"y":80,"w":80,"h":80,"min":0,"max":100,"mode":16,"bg_opa":0,"label_show":true,"total_tick_count":21,"major_tick_every":5,"text_src":["0 °C", "25 °C", "50 °C", "75 °C", "100 °C"],"arc_color":"#4444FF","line_color10":"#4444FF","line_color30":"#AAAAFF","text_color":"#AAAAFF","arc_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5}
   {"id":32,"obj":"scale_section","parentid":31,"min":75,"max":100,"arc_color":"#FF4400","arc_width":3,"line_color10":"#FF4400","line_width10":4,"text_color10":"#FF4400","line_color30":"#FF4400","line_width30":3}
-  {"id":33,"obj":"scale_line","parentid":31,"line_color":"#AAAAFF","line_width":10,"line_rounded":true,"needle_length":30,"val":37}
+  {"id":33,"obj":"scale_line","parentid":31,"line_color":"#1FA3EC","line_width":10,"line_rounded":true,"needle_length":30,"val":37}
 ```
 
 Note: there is no current `val` on the scale object. It must be done with a second `bar` object for linear scale or with a `scale_meter` sub-object for circular scale.
@@ -609,8 +608,8 @@ Example:
 ![HASPmota arc](_media/lvgl/HASPmota_15.png)
 
 ```json
-{"id":11,"obj":"arc","x":10,"y":60,"w":100,"h":100,"arc_color10":"#FFFF88","bg_color20":"#FF4400","min":-20,"max":40,"val":26,"text":"76%","label_to_angle":-20}
-{"id":12,"obj":"arc","x":150,"y":60,"w":100,"h":120,"arc_color10":"#00FF00","bg_color20":"#FF4400","val":65,"text":"Nominal","angle":-40,"border_width20":4,"border_color20":"#FFFFFF","end_angle":310}
+{"id":11,"obj":"arc","x":10,"y":60,"w":100,"h":100,"min":-20,"max":40,"val":26,"text":"76%","label_to_angle":-20}
+{"id":12,"obj":"arc","x":150,"y":60,"w":100,"h":120,"arc_color10":"#00FF00","bg_color20":"#00FF00","val":65,"text":"Nominal","angle":-40,"border_width20":3,"border_color20":"#FFFFFF","end_angle":310}
 ```
 
 Attribute name|LVGL equivalent|Details
@@ -675,7 +674,7 @@ Example:
 ![HASPmota roller](_media/lvgl/HASPmota_12.png)
 
 ```json
-{"id":11,"obj":"roller","x":10,"y":55,"options":"Option 1\nOption 2\nOption 3\nOption 4","val":1,"bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#000000","border_color":"#FFFF88"}
+{"id":11,"obj":"roller","x":10,"y":55,"options":"Option 1\nOption 2\nOption 3\nOption 4","val":1}
 ```
 
 Attribute name|LVGL equivalent|Details
@@ -694,8 +693,8 @@ Example:
 ![HASPmota dropdown](_media/lvgl/HASPmota_19.png)
 
 ```json
-{"id":11,"obj":"dropdown","x":10,"y":55,"direction":3,"options":"Option 1\nOption 2\nOption 3\nOption 4","val":1,"bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#FFFF88","border_color":"#FFFF88"}
-  {"id":12,"obj":"dropdown_list","parentid":11,"h":90,"text_color":"#EAEAEA","bg_color51":"#FF4400"}
+{"id":11,"obj":"dropdown","x":10,"y":55,"direction":3,"options":"Option 1\nOption 2\nOption 3\nOption 4","val":1}
+  {"id":12,"obj":"dropdown_list","parentid":11,"h":90}
 ```
 
 Attribute name|Details
@@ -723,7 +722,7 @@ Example:
 ![HASPmota spinner](_media/lvgl/HASPmota_18.png)
 
 ```json
-{"id":11,"obj":"spinner","x":10,"y":60,"w":100,"h":100,"angle":200,"speed":5000,"arc_color":"#4F4F4F","arc_color10":"#FFFF88"}
+{"id":11,"obj":"spinner","x":10,"y":60,"w":100,"h":100,"angle":200,"speed":5000,"arc_color":"#000044","arc_color10":"#1FA3EC"}
 ```
 
 Attribute name|LVGL equivalent|Details
@@ -740,7 +739,7 @@ Example:
 Example from `pages.jsonl`:
 
 ```json
-{"id":11,"obj":"btnmatrix","x":5,"y":60,"w":310,"h":125,"bg_color":"#4F4F4F","options":["1","2","3","4","5","\n","6","7","8","9","0","\n","Action1","Action2",""],"border_color30":"#FFFF88","border_width30":2,"bg_color30":"#4F4F4F","text_color30":"#FFFF88","border_color":"#4F4F4F"}
+{"id":11,"obj":"btnmatrix","x":5,"y":60,"w":310,"h":125,"bg_color":"#000044","options":["1","2","3","4","5","\n","6","7","8","9","0","\n","Action1","Action2"],"border_color30":"#1FA3EC","border_width30":2,"bg_color30":"#000044","text_color30":"#FFFFFF","border_color":"#000044"}
 ```
 
 Attribute name|LVGL equivalent|Details
@@ -801,7 +800,7 @@ Example:
 Example from `pages.jsonl`:
 
 ```json
-{"id":11,"obj":"line","x":0,"y":60,"w":100,"h":50,"line_color":"#FFFF88","line_width":3,"points":[[0,0],[30,40],[65,15],[90,50]]}
+{"id":11,"obj":"line","x":0,"y":60,"w":100,"h":50,"line_width":3,"points":[[0,0],[30,40],[65,15],[90,50]]}
 {"id":12,"obj":"line","x":120,"y":60,"w":100,"h":50,"line_color":"#00FF00","line_width":5,"points":[[0,0],[30,40],[65,15],[90,50]],"y_invert":true,"line_rounded":true}
 ```
 
@@ -821,7 +820,7 @@ The `chart` object allows to track values over time and show them in a graph.
 
 Example of `pages.jsonl`:
 ```json
-{"page":10,"id":10,"obj":"chart","x":10,"y":60,"w":230,"h":120,"bg_color":"#440000","border_color":"#FFFF44","bg_opa":100,"border_color":"#0099EE","border_width":1,"radius":0,"pad_all":2,"y_min":0,"y_max":50,"point_count":50,"height10":0,"width10":0,"v_div_line_count":0,"h_div_line_count":5,"line_color":"#555555","line_width30":3}
+{"page":10,"id":10,"obj":"chart","x":10,"y":60,"w":230,"h":120,"pad_all":2,"y_min":0,"y_max":50,"point_count":50,"height10":0,"width10":0,"v_div_line_count":0,"h_div_line_count":5,"line_color":"#555555","line_width30":3}
 
 {"comment":"--- Add random values to chart every second ---","berry_run":"tasmota.add_cron('*/1 * * * * *', def () import math var val = math.rand() % 50 global.p10b10.val = val val = math.rand() % 50 global.p10b10.val2 = val end, 'hm_every_1_s_chart')"}
 ```
@@ -884,7 +883,7 @@ The `spangroup` object is equivalent to HTML `<span>` and allows to have a text 
 Example:
 
 ```json
-{"id":11,"obj":"spangroup","x":0,"y":60,"w":300,"h":115,"text_font":"robotocondensed-16","bg_color":"#000088","bg_opa":255}
+{"id":11,"obj":"spangroup","x":0,"y":60,"w":300,"h":115,"text_font":"robotocondensed-16","bg_color":"#000044","bg_opa":255}
   {"id":12,"obj":"span","parentid":11,"text":"This is "}
   {"id":13,"obj":"span","parentid":11,"text":"RED","text_color":"#FF0000","text_font":"montserrat-28"}
   {"id":14,"obj":"span","parentid":11,"text":" and this is "}
@@ -928,14 +927,14 @@ The `tabview` can be used to organize content in tabs.
 Example:
 
 ```json
-{"id":10,"obj":"tabview","x%":5,"y":60,"h%":55,"w%":90,"tab_bar_size":40,"btn_pos":1,"bg_color":"#222222","border_width":2,"border_color":"#FFFF44","val":2}
-  {"id":51,"obj":"tab","parentid":10,"text":"Tab 1","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
-  {"id":52,"obj":"tab","parentid":10,"text":"Tab 2","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
-  {"id":53,"obj":"tab","parentid":10,"text":"Tab 3","tab_bg_color":"#000000","tab_bg_color01":"#FF4400","tab_text_color":"#FFFF44","tab_text_color01":"#FFFFFF","tab_border_color":"#FFFF44","tab_border_side":1,"tab_border_width":0,"tab_border_width01":3}
-    {"id":61,"obj":"switch","x":20,"y":10,"w":60,"h":30,"parentid":51,"radius":25,"radius20":25,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
-    {"id":71,"obj":"dropdown","x":15,"y":10,"w":110,"h":30,"parentid":52,"options":"Apple\nBanana\nOrange\nMelon","bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#FFFF88","border_color":"#FFFF88"}
-      {"id":72,"obj":"dropdown_list","parentid":71,"text_color":"#EAEAEA","bg_color51":"#FF4400"}
-    {"id":81,"obj":"checkbox","x":15,"y":10,"w":120,"h":30,"parentid":53,"text":" Nice tabview","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400","text_color":"#FFFF44"}
+{"id":10,"obj":"tabview","x%":5,"y":60,"h%":55,"w%":90,"tab_bar_size":40,"btn_pos":1,"val":2}
+  {"id":51,"obj":"tab","parentid":10,"text":"Tab 1"}
+  {"id":52,"obj":"tab","parentid":10,"text":"Tab 2"}
+  {"id":53,"obj":"tab","parentid":10,"text":"Tab 3"}
+    {"id":61,"obj":"switch","x":20,"y":10,"w":60,"h":30,"parentid":51,"radius":25,"radius20":25}
+    {"id":71,"obj":"dropdown","x":15,"y":10,"w":110,"h":30,"parentid":52,"options":"Apple\nBanana\nOrange\nMelon"}
+      {"id":72,"obj":"dropdown_list","parentid":71}
+    {"id":81,"obj":"checkbox","x":15,"y":10,"w":150,"h":30,"parentid":53,"text":"Nice tabview"}
 ```
 
 You must first define a `tabview` object, and add as many as `tab` sub-objects. You need to define the `parentid` attribute to the `tabview`. Sub-objects are then placed within each `tab` as long as you define `parentid` to the `tab`.
@@ -968,7 +967,7 @@ The `msgbox` (message box) object allows to display a pop-up with a text content
 
 Example of `pages.jsonl`:
 ```json
-{"id":10,"obj":"msgbox","x":0,"y":0,"w%":80,"h":100,"text":"A message box with two buttons.","border_color":"#FF4400","bg_color":"#4f4f4f","bg_opa":200,"buttons_bg_color":"#FF4400","buttons_border_width":3,"buttons_border_color":"#FFFFFF","text_color":"#FFFFFF","options":["Apply","Close"]}
+{"id":10,"obj":"msgbox","x":0,"y":0,"w%":80,"h":100,"text":"A message box with two buttons.","options":["Apply","Close"]}
 ```
 
 Attribute name|LVGL equivalent|Details
@@ -990,7 +989,7 @@ Example:
 ![HASPmota qrcode](_media/lvgl/HASPmota_13.png)
 
 ```json
-{"id":11,"obj":"qrcode","qr_text":"https://tasmota.github.io/","x":85,"y":55,"qr_size":120,"qr_light_color":"#FFFF88","qr_dark_color":"#4F4F4F"}
+{"id":11,"obj":"qrcode","qr_text":"https://tasmota.github.io/","x":85,"y":55,"qr_size":120}
 ```
 
 Attribute name|LVGL equivalent|Details
