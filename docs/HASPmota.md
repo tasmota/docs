@@ -34,31 +34,31 @@ haspmota.start("my_template.jsonl")
 
 ## Gallery of widgets
 
-[![HASPmota label](_media/lvgl/HASPmota_1_instructions.png){width="160"}](#label)
-[![HASPmota spangroup](_media/lvgl/HASPmota_2_spangroup.png){width="160"}](#spangroup-styled-text)
-[![HASPmota btn](_media/lvgl/HASPmota_3_btn.png){width="160"}](#btn)
-[![HASPmota led](_media/lvgl/HASPmota_4_led.png){width="160"}](#led)
-[![HASPmota switch](_media/lvgl/HASPmota_5_switch.png){width="160"}](#switch)
-[![HASPmota checkbox](_media/lvgl/HASPmota_6_checkbox.png){width="160"}](#checkbox)
-[![HASPmota line](_media/lvgl/HASPmota_7_line.png){width="160"}](#line)
-[![HASPmota bar](_media/lvgl/HASPmota_8_bar.png){width="160"}](#bar)
-[![HASPmota btnmatrix](_media/lvgl/HASPmota_9_btnmatrix.png){width="160"}](#btnmatrix)
-[![HASPmota chart](_media/lvgl/HASPmota_10_chart.png){width="160"}](#chart)
-[![HASPmota image](_media/lvgl/HASPmota_11_img.png){width="160"}](#img)
-[![HASPmota roller](_media/lvgl/HASPmota_12_roller.png){width="160"}](#roller)
-[![HASPmota qrcode](_media/lvgl/HASPmota_13_qrcode.png){width="160"}](#qrcode)
-[![HASPmota slider](_media/lvgl/HASPmota_14_slider.png){width="160"}](#slider)
-[![HASPmota arc](_media/lvgl/HASPmota_15_arc.png){width="160"}](#arc)
-[![HASPmota scale 1](_media/lvgl/HASPmota_16_scale.png){width="160"}](#scale-scale_section-scale_line)
-[![HASPmota scale 2](_media/lvgl/HASPmota_17_scale.png){width="160"}](#scale-scale_section-scale_line)
-[![HASPmota spinner](_media/lvgl/HASPmota_18_spinner.png){width="160"}](#spinner)
-[![HASPmota dropdown](_media/lvgl/HASPmota_19_dropdown.png){width="160"}](#dropdown-and-dropdown_list)
-[![HASPmota fonts](_media/lvgl/HASPmota_20_fonts.png){width="160"}](#embedded-fonts)
-[![HASPmota icons](_media/lvgl/HASPmota_21_icons.png){width="160"}](#embedded-symbols)
-[![HASPmota seg7](_media/lvgl/HASPmota_22_seg7.png){width="160"}](#embedded-special-fonts)
-[![HASPmota msgbox](_media/lvgl/HASPmota_23_msgbox.png){width="160"}](#msgbox)
-[![HASPmota cpicker](_media/lvgl/HASPmota_24_cpicker.png){width="160"}](#cpicker)
-[![HASPmota tabview](_media/lvgl/HASPmota_25_tabview.png){width="160"}](#tabview)
+[![HASPmota label](_media/lvgl/HASPmota_01.png){width="160"}](#label)
+[![HASPmota spangroup](_media/lvgl/HASPmota_02.png){width="160"}](#spangroup-styled-text)
+[![HASPmota btn](_media/lvgl/HASPmota_03.png){width="160"}](#btn)
+[![HASPmota led](_media/lvgl/HASPmota_04.png){width="160"}](#led)
+[![HASPmota switch](_media/lvgl/HASPmota_05.png){width="160"}](#switch)
+[![HASPmota checkbox](_media/lvgl/HASPmota_06.png){width="160"}](#checkbox)
+[![HASPmota line](_media/lvgl/HASPmota_07.png){width="160"}](#line)
+[![HASPmota bar](_media/lvgl/HASPmota_08.png){width="160"}](#bar)
+[![HASPmota btnmatrix](_media/lvgl/HASPmota_09.png){width="160"}](#btnmatrix)
+[![HASPmota chart](_media/lvgl/HASPmota_10.png){width="160"}](#chart)
+[![HASPmota image](_media/lvgl/HASPmota_11.png){width="160"}](#img)
+[![HASPmota roller](_media/lvgl/HASPmota_12.png){width="160"}](#roller)
+[![HASPmota qrcode](_media/lvgl/HASPmota_13.png){width="160"}](#qrcode)
+[![HASPmota slider](_media/lvgl/HASPmota_14.png){width="160"}](#slider)
+[![HASPmota arc](_media/lvgl/HASPmota_15.png){width="160"}](#arc)
+[![HASPmota scale 1](_media/lvgl/HASPmota_16.png){width="160"}](#scale-scale_section-scale_line)
+[![HASPmota scale 2](_media/lvgl/HASPmota_17.png){width="160"}](#scale-scale_section-scale_line)
+[![HASPmota spinner](_media/lvgl/HASPmota_18.png){width="160"}](#spinner)
+[![HASPmota dropdown](_media/lvgl/HASPmota_19.png){width="160"}](#dropdown-and-dropdown_list)
+[![HASPmota fonts](_media/lvgl/HASPmota_20.png){width="160"}](#embedded-fonts)
+[![HASPmota icons](_media/lvgl/HASPmota_21.png){width="160"}](#embedded-symbols)
+[![HASPmota seg7](_media/lvgl/HASPmota_22.png){width="160"}](#embedded-special-fonts)
+[![HASPmota msgbox](_media/lvgl/HASPmota_23.png){width="160"}](#msgbox)
+[![HASPmota cpicker](_media/lvgl/HASPmota_24.png){width="160"}](#cpicker)
+[![HASPmota tabview](_media/lvgl/HASPmota_25.png){width="160"}](#tabview)
 
 
 The `jsonl` file used to display the widgets can be found [widget demo JSONL file](_media/lvgl/haspmota_demo.jsonl)
@@ -394,7 +394,7 @@ It can be used as an alternative to `flex` above as a container used in flex lay
 
 Example:
 
-![HASPmota label](_media/lvgl/HASPmota_1_instructions.png)
+![HASPmota label](_media/lvgl/HASPmota_01.png)
 
 ```json
 {"id":10,"obj":"label","x":0,"y":30,"w":240,"h":24,"text":"[1. Instructions]","text_font":"montserrat-20"}
@@ -406,7 +406,7 @@ Attributes are all related to [text](#attributes-related-to-text-content) conten
 
 Example:
 
-![HASPmota btn](_media/lvgl/HASPmota_3_btn.png)
+![HASPmota btn](_media/lvgl/HASPmota_03.png)
 
 ```json
 {"id":11,"obj":"btn","x":0,"y":60,"w":80,"h":30,"bg_color":"#4f4f4f","text_color":"#FFFF44","radius":10,"text":"Disabled","border_width":3,"border_side":15,"border_color":"#FFFF44","border_opa":210,"enabled":false}
@@ -420,7 +420,7 @@ Example:
 
 Example:
 
-![HASPmota switch](_media/lvgl/HASPmota_5_switch.png)
+![HASPmota switch](_media/lvgl/HASPmota_05.png)
 
 ```json
 {"id":11,"obj":"switch","x":0,"y":60,"w":60,"h":30,"bg_color":"#4f4f4f","bg_color20":"#FFFF88","bg_color11":"#FF4400"}
@@ -446,7 +446,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota checkbox](_media/lvgl/HASPmota_6_checkbox.png)
+![HASPmota checkbox](_media/lvgl/HASPmota_06.png)
 
 ```json
 {"id":11,"obj":"checkbox","x":0,"y":60,"w":60,"h":30,"text":"","border_color10":"#FFFF88","bg_color10":"#4F4F4F","bg_color11":"#FF4400"}
@@ -467,7 +467,7 @@ Attribute name|Details
 
 Example:
 
-![HASPmota slider](_media/lvgl/HASPmota_14_slider.png)
+![HASPmota slider](_media/lvgl/HASPmota_14.png)
 
 ```json
 {"id":11,"obj":"slider","x":0,"y":60,"w":100,"h":10,"bg_color":"#FFFF88","bg_color10":"#FFFF88","bg_color20":"#FF4400","val":65}
@@ -492,7 +492,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota bar](_media/lvgl/HASPmota_8_bar.png)
+![HASPmota bar](_media/lvgl/HASPmota_08.png)
 
 ```json
 {"id":11,"obj":"bar","x":0,"y":60,"w":100,"h":10,"bg_color":"#FFFF88","bg_color10":"#FFFF88","val":65}
@@ -516,7 +516,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota scale 1](_media/lvgl/HASPmota_16_scale.png)
+![HASPmota scale 1](_media/lvgl/HASPmota_16.png)
 
 ```json
 {"id":11,"obj":"scale","x":10,"y":60,"w":200,"h":30,"min":10,"max":40,"total_tick_count":31,"major_tick_every":5,"label_show":true,"line_color":"#FFFF88","line_color10":"#00FF00","line_color30":"#00FF00","line_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5,"pad_top":10}
@@ -527,7 +527,7 @@ Example:
   {"id":24,"obj":"bar","parentid":22,"x":-10,"h%":100,"w":6,"radius":0,"radius10":0,"bg_color":"#4F4F4F","bg_color10":"#AAAAFF","val":27}
 ```
 
-![HASPmota scale 2](_media/lvgl/HASPmota_17_scale.png)
+![HASPmota scale 2](_media/lvgl/HASPmota_17.png)
 
 ```json
 {"id":21,"obj":"scale","x":10,"y":60,"w":120,"h":120,"min":10,"max":40,"mode":8,"bg_opa":255,"bg_color":"#662222","radius":32767,"clip_corner":true,"label_show":true,"total_tick_count":31,"major_tick_every":5,"length10":10,"length30":5,"angle_range":270,"rotation":135,"arc_color":"#FFFF88","line_color10":"#FFFF88","line_color30":"#FFFF88","arc_width":2,"line_width10":2,"line_width30":2,"length10":10,"length30":5}
@@ -606,7 +606,7 @@ For linear scales, you can just use a `bar` sub-object. It inherits `min` and `m
 
 Example:
 
-![HASPmota arc](_media/lvgl/HASPmota_15_arc.png)
+![HASPmota arc](_media/lvgl/HASPmota_15.png)
 
 ```json
 {"id":11,"obj":"arc","x":10,"y":60,"w":100,"h":100,"arc_color10":"#FFFF88","bg_color20":"#FF4400","min":-20,"max":40,"val":26,"text":"76%","label_to_angle":-20}
@@ -638,7 +638,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota image](_media/lvgl/HASPmota_11_img.png)
+![HASPmota image](_media/lvgl/HASPmota_11.png)
 
 ```json
 {"id":11,"obj":"img","x":10,"y":60,"raw":"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"}
@@ -672,7 +672,7 @@ f.close()
 
 Example:
 
-![HASPmota roller](_media/lvgl/HASPmota_12_roller.png)
+![HASPmota roller](_media/lvgl/HASPmota_12.png)
 
 ```json
 {"id":11,"obj":"roller","x":10,"y":55,"options":"Option 1\nOption 2\nOption 3\nOption 4","val":1,"bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#000000","border_color":"#FFFF88"}
@@ -691,7 +691,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota dropdown](_media/lvgl/HASPmota_19_dropdown.png)
+![HASPmota dropdown](_media/lvgl/HASPmota_19.png)
 
 ```json
 {"id":11,"obj":"dropdown","x":10,"y":55,"direction":3,"options":"Option 1\nOption 2\nOption 3\nOption 4","val":1,"bg_color50":"#FF4400","text_color":"#FFFF88","text_color50":"#FFFF88","border_color":"#FFFF88"}
@@ -720,7 +720,7 @@ Attribute name|Details
 
 Example:
 
-![HASPmota spinner](_media/lvgl/HASPmota_18_spinner.png)
+![HASPmota spinner](_media/lvgl/HASPmota_18.png)
 
 ```json
 {"id":11,"obj":"spinner","x":10,"y":60,"w":100,"h":100,"angle":200,"speed":5000,"arc_color":"#4F4F4F","arc_color10":"#FFFF88"}
@@ -735,7 +735,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota btnmatrix](_media/lvgl/HASPmota_9_btnmatrix.png)
+![HASPmota btnmatrix](_media/lvgl/HASPmota_09.png)
 
 Example from `pages.jsonl`:
 
@@ -769,7 +769,7 @@ xx:xx:25.737 {'hasp': {'p9b11_0': {'event': 'up'}}}
 
 Example:
 
-![HASPmota led](_media/lvgl/HASPmota_4_led.png)
+![HASPmota led](_media/lvgl/HASPmota_04.png)
 
 Example from `pages.jsonl`:
 
@@ -796,7 +796,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota line](_media/lvgl/HASPmota_7_line.png)
+![HASPmota line](_media/lvgl/HASPmota_07.png)
 
 Example from `pages.jsonl`:
 
@@ -817,7 +817,7 @@ Attribute name|LVGL equivalent|Details
 
 The `chart` object allows to track values over time and show them in a graph.
 
-![HASPmota chart](_media/lvgl/HASPmota_10_chart.png)
+![HASPmota chart](_media/lvgl/HASPmota_10.png)
 
 Example of `pages.jsonl`:
 ```json
@@ -858,7 +858,7 @@ Attribute name|LVGL equivalent|Details
 
 The `cpicker` (color picker) object allows to select a color, encoded as `#RRGGBB` where RR/GG/BB are Hex values for Red/Green/Blue. Color Picker has 3 modes: "hue", "saturation", "value"; use long press to change mode.
 
-![HASPmota cpicker](_media/lvgl/HASPmota_24_cpicker.png)
+![HASPmota cpicker](_media/lvgl/HASPmota_24.png)
 
 Example of `pages.jsonl`:
 ```json
@@ -879,7 +879,7 @@ Attribute name|LVGL equivalent|Details
 
 The `spangroup` object is equivalent to HTML `<span>` and allows to have a text area composed of multiple fragments, each fragment with its own style, size, font, color...
 
-![HASPmota spangroup](_media/lvgl/HASPmota_2_spangroup.png)
+![HASPmota spangroup](_media/lvgl/HASPmota_02.png)
 
 Example:
 
@@ -923,7 +923,7 @@ Attribute name|LVGL equivalent|Details
 
 The `tabview` can be used to organize content in tabs.
 
-![HASPmota tabview](_media/lvgl/HASPmota_25_tabview.png)
+![HASPmota tabview](_media/lvgl/HASPmota_25.png)
 
 Example:
 
@@ -964,7 +964,7 @@ You must first define a `tabview` object, and add as many as `tab` sub-objects. 
 
 The `msgbox` (message box) object allows to display a pop-up with a text content and one or multiple buttons. The pop-up can be made "modal" (not impemented yet).
 
-![HASPmota msgbox](_media/lvgl/HASPmota_23_msgbox.png)
+![HASPmota msgbox](_media/lvgl/HASPmota_23.png)
 
 Example of `pages.jsonl`:
 ```json
@@ -987,7 +987,7 @@ Attribute name|LVGL equivalent|Details
 
 Example:
 
-![HASPmota qrcode](_media/lvgl/HASPmota_13_qrcode.png)
+![HASPmota qrcode](_media/lvgl/HASPmota_13.png)
 
 ```json
 {"id":11,"obj":"qrcode","qr_text":"https://tasmota.github.io/","x":85,"y":55,"qr_size":120,"qr_light_color":"#FFFF88","qr_dark_color":"#4F4F4F"}
@@ -1129,7 +1129,7 @@ HASPmota can use 3 types of LVGL fonts:
 
 Use attribute like `"text_font":"<font_name>-<font_size>"`. The default is `"text_font":"robotocondensed-16"`
 
-![HASPmota fonts](_media/lvgl/HASPmota_20_fonts.png)
+![HASPmota fonts](_media/lvgl/HASPmota_20.png)
 
 Embedded font|Details
 :---|:---
@@ -1142,7 +1142,7 @@ Embedded font|Details
 
 HASPmota combines icons from LVGL and from OpenHASP.
 
-![HASPmota icons](_media/lvgl/HASPmota_21_icons.png)
+![HASPmota icons](_media/lvgl/HASPmota_21.png)
 
 You can use the following icons fonts:
 
@@ -1160,7 +1160,7 @@ Embedded font|Details
 
 The font `seg7` is used to look like 7-segment display. To improve readability, sizes up to 20 are straight, and sizes above 24 are slightly italic.
 
-![HASPmota seg7](_media/lvgl/HASPmota_22_seg7.png)
+![HASPmota seg7](_media/lvgl/HASPmota_22.png)
 
 Embedded font|Details
 :---|:---
