@@ -2,9 +2,11 @@ DeepSleep support for up to 10 years (i.e., 86,400 seconds = 1 day) (e.g., if us
 
 ![](_media/deepsleep_minimal.png)
 
-In order for the device to wake itself to perform its function during the DeepSleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST. When connected to RST for DeepSleep purpose, GPIO16 may not be used for other functions. As such, it is recommended to leave it configured as `None (0)`. *On the diagram, black denotes existing parts and connections on a standard ESP board (mini-D1, NodeMCU, ...). Red denotes what is added to the DeepSleep feature.*
+For ESP8266, in order for the device to wake itself to perform its function during the DeepSleep cycle, the RST pin must be connected to the D0/GPIO16 pin. This is the only pin which can perform this function as the wake-up signal is sent from the RTC through D0/GPIO16 to RST. When connected to RST for DeepSleep purpose, GPIO16 may not be used for other functions. As such, it is recommended to leave it configured as `None (0)`. *On the diagram, black denotes existing parts and connections on a standard ESP board (mini-D1, NodeMCU, ...). Red denotes what is added to the DeepSleep feature.*
 
 ![](_media/deepsleep_gpio16_none.png)
+
+With ESP32, you need no connection to RST, and GPIO16 has no special function.
 
 ## DeepSleep modes (regular, time based)
 
