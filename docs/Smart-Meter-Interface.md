@@ -4429,6 +4429,38 @@ The website https://www.smartcircuits.de/wattwaechter-wifi-usb/flashen/ (in Germ
     #
     ```
     
+### Siemens IM-351
+
+This device is used in the grid of Wiener Netze. Insert your Key into the script.
+
+??? summary "View script"
+    ```
+    >D
+	>B
+	=>sensor53 r
+	>M 1
+	+1,3,r,0,9600,SM
+	1,=so3,256
+	1,=so4,KEY
+	1,0209090Cx0UUuu@1,year,,year,0
+	1,0209090Cx2ss@1,month,,month,0
+	1,0209090Cx3ss@1,day,,day,0
+	;1,0209090Cx4ss@1,weekday,,weekday,0
+	1,0209090Cx5ss@1,hh,,hh,0
+	1,0209090Cx6ss@1,mm,,mm,0
+	1,0209090Cx7ss@1,ss,,ss,0
+	1,0209090Cx13UUuuUUuu@1000,Zaehlerstand,kWh,Zaehlerstand,3
+	1,0209090Cx18UUuuUUuu@1000,Einspeisung,kWh,Einspeisung,3
+	1,0209090Cx23UUuuUUuu@1000,Blindenergie,kvarh,Blindenergie,3
+	1,0209090Cx28UUuuUUuu@1000,Blindenergie Einsp,kvarh,Blindenergie Einsp,3
+	; Letzter Paramater (Precision) = add 16 to send data immediately 0 + 16 = 16
+	1,0209090Cx33UUuuUUuu@1,Momentanleistung,W,Momentanleistung,16
+	1,0209090Cx38UUuuUUuu@1,Einspeiseleistung,W,Einspeiseleistung,0
+	1,0209090Cx43UUuuUUuu@1,Blindleistung,var,Blindleistung,0
+	1,0209090Cx48UUuuUUuu@1,Blindleistung Einsp,var,Blindleistung Einsp,0
+	#
+    ```
+
 ### Siemens TD-3511
 
 This device is used in the grid of EGTF - Elektrizitäts-Genossenschaft Tacherting-Feichten eG. Read uses IEC 62056-21 data mode "C" without acknowledgement by the reading device.
