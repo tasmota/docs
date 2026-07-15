@@ -118,25 +118,32 @@ The four properties with UPPERCASE property names have the following functionali
 Property name | Property value description
 --------------|-----------------------------------------------------------------------------------------------------------
 NAME          | Up to 60 characters for the Module name
-[GPIO](#gpio) | Numbers from 0 to 65535 representing GPIO0 to GPIO5, GPIO09, GPIO10 and GPIO12 to GPIO16 and GPIO17 for A0 pin for ESP8266. ESP32 has more configurable GPIO's
+[GPIO](#gpio) | Numbers from 0 to 65535 representing GPIO0 to 5, GPIO09, GPIO10, GPIO12 to 16, and GPIO17 for A0 pin for ESP8266. And for the ESP32, representing GPIO0 to 5, GPIO09, GPIO10, GPIO12 to 27, GPIO6 to 8, GPIO11 and GPIO32 to 39.
 [FLAG](#flag) | **Deprecated* Replaced with GPIO17. 8 bit mask flag register. 
 [BASE](#base) | Module number of a hard-coded device to be used when device specific functionality is needed
 [CMND](#cmnd) | (Optional) Commands executed after activating the template
 
 ### GPIO
 
-#### GPIO order
+#### GPIO order for ESP8266
 
 ```  
-GPIO# |00| 01|02| 03|04| 05| 09| 10| 12| 13| 14| 15| 16| 17 
-CODE  [416,0,418,0,417,2720,0,0,2624,32,2656,224,0,0] 
+GPIO# |  0| 1|  2|3|  4|   5| 9|10|  12|13|  14| 15|16|17|
+CODE  [416, 0,418,0,417,2720, 0, 0,2624,32,2656,224, 0, 0] 
+```
+
+#### GPIO order for ESP32
+
+```  
+GPIO# |0|   1|2|   3|4|5|9|10|  12|   13|   14|15|16|17|  18|19|20|21|22|  23|24|25|26|27|6|7|8|11| 32| 33|34|35|36|37|38|39|
+CODE  [0,3200,0,3232,0,0,0, 0,5536,10240,10241, 0, 0, 0,5600, 0, 0, 0, 0,5568, 0, 0, 0, 0,0,0,0, 0,608,640, 0, 0, 0, 0, 0, 0] 
 ```
 
 #### GPIO functionality
 The GPIO functionality numbers are the same as shown by command ``GPIOs``. In addition code 1 is added to select a GPIO as user configurable via the GUI Configure Module menu.
 
 !!! example
-    In our example the GPIO 12 data element is `32` which corresponds to the `Button1` component, according to the [components table](Components.md). If you change that template element to `160` it would then be assigned as a `Switch1` component instead.
+    In our example for the ESP8266, the GPIO 12 data element is `32` which corresponds to the `Button1` component, according to the [components table](Components.md). If you change that template element to `160` it would then be assigned as a `Switch1` component instead.
 
 #### Components
 See [Components](Components.md) for a complete list or use command `Gpios 255` in console.
