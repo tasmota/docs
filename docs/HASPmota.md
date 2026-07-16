@@ -875,9 +875,13 @@ Attribute name|LVGL equivalent|Details
 `scale_width`|`arc_width`|(int) Set or read the width of the ring
 `pad_inner`||This attribute is ignored but present for OpenHASP compatibility. Since LVGL 8, there is no inner circle showing the color. There color is shown on the knob instead
 
-### `stripes`~
+### `stripes`
 
 Available since Tasmota v15.6. This object is not part of OpenHASP.
+
+![HASPmota stripes 1](_media/lvgl/HASPmota_26.png)
+![HASPmota stripes 2](_media/lvgl/HASPmota_27.png)
+![HASPmota stripes 3](_media/lvgl/HASPmota_28.png)
 
 The `stripes` object draws a rectangle filled with a repeating pattern of
 straight stripes at an arbitrary angle, on top of the regular background. The
