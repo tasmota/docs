@@ -879,10 +879,6 @@ Attribute name|LVGL equivalent|Details
 
 Available since Tasmota v15.6. This object is not part of OpenHASP.
 
-![HASPmota stripes 1](_media/lvgl/HASPmota_26.png)
-![HASPmota stripes 2](_media/lvgl/HASPmota_27.png)
-![HASPmota stripes 3](_media/lvgl/HASPmota_28.png)
-
 The `stripes` object draws a rectangle filled with a repeating pattern of
 straight stripes at an arbitrary angle, on top of the regular background. The
 background color/opacity, stripe color/opacity, the width of the stripes and of
@@ -895,15 +891,28 @@ corners), and the border is drawn on top of the stripes.
 
 Example:
 
-![HASPmota stripes](https://tasmota.github.io/docs/_media/lvgl/HASPmota_stripes.png)
-
+![HASPmota stripes 1](_media/lvgl/HASPmota_26.png)
 
 ```
-{"id":11,"obj":"stripes","x":10,"y":60,"w":140,"h":75,"radius":8,"bg_color":"#FFFFFF","stripe_color":"#1FA3EC","stripe_width":10,"gap_width":10,"angle":45}
-{"id":12,"obj":"stripes","x":170,"y":60,"w":140,"h":75,"radius":22,"border_side":15,"border_width":4,"border_color":"#FFFFFF","bg_color":"#000044","stripe_color":"#00C853","stripe_opa":230,"stripe_width":12,"gap_width":10,"angle":135}
+{"id":21,"obj":"label","x":10,"y":56,"w":145,"h":14,"text":"0deg  10/10","align":1,"text_font":"montserrat-14"}
+{"id":11,"obj":"stripes","x":10,"y":71,"w":145,"h":50,"radius":6,"border_side":0,"bg_color":"#FFFFFF","stripe_color":"#1FA3EC","stripe_opa":255,"stripe_width":10,"gap_width":10,"angle":0}
+
+{"id":22,"obj":"label","x":165,"y":56,"w":145,"h":14,"text":"45deg  10/10","align":1,"text_font":"montserrat-14"}
+{"id":12,"obj":"stripes","x":165,"y":71,"w":145,"h":50,"radius":6,"border_side":0,"bg_color":"#FFFFFF","stripe_color":"#1FA3EC","stripe_opa":255,"stripe_width":10,"gap_width":10,"angle":45}
+
+{"id":23,"obj":"label","x":10,"y":126,"w":145,"h":14,"text":"45deg  wide 20/6","align":1,"text_font":"montserrat-14"}
+{"id":13,"obj":"stripes","x":10,"y":141,"w":145,"h":50,"radius":6,"border_side":0,"bg_color":"#FFFFFF","stripe_color":"#1FA3EC","stripe_opa":255,"stripe_width":20,"gap_width":6,"angle":45}
+
+{"id":24,"obj":"label","x":165,"y":126,"w":145,"h":14,"text":"45deg  thin 4/16","align":1,"text_font":"montserrat-14"}
+{"id":14,"obj":"stripes","x":165,"y":141,"w":145,"h":50,"radius":6,"border_side":0,"bg_color":"#FFFFFF","stripe_color":"#1FA3EC","stripe_opa":255,"stripe_width":4,"gap_width":16,"angle":45}
 ```
 
-|  |  |
+Other examples:
+
+![HASPmota stripes 2](_media/lvgl/HASPmota_27.png)
+![HASPmota stripes 3](_media/lvgl/HASPmota_28.png)
+
+Attribute name|Details
 |---|---|
 | stripe_color | Color of the stripes, format `#RRGGBB` |
 | stripe_opa | Opacity of the stripes, `0` transparent .. `255` opaque |
@@ -935,9 +944,9 @@ is `280 + 34 = 314`; we use `340` for a comfortable margin.
 
 ```
 {"id":10,"obj":"obj","x":20,"y":80,"w":280,"h":80,"radius":10,"pad_all":0,"bg_color":"#FFD500","bg_opa":255,"border_color":"#000000","border_width":6}
-  {"id":11,"obj":"stripes","parentid":10,"x":0,"y":0,"w":340,"h":80,"bg_color":"#FFD500","stripe_color":"#000000","stripe_width":12,"gap_width":12,"angle":45}
+  {"id":11,"obj":"stripes","parentid":10,"x":0,"y":0,"w":340,"h":80,"bg_color":"#FFD500","stripe_color":"#000000","stripe_opa":255,"stripe_width":12,"gap_width":12,"angle":45}
 
-{"comment":"--- Scroll one period (round(24*sqrt2)=34) then wrap, seamless ---","berry_run":"def warn_scroll() if global.p28b11 var x = global.p28b11.x - 3 if x <= -34 x += 34 end global.p28b11.x = x end tasmota.set_timer(60, warn_scroll) end warn_scroll()"}
+{"comment":"--- Scroll the stripes one horizontal period (round(24*sqrt2)=34) then wrap, seamless ---","berry_run":"def warn_scroll() if global.p28b11 var x = global.p28b11.x - 3 if x <= -34 x += 34 end global.p28b11.x = x end tasmota.set_timer(60, warn_scroll) end warn_scroll()"}
 ```
 
 Note: `clip_corner`, `scrollbar_mode:0` and `border_post` are already the defaults on the `stripes` widget, so you only need to set them explicitly on the outer `obj` container.
