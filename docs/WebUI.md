@@ -7,7 +7,7 @@ To access the WebUI use your device's IP address in your favorite web browser.
 
 By default, WebUI starts in unprotected admin mode which allows complete access to your device to anyone with access to that IP.
 
-If you want to restrict other users to only control through the WebUI, use [`WebServer 1`](Commands.md#webserver).
+If you want to restrict other users to only control through the WebUI, use [`WebServer 1`](Commands.md#webserver). For admin features (including command `WebServer 2` for switching back to WebUI admin mode), you'll need access outside of the browser, typically using MQTT or serial.
 
 Command [`WebPassword`](Commands.md#webpassword) will set up a password that needs to be entered when trying to access WebUI. This is a very thin layer of protection since everything is transmitted over unencrypted HTTP protocol.
  
