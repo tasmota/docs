@@ -1,0 +1,54 @@
+@font-face {
+  font-family: 'icons';
+  src:  url('../fonts/icons.eot?zf8qoi');
+  src:  url('../fonts/icons.eot?zf8qoi#iefix') format('embedded-opentype'),
+    url('../fonts/icons.ttf?zf8qoi') format('truetype'),
+    url('../fonts/icons.woff?zf8qoi') format('woff'),
+    url('../fonts/icons.svg?zf8qoi#icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change ../fonts */
+  font-family: 'icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-bolt:before {
+  content: "\e900";
+}
+.icon-magic:before {
+  content: "\e901";
+}
+.icon-memory:before {
+  content: "\e902";
+}
+.icon-feather-alt:before {
+  content: "\e903";
+}
+.icon-code:before {
+  content: "\e904";
+}
+.icon-running:before {
+  content: "\e905";
+}
+.icon-github:before {
+  content: "\e906";
+}
+.icon-telegram:before {
+  content: "\e907";
+}
+.icon-4x {
+  font-size: 80px;
+}
