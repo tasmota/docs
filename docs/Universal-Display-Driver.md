@@ -514,7 +514,7 @@ Defines an optional mapping for touch controllers (always needed on resistive to
 Defines optional display rotation `X` = `0..3`
 
 `:b,X`
-Defines optional inverted backpanel `X` = `1` = use inverted logic for backpanel  
+Defines optional inverted backpanel `X` = `1` = use inverted logic for backpanel (backlight)
 
   
 !!! example "Full configuration for SH1106 (comment lines starting with ; are allowed)"  
