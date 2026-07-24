@@ -913,16 +913,16 @@ Other examples:
 ![HASPmota stripes 3](_media/lvgl/HASPmota_28.png)
 
 Attribute name|Details
-|---|---|
-| stripe_color | Color of the stripes, format `#RRGGBB` |
-| stripe_opa | Opacity of the stripes, `0` transparent .. `255` opaque |
-| stripe_width | Width (thickness) of each stripe in pixels, minimum `1` |
-| gap_width | Width of the gap between two stripes in pixels, `0` for contiguous stripes |
-| angle | Angle of the stripes in degrees. `0` is horizontal, `90` is vertical. Any value is accepted and normalized to `0..359` |
-| bg_color | Color of the background behind the stripes (standard `lv.obj` style) |
-| bg_opa | Opacity of the background, `0` transparent .. `255` opaque |
-| radius | Radius of the rounded corners, stripes are clipped to the rounded shape |
-| border_width border_color border_side | Standard border styling, drawn on top of the stripes |
+:---|:---
+stripe_color | Color of the stripes, format `#RRGGBB`
+stripe_opa | Opacity of the stripes, `0` transparent .. `255` opaque
+stripe_width | Width (thickness) of each stripe in pixels, minimum `1`
+gap_width | Width of the gap between two stripes in pixels, `0` for contiguous stripes
+angle | Angle of the stripes in degrees. `0` is horizontal, `90` is vertical. Any value is accepted and normalized to `0..359`
+bg_color | Color of the background behind the stripes (standard `lv.obj` style)
+bg_opa | Opacity of the background, `0` transparent .. `255` opaque
+radius | Radius of the rounded corners, stripes are clipped to the rounded shape
+border_width border_color border_side | Standard border styling, drawn on top of the stripes
 
 #### Animated stripes~
 
