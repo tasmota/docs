@@ -756,21 +756,38 @@ current|float|Current (A) for main phase
 current\_phases|array of float|Current (A) as an array of phases
 active\_power|float|Active Power (W) for main phase
 active\_power\_phases|array of float|Active Power (W) as an array of phases
-reactive\_power|float|Reactive Power (W) for main phase
-reactive\_power\_phases|array of float|Reactive Power (W) as an array of phases
+active\_power|float|Active Power (W) for main phase
+active\_power\_phases|array of float|Active Power (W) as an array of phases
+apparent\_power|float|Apparent Power (W) for main phase
+apparent\_power\_phases|array of float|Apparent Power (W) as an array of phases
 power\_factor|float|Power Factor (no unit) for main phase
 power\_factor\_phases|array of float|Power Factor (no unit) as an array of phases
 frequency|float|Frequency (Hz) for main phase
 frequency\_phases|array of float|Frequency (Hz) as an array of phases
 export\_active|float|(kWh)
 export\_active\_phases|array of float|(kWh)
+import\_active|float|(kWh)
+import\_active\_phases|array of float|(kWh)
+energy\_active\_export|uint8|
 start\_energy|float|Total previous energy (kWh)
+start\_energy\_phases|array of float|Total previous energy (kWh) as an array of phases
 daily|float|Daily energy (kWh)
+daily\_phases|array of float|Daily energy (kWh) as an array of phases
+daily\_sum|float|
+daily\_sum\_export\_balanced|float|
+daily\_sum\_import\_balanced|float|
 total|float|Total energy (kWh)
+total\_phases|array of float|Total energy (kWh) as an array of phases
+total\_sum|float|
+yesterday\_sum|float|
 today\_delta\_kwh|uint32|(deca milli Watt hours)<br>5764 = 0.05764 kWh = 0.058 kWh
+today\_delta\_kwh\_phases|array of uint32|(deca milli Watt hours)<br>5764 = 0.05764 kWh = 0.058 kWh, as an array of phases
 today\_offset\_kwh|uint32|(deca milli Watt hours)
+today\_offset\_kwh\_phases|array of uint32|(deca milli Watt hours) as an array of phases
 today\_kwh|uint32|(deca milli Watt hours)
+today\_kwh\_phases|array of uint32|(deca milli Watt hours) as an array of phases
 period|uint32|(deca milli Watt hours)
+period\_phases|array of uint32|(deca milli Watt hours) as an array of phases
 fifth\_second|uint8|
 command\_code|uint8|
 data\_valid|uint8|`0` if data is valid for main phase
@@ -786,6 +803,7 @@ type\_dc|bool|
 power\_on|bool|
 |||**Below if for Energy Margin Detection**
 power\_history\_0<br>power\_history\_1<br>power\_history\_2|uint16|
+power\_history\_0\_phases<br>power\_history\_1\_phases<br>power\_history\_2\_phases|array of uint16|
 power\_steady\_counter|uint8|Allow for power on stabilization
 min\_power\_flag|bool|
 max\_power\_flag|bool|
@@ -794,10 +812,12 @@ max\_voltage\_flag|bool|
 min\_current\_flag|bool|
 max\_current\_flag|bool|
 |||**Below if for Energy Power Limit**
-mplh\_counter|uint16|
-mplw\_counter|uint16|
-mplr\_counter|uint8|
+mpl\_hold\_counter|uint16|
+mpl\_window\_counter|uint16|
+mpl\_retry\_counter|uint8|
 max\_energy\_state|uint8|
+
+In addition to these, the array values also have simple names for the indexes above 1, like `active_power_2` and `active_power_3`
 
 ### Energy driver in Berry
 
