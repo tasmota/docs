@@ -756,8 +756,8 @@ current|float|Current (A) for main phase
 current\_phases|array of float|Current (A) as an array of phases
 active\_power|float|Active Power (W) for main phase
 active\_power\_phases|array of float|Active Power (W) as an array of phases
-active\_power|float|Active Power (W) for main phase
-active\_power\_phases|array of float|Active Power (W) as an array of phases
+reactive\_power|float|Reactive Power (W) for main phase
+reactive\_power\_phases|array of float|Reactive Power (W) as an array of phases
 apparent\_power|float|Apparent Power (W) for main phase
 apparent\_power\_phases|array of float|Apparent Power (W) as an array of phases
 power\_factor|float|Power Factor (no unit) for main phase
