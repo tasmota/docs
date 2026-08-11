@@ -801,7 +801,7 @@ voltage\_available|bool|Enable if voltage is measured
 current\_available|bool|Enable if current is measured
 type\_dc|bool|
 power\_on|bool|
-|||**Below if for Energy Margin Detection**
+||**Below if for Energy Margin Detection**
 power\_history\_0<br>power\_history\_1<br>power\_history\_2|uint16|
 power\_history\_0\_phases<br>power\_history\_1\_phases<br>power\_history\_2\_phases|array of uint16|
 power\_steady\_counter|uint8|Allow for power on stabilization
@@ -811,7 +811,7 @@ min\_voltage\_flag|bool|
 max\_voltage\_flag|bool|
 min\_current\_flag|bool|
 max\_current\_flag|bool|
-|||**Below if for Energy Power Limit**
+||**Below if for Energy Power Limit**
 mpl\_hold\_counter|uint16|
 mpl\_window\_counter|uint16|
 mpl\_retry\_counter|uint8|
