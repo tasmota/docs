@@ -650,6 +650,7 @@ SetOption162<a class="cmnd" id="setoption162"></a>|Do not add export energy to e
 SetOption163<a class="cmnd" id="setoption163"></a>|Disable display of webUI device name
 SetOption164<a class="cmnd" id="setoption164"></a>|Enable WiZ Smart Remote support
 SetOption165<a class="cmnd" id="setoption165"></a>|Allow TLS ECDSA certificates<br>`0` = allow only RSA certificates<br>`1` = allow both RSA and ECDSA certificates<br>Because letsencrypt nod defaults to ECDSA certificates, in case of TLS error 296 (unsupported cipher), `SetOption165 1` is automatically enabled.
+SetOption166<a class="cmnd" id="setoption166"></a>|Publish [TFA Marbella](TFA-Marbella) readings as they arrive<br>`0` = *(default)* readings are sent with the regular `TelePeriod` telemetry<br>`1` = additionally publish each reading as soon as it is received. The sensor transmits about once a minute, so with the default `TelePeriod` of 300 seconds most readings would otherwise never be sent.
               
 ### TuyaMCU
 
