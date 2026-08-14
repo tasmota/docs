@@ -25,7 +25,7 @@ Use or change one of the existing example sections with naming scheme `tasmota32
     extends                 = env:tasmota32_base
     build_flags             = ${env:tasmota32_base.build_flags}
                               -DUSE_MI_ESP32
-                              -DUSE_MI_EXT_GUI
+                              -DUSE_MI_EXT_GUI=1
                               -DCONFIG_BT_NIMBLE_NVS_PERSIST=y
     lib_extra_dirs          = lib/libesp32, lib/libesp32_div, lib/lib_basic, lib/lib_i2c, lib/lib_div, lib/lib_ssl
     ```
@@ -42,7 +42,7 @@ If you want to try out Bluetooth version 5.x, which consumes a bit more memory a
     lib_ignore              = Micro-RTSP
     build_flags             = ${env:tasmota32_base.build_flags}
                               -DFIRMWARE_BLUETOOTH
-                              -DUSE_MI_EXT_GUI
+                              -DUSE_MI_EXT_GUI=1
                               -DCONFIG_BT_NIMBLE_EXT_ADV
                               -DCONFIG_BT_NIMBLE_MAX_EXT_ADV_INSTANCES=1
                               -DOTA_URL='"http://ota.tasmota.com/tasmota32/release/tasmota32c3.bin"'
@@ -218,7 +218,7 @@ For the latter it is necessary to retrieve the Identiy Resolving Key (= IRK), wh
         def init()
             import cb
             var cbp = cb.gen_cb(/e,o,u,h->self.cb(e,o,u,h))
-            BLE.serv_cb(cbp,cbuf)
+            BLE.conn_cb(cbp,cbuf)
             self.current_func = /->self.add_bpm()
             log("BLE: start hearrate server",1)
         end
@@ -478,6 +478,7 @@ What can be done?
 |BLE lights   | control lights that uses smartphone apps like *Happy Lighting*, *Triones*, *ILC*, ...|
 |BLE remotes  | use a cheap BLE remote control like the BPR2S Air Mouse|
 |BLE UART     | control Tasmota without WiFi via Nordic UART Service (NUS) |
+|ANCS         | communicate with Apple devices using the Apple Notification Center Service (ANCS)|
 |Tuya BLE     | Control Tuya Bluetooth devices like the Fingerbot |
 
 
@@ -491,9 +492,9 @@ MI32 method|Parameters and details
 MI32.devices|`()` returns the number of monitored Xiaomi devices
 MI32.get_name|`(x)` returns a string with the sensor name (internal name of the driver) at slot x in the internal sensor array of the driver
 MI32.get_MAC|`(x)` returns a byte buffer (6 bytes) representing the MAC at slot x in the internal sensor array of the driver
-MI32.set_bat|`(x,v)`  sets the battery value to v at slot x in the internal sensor array of the driver
-MI32.set_hum|`(x,v)`  sets the humidity value to v at slot x in the internal sensor array of the driver
-MI32.set_temp|`(x,v)`  sets the temperature value to v at slot x in the internal sensor array of the driver
+MI32.set_bat|`(slot:int, value:int)` sets the battery value in the internal sensor array of the driver
+MI32.set_hum|`(slot:int, value:int)` sets the humidity value in the internal sensor array of the driver
+MI32.set_temp|`(slot:int, value:int)` sets the temperature value in the internal sensor array of the driver
 MI32.widget|`(html:string[,cb:function])`  send a custom widget to the dashboard expecting a string with minimal content of `<div class="box" id="myID">hello world!</div>`, optionally get notified with a callback function for a complex UI
 
 ### BLE module
@@ -503,20 +504,20 @@ For generic BLE access we import the module:
 
 BLE Function|Parameters and details
 :---|:---
+info|`()`<br>Returns a map with local BLE adapter information and active connection details when connected.<br><br>Base fields: `role`, `local_addr`, `power`, `MTU`, `version`, `bonds`.<br>When a connection is active, the map additionally contains a `connection` map with `peer_addr`, `peerID_addr`, `MTU`, `bonded`, `master`, `encrypted` and `authenticated`. `RSSI` is present for an outbound client connection; `name` is available for an inbound server connection; `IRK` is present only when the peer has an identity-resolving key.
 adv_cb|`(callback function:function, buffer:bytes)`<br>Will start listening to advertisements or stop it by providing `nil` as function.<br>The callback function will have arguments `service data` and `manufacturer data` as integer values, that are indices pointing to these kinds of data in the buffer or have a value of 0 if there is no such data in the advertisement.
 adv_watch|`(MAC:bytes[, type:int])`<br>Watch BLE address exclusively, is added to a list (MAC is a 6-byte-buffer, type is optional 0-3, default is 0).
-adv_block|`(MAC:bytes[, type:int])`<br>Block BLE address, is added to a list (MAC is a 6-byte-buffer, type is optional 0-3, default is 0).
-conn_cb|`(callback function:function, buffer:bytes)`<br>Will init Tasmota as a peripheral device, that can connect to a central device.<br>The callback function will have arguments `error`,`op code`,`16-bit uuid` and `handle`. If an UUID with more than 16 bit is accessed, the automatic conversion to 16-bit will probably give no usable result, thus the handle should be used in these cases.
-serv_cb|`(callback function:function, buffer:bytes)`<br>Will init Tasmota as a central device (aka server) or stop it by providing `nil` as function.<br>The callback function will have arguments `error`,`op code`,`16-bit uuid` and `handle`. If an UUID with more than 16 bit is accessed, the automatic conversion to 16-bit will probably give no usable result, thus the handle should be used in these cases.
-set_MAC|`(MAC:bytes[, type:int]) -> handled:bool`<br>Set MAC for for use as peripheral or central device as a 6-byte-buffer, type is optional 0-3, default is 0.
-set_svc|`(UUID:string[, discoverAttributes:bool]) -> handled:bool`<br>Set service UUID for for use as peripheral or central device as a 16-Bit or 128-Bit service uuid, the latter must include the dashes. Optional: Let the BLE stack discover all attributes of the service, which takes time and battery. Default is `false`.
-set_chr|`(UUID:string) -> handled:bool`<br>Set characteristic UUID for for use as peripheral or central device as a 16-Bit or 128-Bit service uuid, the latter must include the dashes.
-run|`(operation:int[, response:bool, optional_arg: int])`<br>Start a Bluetooth operation, where `operation` is a proprietary code - see sections below. `Response` is optional and defaults to `false`. `optional_arg` depends on used operation, no default.
+conn_cb|`(callback function:function, buffer:bytes)`<br>Registers the unified BLE callback for connection and GATT events.<br>The callback function will have arguments `error`,`op code`,`16-bit uuid` and `handle`. If an UUID with more than 16 bit is accessed, the automatic conversion to 16-bit will probably give no usable result, thus the handle should be used in these cases.
+serv_cb|`(callback function:function, buffer:bytes)`<br>DEPRECATED!! Compatibility alias for `conn_cb`.
+set_MAC|`(MAC:bytes[, type:int[, pin:int]])`<br>Set MAC for use as peripheral or central device as a 6-byte-buffer, type is optional 0-3, default is 0, and `pin` is optional.
+set_svc|`(UUID:string[, discoverAttributes:bool])`<br>Set a 16-, 32- or 128-bit service UUID for use as peripheral or central device. A 128-bit UUID must include the dashes. Optional: let the BLE stack discover all attributes of the service, which takes time and battery. Default is `false`. Raises `ble_error` if the context is unavailable.
+set_chr|`(UUID:string)`<br>Set a 16-, 32- or 128-bit characteristic UUID. Raises `ble_error` if the context is unavailable.
+run|`(operation:int[, response:bool[, arg1:int]])`<br>Start a Bluetooth operation, where `operation` is a proprietary code - see sections below. `response` is optional and defaults to `false`. `arg1` depends on used operation.
 loop|`()`<br>Triggers a synchronization between Bluetooth stack and Berry, thus firing callbacks, if there is new data. Will typically be called from Berrys [Fast Loop](Berry.md#fast-loop).
+store|`(blob:bytes)`<br>Restore the bond blob delivered by callback operation `230`. The blob must contain the two security records produced by the authentication callback.
 
-
-To simplify BLE access this works in the form of state machine, where you have to set some properties of a context and then finally launch an operation. Besides we have three callback mechanisms for listening to advertisements, active sensor connections with Tasmota as a client and providing a server including advertising. All you need is a byte buffer in Berry for data exchange and a Berry function as the callback.
-The byte buffer is always organized in the format `length-data bytes`, where the first byte represents the length of the following data bytes, which results in a maximum of 255 data bytes.
+To simplify BLE access this works in the form of a state machine, where you set properties of a context and finally launch an operation. There are two callback paths: `adv_cb` for advertisements and `conn_cb` for active connections plus server events. `serv_cb` is only a compatibility alias for `conn_cb`.
+The connection/server byte buffer is organized as `length-data bytes`, where the first byte represents the length of the following data bytes. The caller must provide enough space for the length byte and the operation-specific data.
 Because Bluetooth is inherently very asynchronous, almost every status, result or error condition is reported via callbacks.
 ```mermaid
 sequenceDiagram
@@ -544,6 +545,7 @@ To listen to advertisements inside a class (that could be a driver) we could ini
         var buf # transfer buffer, gets filled by the Bluetooth driver, can be read in Berry
         def init()
             import BLE
+            import cb
             self.buf = bytes(-64) # will be used in the form length-data, so self.buf[0] = length of actual data
             var callback_pointer = cb.gen_cb(/svc,manu->self.cb(svc,manu))
             BLE.adv_cb(callback_pointer,self.buf)
@@ -578,7 +580,7 @@ We just have to provide a pointer to a (callback) function and a byte buffer.  T
 1 byte - address type
 1 byte  - RSSI
 1 byte  - length of payload
-n bytes - payload data
+n bytes - complete advertisement payload, optionally followed by scan-response data
 ```
 ```mermaid
 packet-beta
@@ -586,15 +588,14 @@ packet-beta
 6: "t"
 7: "R"
 8: "l"
-9-40: "payload data (up to 31 byte)"
-41-71: "optional scan response (up to 31 byte)"
+9-72: "advertisement payload, optionally followed by scan-response data (up to 64 bytes total)"
 ```
 
 The advertisement callback function provides 2 arguments, which are indices of the whole buffer that point to optional parts of the payload. A value of 0 means, this type of of element is not in the payload.
 1. svc (= service data index) - index of service data in the advertisement buffer
 2. manu (= manufacturer data index) - index of manufacturer data in the advertisement buffer
 
-The payload is always provided completely, so every possibles AD type can be parsed in Berry if needed, but for convenience the two most important types for IOT applications are given in the callback.
+The payload is provided completely for reports up to 64 bytes, including scan-response data when active scanning receives a response. Longer reports are truncated to the Berry buffer size. Every AD type within the available payload can be parsed in Berry, but for convenience the two most important types for IoT applications are given in the callback.
 
 !!! tip
 
@@ -603,22 +604,30 @@ The payload is always provided completely, so every possibles AD type can be par
 
 !!! tip
 
-    The watchlist is more effective to avoid missing packets than the blocklist in environments with high BLE traffic. Both methods work for the internal Xiaomi driver and the post processing with Berry, because they set properties of the underlying Bluetooth framework.
+    The watchlist is effective to avoid missing packets in environments with high BLE traffic. It works both for the internal Xiaomi driver and for Berry advertisement processing because it sets the whitelist of the underlying Bluetooth framework.
 
-#### Peripheral role (aka client)
+#### Connected devices
 
-Communicating via connections is a bit more complex. We have to start with a callback function and a byte buffer again.
+Communicating via connections is a bit more complex. We have to start with a callback function and a byte buffer again.  
 ```berry
 # simple example for the Berry console
 import BLE
+import cb
 cbuf = bytes(-64)
 
 def cb(error,op,uuid,handle)
 end
 
-cbp = tasmota.gen_cb(/e,o,u,h->cb)
+cbp = cb.gen_cb(/e,o,u,h->cb(e,o,u,h))
 BLE.conn_cb(cbp,cbuf)
 ```
+The callback functions returns error, operation, 16-bit-uuid and 16-bit-handle.  
+The connection task can be stopped with `BLE.conn_cb(nil, nil)`.
+The deprecated alias `BLE.serv_cb(nil, nil)` stops the same task.
+  
+The role of the BLE device is then defined by the use of BLE op code, which makes the ESP32 become a client, a server or both. Some complex setups are possible like Apple Notification Center Service (ANCS).  
+  
+#### Central role (aka client)
 
 ```mermaid
 ---
@@ -669,14 +678,14 @@ cb --|> handle
 Internally this creates a context, that can be modified with the following methods:
 
 Set the MAC of the device we want to connect to:
-`BLE.set_MAC(MAC,type)`: where MAC is a 6-byte-buffer, type is optional 0-3, default is 0
+`BLE.set_MAC(MAC[,type[,pin]])`: where `MAC` is a 6-byte buffer, `type` is optional 0-3 and defaults to 0, and `pin` is an optional numeric pairing PIN.
 
 Set service and characteristic:
 `BLE.set_svc(string)`: where string is a 16-Bit, 32-Bit or 128-Bit service uuid
 `BLE.set_chr(string)`: where string is a 16-Bit, 32-Bit or 128-Bit characteristic uuid
 
 Finally run the context with the specified properties and (if you want to get data back to Berry) have everything prepared in the callback function:
-`BLE.run(operation,response)`: where operation is a number (optional: boolean w/o server response to write or subscribe, default is false) , that represents an operation in a proprietary format. Values below 10 will not disconnect automatically after completion:
+`BLE.run(operation[,response[,arg1]])`: where `operation` is a proprietary operation number, `response` defaults to `false`, and `arg1` is operation-specific. Values below 10 will not disconnect automatically after completion:
 
 - 1 - read
 - 2 - write
@@ -695,27 +704,11 @@ The buffer format for reading and writing is in the format (length - data):
 n bytes - data
 ```
 
-#### Central role (aka server)
+#### Peripheral role (aka server)
 
-The server is initiated similarly with `BLE.serv_cb(cbp,cbuf)`.
+The server is initiated with `BLE.conn_cb(cbp,cbuf)` too.  
 After that you have to construct the server by first adding all *characteristics* and finally starting it, by setting the *advertisement* data for the first time.
 Setting *advertisement* data without adding *characteristics* will not start a BLE server but only a BLE Broadcaster, which is totally fine for some use cases (i.e. Beacons, BTHome).
-The BLE server can be stopped with `BLE.serv_cb(nil)`, which will restart the "BLE Scan Task".
-
-The callback functions returns error, operation, 16-bit-uuid and 16-bit-handle.
-
-```berry
-# simple server setup example for the Berry console
-import BLE
-cbuf = bytes(-256)
-
-def cb(error,op,uuid,handle)
-end
-
-cbp = tasmota.gen_cb(cb)
-BLE.serv_cb(cbp,cbuf)
-# now add characteristics and advertisement ...
-```
 
 ####Command op codes:
 
@@ -724,8 +717,7 @@ When called for the first time, will return a bytes buffer, that represents an a
 - 202 - add and/or set scan response data, according to the BLE standard which is equally  to the advertisement data. Should be used sparsely.
 - 211 - add and/or set characteristic with value of bytes buffer. 
 For simplicity a `Client Characteristic Configuration Descriptor` (aka 0x2902) will be added on construction of every characteristic and read, write, notification and indication is enabled.
-You can select write with or without response withe the optional boolean of  `BLE.set_chr(string, bool)`, which defaults to "write with no response".
-The function call will always trigger a *callback*. As every *characteristic* belongs to a *service*, `BLE.set_svc(string)` must have been called before.
+`BLE.run(211,response[,arg1])` creates or updates a characteristic. `response` selects write-with-response versus write-without-response and, when updating the value, indication versus notification. The optional `arg1` overrides the characteristic property bitmask when the characteristic is first created. The call always triggers a *callback*. As every *characteristic* belongs to a *service*, `BLE.set_svc(string)` must have been called before.
 
 ####Response op codes (triggered when a client interacts with the server):
 
@@ -737,8 +729,8 @@ The function call will always trigger a *callback*. As every *characteristic* be
 - 226 - on subscribe to notifications and indications, returns no buffer data
 - 227 - on connect, returns MAC of client device as byte buffer
 - 228 - on disconnect, returns no buffer data
-- 229 - on status, returns error code as byte buffer
-- 230 - on authentication, returns raw security record as byte buffer
+- 229 - on status, returns error code as byte buffer, signals readiness of BLE stack for next op
+- 230 - on authentication, returns bond blob as byte buffer, which should be saved to flash
 
 !!! tip
 
@@ -750,7 +742,7 @@ The function call will always trigger a *callback*. As every *characteristic* be
 ####Configuration op codes (return immediately, no callback involved):
 
 - 231 - set own address to random with `BLE.set_MAC(bytes("aabbccddeeff"),1)`
-- 232 - set advertising parameters with bytes() descriptor of length 5 [advType:byte, minInterval:uint16_t, max interval: uint16_t]
+- 232 - set advertising parameters with a bytes() descriptor whose data length is 5 [advType:byte, minInterval:uint16_t, maxInterval:uint16_t]. This is ignored when extended advertising is enabled.
 - 233 - set GAP name with `string` in bytes buffer (must be null terminated)
 
 ### Berry examples
@@ -761,6 +753,7 @@ Here is an implementation of the "old" MI32 commands:
     ```berry
     import BLE
     import MI32
+    import cb
 
     j = 0
     sl = 0
@@ -785,7 +778,7 @@ Here is an implementation of the "old" MI32 commands:
         end
     end
 
-    cbp = tasmota.gen_cb(cb)
+    cbp = cb.gen_cb(cb)
     BLE.conn_cb(cbp,cbuf)
 
     def SetMACfromSlot(slot)
@@ -885,8 +878,7 @@ Here is an implementation of the "old" MI32 commands:
         def init()
             import cb
             var cbp = cb.gen_cb(/e,o,u,h->self.cb(e,o,u,h))
-            BLE.serv_cb(cbp,cbuf)
-            # BLE.set_svc(self.imp_svc)
+            BLE.conn_cb(cbp,cbuf)
             self.current_func = /->self.add_TX()
             log("BLE: ready for Nordic UART via BLE")
             self.pin_ready = false
@@ -1021,10 +1013,11 @@ Here is an implementation of the "old" MI32 commands:
 
         def init(MAC)
             import BLE
+            import cb
             self.buf = bytes(-21) # create a byte buffer, first byte reserved for length info
             self.buf[0] = 20 # length of the data part of the buffer in bytes
             self.buf[1] = 0x33 # a magic number - control byte for the Govee lamp
-            var cbp = tasmota.gen_cb(/e,o,u->self.cb(e,o,u)) # create a callback function pointer
+            var cbp = cb.gen_cb(/e,o,u->self.cb(e,o,u)) # create a callback function pointer
             BLE.conn_cb(cbp,self.buf)
             BLE.set_MAC(bytes(MAC),1) # addrType: 1 (random)
         end
@@ -1148,7 +1141,8 @@ Here is an implementation of the "old" MI32 commands:
         var x,y
 
         def init(MAC,addr_type)
-            var cbp = tasmota.gen_cb(/e,o,u,h->self.cb(e,o,u,h))
+            import cb
+            var cbp = cb.gen_cb(/e,o,u,h->self.cb(e,o,u,h))
             self.buf = bytes(-256)
             BLE.conn_cb(cbp,self.buf)
             BLE.set_MAC(bytes(MAC),addr_type)
