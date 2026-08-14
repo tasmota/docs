@@ -105,7 +105,7 @@ After entering click ***Create new endpoint*** and it will appear in the ***Curr
 
 ![Endpoint configured](_media/matter/endpoint_configured.jpg)
 
-#### Add Remote Tasmota or OpenBK
+#### Add Remote Tasmota or OpenBK via HTTP
 
 With this option you can bridge any existing Tasmota or OpenBK device to Matter.
 
@@ -129,13 +129,21 @@ When finished click ***Add endpoints***. The remote device will appear in the **
 
 ![Add Remote Tasmota or OpenBK configured](_media/matter/add_remote_completed.jpg)
 
-When a command arrives from the Matter controller, it is passed immediately to the end-device. Any change made on the end-device is eventually sent back to Matter controller via polling. Polling is done every 3 seconds for lights and relays and every 5 seconds for sensors.
+For HTTP remotes, a command from the Matter controller is passed immediately to the end-device. Any change made on the end-device is returned to the Matter controller through polling. Polling is done every 3 seconds for lights and relays and every 5 seconds for sensors.
 
-The Matter border router needs to have IP connectivity to the Tasmota end-device to send HTTP requests. However they don't need to be on the same VLAN (contrary to Matter which needs the controller and the device to be on the same VLAN).
+The Matter border router needs IP connectivity to the remote device to send HTTP requests. However, they don't need to be on the same VLAN (contrary to Matter, which needs the controller and the device to be on the same VLAN).
 
-!!! warning "There is a limit to the number of endpoints"
-    Matter bridge cannot support a large number of endpoints since the numerous HTTP requests will impact performance. 
+!!! warning "HTTP remote endpoint limit"
+    A Matter bridge cannot support a large number of HTTP remote endpoints since the numerous HTTP requests will impact performance.
     It is recommended to limit the number of remote endpoints to 8 per Matter bridge.
+
+#### Add a remote Tasmota device via MQTT
+
+A Matter bridge can also expose remote Tasmota devices through MQTT. The Matter bridge and the remote device must use the same MQTT broker, and Tasmota Discovery must be enabled on the remote device (`SetOption19 0`, the default).
+
+In **Configuration → Configure Matter**, select the device under **Discovered MQTT Devices** and click **Add**. If it is not listed, reboot the remote device so it republishes its retained discovery data. Select or adjust the endpoints and click ***Add endpoints***.
+
+MQTT remotes receive commands and state updates through MQTT subscriptions; they do not use HTTP polling or require direct IP connectivity from the Matter bridge to the remote device.
 
 #### Reset all and Auto-discover
 
