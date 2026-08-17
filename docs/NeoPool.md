@@ -269,7 +269,7 @@ Hydrolysis.Runtime.Part|(String) Cell partly runtime
 Hydrolysis.Runtime.Pol1|(String) Cell runtime for polarization 1
 Hydrolysis.Runtime.Pol2|(String) Cell runtime for polarization 2
 Hydrolysis.Runtime.Changes|(Int) Number of polarization changes
-Hydrolysis.State|(String) Cell state:<BR>`OFF` = Cell inactive<BR>`FLOW` = Cell water flow alarm<BR>`POL1` = Cell polarization 1 active<BR>`POL2` = Cell polarization 2 active
+Hydrolysis.State|(String) Cell state:<BR>`OFF` = Cell inactive<BR>`Flow` = Cell water flow alarm<BR>`Pol1` = Cell polarization 1 active<BR>`Pol2` = Cell polarization 2 active
 Hydrolysis.Cover|(Bool) Cover signal input:<BR>`0` = Cover input inactive<BR>`1` = Cover input active
 Hydrolysis.Boost|(Int) Boost mode state:<BR>`0` = Boost mode inactive<BR>`1` = Boost mode active<BR>`2` = Boost mode active with redox control
 Hydrolysis.Low|(Bool) Hydrolysis low alarm:<BR>`0` = No alarm<BR>`1` = Hydrolysis cannot reach the setpoint
