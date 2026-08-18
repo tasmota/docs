@@ -130,6 +130,7 @@ DS3502 | Digital potentiometer| I^2^C
 **T6703**<BR>**T6713** | Telaire T6700 series CO~2~ sensor | I^2^C
 [**TC74**](https://github.com/arendst/Tasmota/blob/development/tasmota/tasmota_xsns_sensor/xsns_108_tc74.ino) | Temperature sensor| I^2^C
 [**Téléinfo**](Teleinfo) | French energy measuring system | serial
+[**TFA Marbella**](TFA-Marbella) | 868MHz pool thermometer (30.3066.01) via CC1101 | SPI
 **TFMini** | TFmini, TFmini Plus, TFmini Plus (indoor Version), TFmini-S LiDAR module | serial
 **TM1638** | 8 Switch, LED and 7-segment unit sensor| gpio
 [**TSL2561**](TSL2561) | Luminosity sensor| I^2^C
