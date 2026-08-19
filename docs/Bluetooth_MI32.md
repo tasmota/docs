@@ -759,7 +759,7 @@ Here is an implementation of the "old" MI32 commands:
     sl = 0
 
     cbuf = bytes(-64)
-    def cb()
+    def ble_cb()
 
         if j == 0
             print(cbuf)
@@ -778,7 +778,7 @@ Here is an implementation of the "old" MI32 commands:
         end
     end
 
-    cbp = cb.gen_cb(cb)
+    cbp = cb.gen_cb(ble_cb)
     BLE.conn_cb(cbp,cbuf)
 
     def SetMACfromSlot(slot)
