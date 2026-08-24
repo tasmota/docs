@@ -1,6 +1,42 @@
 # Bluetooth for ESP32 :material-cpu-32-bit:
 (Bluetooth version 4.x)
-## MI32 Sensors
+
+## Base Setup
+### BLE ESP32
+
+This allows for the receiving of BLE advertisements from BLE devices, including "iBeacons" and BLE sensors, but also for the control of simple BLE devices, providing for reading, writing and receiving notifications.
+
+??? failure "This feature is included only in tasmota32-bluetooth.bin"
+
+    When [compiling your build](Compile-your-build), you need to
+
+    (1) Add the following to `user_config_override.h`:
+    ```c++
+    #define USE_BLE_ESP32                // Add support for ESP32 as a BLE-bridge (+9k2? mem, +292k? flash)
+    ```
+    (2) Copy `platformio_override_sample.ini` to `platformio_override.ini`
+
+    (3) In `platformio_override.ini`, search for the following lines and remove the `;` in front of the 2nd line if it is there
+    ```
+    ; *** uncomment the following line if you use Bluetooth or Apple Homekit in a Tasmota32 build. Reduces compile time
+    ;                          lib/libesp32_div
+    ```
+    becomes
+    ```
+    ; *** uncomment the following line if you use Bluetooth or Apple Homekit in a Tasmota32 build. Reduces compile time
+                              lib/libesp32_div
+    ```
+
+Be aware, enabling of the native BLE on ESP32 has an impact on Wi-Fi performance.  Although later SDK helped a bit, expect more lag on the web interface and on MQTT.
+If only controlling BLE devices, then scanning can be disabled, which will minimize Wi-Fi impact.
+BLE can be enabled from the web UI menus.
+
+This is compiled by default in the Bluetooth firmware, but you need to enable it using the webUI **Configure BLE** button or [`SetOption115 1`](Commands.md#setoption115) command.
+
+Note that the only configuration stored is the [`SetOption115`](Commands.md#setoption115) to turn BLE on and off.  All other configurations can be set at boot if necessary using Rules.
+
+## Passive BLE Receivers
+### MI32 Sensors
 
 ??? failure "This feature is included only in tasmota32-bluetooth.bin"
 
@@ -17,7 +53,7 @@ These packets already contain the sensor data and can be passively received by o
 
 This is therefore the preferred option, if supported by the sensor.
 
-### Supported Devices
+#### Supported Devices
 
 !!! note "It can not be ruled out, that changes in the device firmware may break the functionality of this driver completely!"
 
@@ -109,7 +145,7 @@ The naming conventions in the product range of Bluetooth sensors in Xiaomi unive
     <th class="th-lboi">WZ-KR220IBLE-310</th>
   </tr>
   <tr>
-    <td class="tg-lboi"><img src="../_media/bluetooth/ATBtn.png" width=200></td>
+    <td class="tg-lboi"><img src="../_media/bluetooth/WZ-KR220IBLE-310.png" width=200></td>
   </tr>
   <tr>
     <td class="tg-lboi">button press (1-3 buttons)</td>
@@ -126,33 +162,7 @@ The naming conventions in the product range of Bluetooth sensors in Xiaomi unive
 
 **MJYD2S** sends motion detection events and 2 discrete illuminance levels (1 lux or 100 lux for a dark or bright environment). Additionally battery level and contiguous time without motion in discrete growing steps (no motion time = NMT).
 
-### WZ-KR220IBLE-310
-
-These bluetooth switches are NOT Xiaomi branded devices and do not use encryption. They are normally be found in combination with a Tuya relay module and avaialble in 1 2 or 3 button versions.  
-Also known as bluetooth remote controls.
-All of these switches use the same source MAC address (C1A2A3A4A5A6). To be able to distinguish individual switchs and buttons, the end of the MAC address is replaced with the unique switch_id.
-Thus you can use BLEAlias to name individual switches and monitor for the button presses.
-
-To use these switches, you also need to set a few other MI32 options
-
-option|meaning
-:---|:---
-BLEAddrFilter 1|So BLE can see address, any value greater than 0 
-MI32Option1 1|Stops button press occuring at TELEPERIOD times
-MI32Option2 2|Sends message on button press
-
-!!! tip
-Two button switches are btn 1 and 3 (not 1 and 2)
-
-!!! tip
-If BLEAlias is used then an alias for C1A2A3A4A5A6 must be included, along with the alias for the unique switch
-
-```haskell
-BLEAlias c1a2a3a40048=LoungeBtn
-BLEAlias c1a2a3a4a5a6=AnyButton
-```
-
-### Encryption and bind_key
+#### Encryption and bind_key
 
 Most of the older sensors use unencrypted messages, which can be read by all kinds of BLE devices or even a NRF24L01. With the arrival of newer sensors, such as LYWSD03MMC, MHO-C401 or MJYD2S, came the problem of encrypted data in MiBeacons, which can be decrypted in Tasmota.
 
@@ -191,7 +201,33 @@ To retain the data use a rule on startup:
 rule1 on System#Boot do backlog MI32key 00112233445566778899AABBCCDDEEFF112233445566; MI32key 00112233445566778899AABBCCDDEEFFAABBCCDDEEFF endon
 ```
 
-### Commands
+#### WZ-KR220IBLE-310
+
+These bluetooth switches are NOT Xiaomi branded devices and do not use encryption. They are normally be found in combination with a Tuya relay module and avaialble in 1 2 or 3 button versions.  
+Also known as bluetooth remote controls.
+All of these switches use the same source MAC address (C1A2A3A4A5A6). To be able to distinguish individual switchs and buttons, the end of the MAC address is replaced with the unique switch_id.
+Thus you can use BLEAlias to name individual switches and monitor for the button presses.
+
+To use these switches, you also need to set a few other MI32 options
+
+option|meaning
+:---|:---
+BLEAddrFilter 1|So BLE can see address, any value greater than 0 
+MI32Option1 1|Stops button press occuring at TELEPERIOD times
+MI32Option2 2|Sends message on button press
+
+!!! tip
+Two button switches are btn 1 and 3 (not 1 and 2)
+
+!!! tip
+If BLEAlias is used then an alias for C1A2A3A4A5A6 must be included, along with the alias for the unique switch
+
+```haskell
+BLEAlias c1a2a3a40048=LoungeBtn
+BLEAlias c1a2a3a4a5a6=AnyButton
+```
+
+#### MI32-Commands
 
 Full list of available [Mi Sensors commands](Commands.md#ble-mi-sensors).
 
@@ -204,39 +240,7 @@ Backlog Rule1 on Time#Minute=30 do MI32Battery endon; Rule1 1
 
 This will update every day at 00:30 AM.
 
-## BLE ESP32
-This allows for the receiving of BLE advertisements from BLE devices, including "iBeacons" and BLE sensors, but also for the control of simple BLE devices, providing for reading, writing and receiving notifications.
-
-??? failure "This feature is included only in tasmota32-bluetooth.bin"
-
-    When [compiling your build](Compile-your-build), you need to
-
-    (1) Add the following to `user_config_override.h`:
-    ```c++
-    #define USE_BLE_ESP32                // Add support for ESP32 as a BLE-bridge (+9k2? mem, +292k? flash)
-    ```
-    (2) Copy `platformio_override_sample.ini` to `platformio_override.ini`
-
-    (3) In `platformio_override.ini`, search for the following lines and remove the `;` in front of the 2nd line if it is there
-    ```
-    ; *** uncomment the following line if you use Bluetooth or Apple Homekit in a Tasmota32 build. Reduces compile time
-    ;                          lib/libesp32_div
-    ```
-    becomes
-    ```
-    ; *** uncomment the following line if you use Bluetooth or Apple Homekit in a Tasmota32 build. Reduces compile time
-                              lib/libesp32_div
-    ```
-
-Be aware, enabling of the native BLE on ESP32 has an impact on Wi-Fi performance.  Although later SDK helped a bit, expect more lag on the web interface and on MQTT.
-If only controlling BLE devices, then scanning can be disabled, which will minimize Wi-Fi impact.
-BLE can be enabled from the web UI menus.
-
-This is compiled by default in the Bluetooth firmware, but you need to enable it using the webUI **Configure BLE** button or [`SetOption115 1`](Commands.md#setoption115) command.
-
-Note that the only configuration stored is the [`SetOption115`](Commands.md#setoption115) to turn BLE on and off.  All other configurations can be set at boot if necessary using Rules.
-
-## iBeacon
+### iBeacon
 
 Hear adverts from BLE devices, and produce MQTT messages containing RSSI and other information about them.  Break out iBeacon specific data if present.
 
@@ -263,9 +267,9 @@ tele/ibeacon/SENSOR = {"Time":"2021-01-02T12:08:40","IBEACON":{"MAC":"A4C1387FC1
 
 Additional fields will be present depending upon the beacon, e.g. NAME, UID, MAJOR, MINOR.
 
-### iBeacon MQTT Fields
+#### iBeacon MQTT Fields
 
-#### Always present
+##### Always present
 json|meaning
 :---|:---
 Time|time of MQTT send
@@ -273,7 +277,7 @@ IBEACON.MAC|mac addr
 IBEACON.RSSI|signal strength
 IBEACON.STATE|ON - present, OFF - last MQTT you will get for now (device removed)
 
-#### Optional
+##### Optional
 json|meaning
 :---|:---
 IBEACON.NAME|name if in scan, or BLEAlias if set - only present if NAME present
@@ -281,16 +285,16 @@ IBEACON.PERSEC|count of adverts per sec.  Useful for detecting button press
 IBEACON.MAJOR|some iBeacon related term? - only present for some
 IBEACON.MINOR|some iBeacon related term? - only present for some
 
-### Examples
+#### Examples
 
-#### Setup a rule to set some aliases at boot time, and only allow those starting `iB`
+##### Setup a rule to set some aliases at boot time, and only allow those starting `iB`
 
 ```console
 Rule1 ON System#Boot DO backlog iBeacon 1; BLEAlias A4C1386A1E24=iBfred A4C1387FC1E1=iBjames; iBeaconOnlyAliased 2 endon
 Rule1 1
 ```
 
-### Supported Devices
+#### Supported Devices
 <img src="../_media/bluetooth/nRF51822.png" width=155 align="right">
 
 All Apple compatible iBeacon devices should be discoverable.
@@ -311,7 +315,7 @@ Cheap "iTag" beacons with a beeper. The battery on these lasts only about a mont
 !!! tip
     You can activate a beacon with a beeper using command `IBEACON_%BEACONID%_RSSI 99` (ID is visible in webUI and SENSOR reports). This command can freeze the Bluetooth module and beacon scanning will stop. After a reboot of Tasmota the beacon will start beeping and scanning will resume. (untested on ESP32 native BLE)
 
-### MI32 MQTT Messages
+#### MI32 MQTT Messages
 
 Because we can have many sensors reporting, tele messages are chunked to have a maximum of four sensors per message.
 
@@ -328,11 +332,14 @@ These messages can be used without Home Assistant if it is a preferred format.
 !!! note
     The topic would be the **same** from all Tasmotas if they have the same BLEAlias or no BLEAlias.  So if you wish to 'hear' the same device separately from different Tasmotas, use different BLEAlias names or different Mi32Topic.
 
+## Active BLE Controllers
+### Eqiva eQ-3 TRV
 
-### EQ3 TRV
+Tasmota supports the active control of Eqiva eQ-3 Bluetooth Smart thermostatic radiator valves (TRVs). This driver allows you to actively send commands (such as setting target temperatures or configuring weekly schedules) and receive detailed device status updates.
 
-A preliminary EQ3 driver is in production. [Documentation](EQ3-TRV.md).
+For full configuration details, command syntax, and MQTT examples, see the dedicated [Eqiva eQ-3 TRV Documentation](EQ3-TRV.md).
 
+## Advanced Configuration
 ### Commands
 
 Full list of available [BLE ESP32 commands](Commands.md#ble-esp32).
