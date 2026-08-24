@@ -49,11 +49,29 @@ From then on every other sensor is ignored, so an identical thermometer next doo
 
 Command|Parameters
 :---|:---
-Marbella|Show the bound sensor id and the reception state<br>`<id>` = bind to one sensor, id as six hex digits, e.g. `683f16`<br>`0` = forget the binding and learn the next sensor seen
+Marbella|Show the bound sensor id, the reception state and the receive frequency<br>`<id>` = bind to one sensor, id as six hex digits, e.g. `683f16`<br>`0` = forget the binding and learn the next sensor seen<br>`<MHz>` = tune the receiver, e.g. `868.021`, up to 0.2 MHz either way
 
 The binding is stored and survives a restart, so the receiver cannot bind itself to a neighbour's sensor while yours happens to be quiet. `TFA_MARBELLA_SERIAL` sets it at compile time instead.
 
-[`SetOption166`](Commands#setoption166) additionally publishes each reading as it arrives instead of leaving it to `TelePeriod`. Useful here, because the sensor transmits about once a minute while the default `TelePeriod` is 300 seconds.
+Readings are published as they arrive, which matters here: the sensor transmits about once a minute while the default `TelePeriod` is 300 seconds, so waiting for telemetry would drop four readings out of five. [`SetOption147`](Commands#setoption147) turns the immediate publish off, the same way it does for the other receiving drivers; rules still see every reading.
+
+## Tuning
+
+A decimal point is what tells a frequency from a sensor id, so no extra keyword is needed:
+
+```
+Marbella 868.021
+```
+
+The setting is stored and survives a restart, and `Marbella` reports it:
+
+```json
+{"Marbella":{"Id":"68B94A","Bound":"YES","Reading":"VALID","Frequency":868.021}}
+```
+
+Most modules need no correction. The one it exists for is crystal tolerance: the CC1101 derives its frequency from a 26 MHz crystal, and a cheap one lands the receiver beside the frequency it was told. Measured on one module, `868.000` put it on 867.973 - 27 kHz low. That still fits inside the 135 kHz receive filter, but it spends the margin the signal needs, and reception then works only while the sensor is close.
+
+The symptom is losing frames for no apparent reason while the sensor is demonstrably transmitting. Finding the right value needs a receiver you can trust, an SDR for instance; guessing is not useful, since being wrong in the other direction is just as bad.
 
 ## Web interface
 
