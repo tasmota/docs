@@ -1,4 +1,27 @@
-# Eqiva eQ-3 thermostatic radiator valve :material-cpu-32-bit: <br>(EQ3 TRV)
+---
+tags:
+  - Bluetooth
+  - BLE
+  - EQ3
+  - TRV
+  - Eqiva
+  - ESP32
+---
+
+# Eqiva eQ-3 thermostatic radiator valve :material-cpu-32-bit:
+
+## Overview
+<style>
+  /* Hides the heading from the main content layout while keeping it fully functional for the right TOC */
+  h2#overview {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+</style>
 
 ??? tip "This feature is included in tasmota32-bluetooth.bin"
 
@@ -8,11 +31,9 @@
 	#define USE_EQ3_ESP32
     ```
 
-## General
-
 This driver enables the control of Eqiva thermostatic radiator valves (TRVs).
 
-![Eqiva eQ-3 Bluetooth Smart TRV](_media/eq3-trv/eqiva-bluetooth-smart-trv.png){: style="float: right; width: 150px;" }
+[![Eqiva eQ-3 Bluetooth Smart TRV](_media/eq3-trv/eqiva-bluetooth-smart-trv.png)](_media/eq3-trv/eqiva-bluetooth-smart-trv.png){: style="float: right; width: 150px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(2.5) translateX(-30px)'" onmouseout="this.style.transform='scale(1)'" }
 
 These models are compatible:
 
@@ -109,8 +130,11 @@ The available subcommands are described in the [TRV subcommands](#trv-subcommand
 | Command | Description and parameters |
 | :--- | :--- |
 | TRVPeriod<a class="cmnd" id="trvperiod"></a> | `<seconds>` = EQ3 poll interval in seconds.<br>During this interval, a `poll` ([`state`](#state)) command is automatically sent to every TRV.<br>`0` = disables automatic polling.<br>`1` = immediately starts a poll cycle, but does not change its value.<br>At boot time, this value is set to [`TelePeriod`](Commands.md#teleperiod). |
+| TRVRetries<a class="cmnd" id="trvretries"></a> | `<retries>` = maximum number of command transmission retries to the TRV (`0..10`).<br>At boot time, this value is set to `4` |
+| TRVMinRSSI<a class="cmnd" id="trvminrssi"></a> | `<rssi>` = minimum RSSI signal strength threshold for discovering TRV devices (`-99..0`).<br>At boot time, this value is set to `-99` |
 | TRVOnlyAliased<a class="cmnd" id="trvonlyaliased"></a> | `<value>` = EQ3 OnlyAliased parameter.<br>`0` = all devices will be processed (default).<br>`1` = only devices with an alias will be processed.<br>`2` = only devices whose alias starts with `EQ3` will be processed. |
 | TRVMatchPrefix<a class="cmnd" id="trvmatchprefix"></a> | `<value>` = EQ3-MAC prefix matching.<br>`0` = no automatic identification (active scan is needed).<br>`1` = automatically identify EQ3 via MAC address (default). |
+| TRVHideFailedPoll<a class="cmnd" id="trvhidefailedpoll"></a> | `<value>` = hide failed periodic polling responses.<br>`0` = send MQTT response even if polling fails.<br>`1` = hide/suppress MQTT response when a periodic polling fails (default). |
 | TRVDevList<br>TRVScan<a class="cmnd" id="trvdevlist"></a> | Display all discovered TRVs. |
 | TRVReset<a class="cmnd" id="trvreset"></a> | Remove all known devices and clear the command queue. |
 
@@ -151,7 +175,7 @@ After submitting a command, you will see one or more of the following results:
 | queued | Command has been accepted by the BLE driver. |
 | DONENOTIFIED | Command has been successfully processed by the TRV, and the results are sent in JSON format. |
 | ignoredbusy | Only a single command can be accepted in the queue at a time. During the processing of a TRV command, subsequent commands will be rejected. Please resubmit. |
-| FAILCONNECT | Connection to the TRV failed after three automatic retries. Please resubmit. |
+| FAILCONNECT | Connection to the TRV failed after the configured number of automatic retries (see [`TRVRetries`](#trvretries)). Please resubmit. |
 
 Under normal circumstances, you will get a JSON-formatted response from the valve:
 
