@@ -22,7 +22,7 @@ Incredibly expandable and flexible.
 - Support for BLE BTHome in binary tasmota32-bluetooth.bin
 - Shelly Pro 2PM emulation for ESP32 (Emulation 3)
 - TLS support for EC P-384 curve in server certificate 
-- Fixes some regression from version v15.5.0
+- Fixes regressions from version v15.5.0
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
