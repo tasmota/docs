@@ -746,7 +746,7 @@ Tasmota Function|Parameters and details
 energy.read()<a class="cmnd" id="energy_read"></a>|`() -> map`<br>Returns all current values for the energy module. Some values may be unused by the current driver.
 energy.driver_enabled()<a class="cmnd" id="energy_driver_enabled"></a>|`() -> bool`<br>Returns `true` if the Berry virtual driver is active, i.e. `OPTION_A 9` is configured on a GPIO.<br>See below for Berry Energy driver implementation.
 
-List of `energy` attributes that you can read or write:
+#### List of `energy` attributes that you can read or write:
 
 Attribute|Type|Description
 :---|:---|:---
@@ -877,7 +877,7 @@ write<a class="cmnd" id="wire_write"></a>|`(addr:int, reg:int, val:int, size:int
 read\_bytes<a class="cmnd" id="wire_read_bytes"></a>|`(addr:int, reg:int ,size:int) -> instance of bytes()`<br>Reads a sequence of `size` bytes from address `addr` register `reg`. Result is a `bytes()` instance or `bytes()` if not successful.`
 write\_bytes<a class="cmnd" id="wire_write_bytes"></a>|`(addr:int, reg:int, val:bytes) -> nil`<br>Writes the `val` bytes sequence as `bytes()` to address `addr` register `reg`.
 
-Low-level commands if you need finer control:
+#### Low-level `wire` commands if you need finer control:
 
 Wire Function|Parameters and details
 :---|:---
@@ -1072,7 +1072,7 @@ Alternatively, you can manage yourself redirects and retrieve the `Location` hea
     cl.close()
     ```
 
-Main functions:
+#### Main functions:
 
 webclient method|Parameters and details
 :---|:---
@@ -1087,7 +1087,7 @@ get\_string<a class="cmnd" id="wc_get_string"></a>|`() -> string`<br>Once a conn
 close<a class="cmnd" id="wc_close"></a>|`() -> nil`<br>Closes the connection and frees buffers. `close` can be called after `GET` or `POST` and is implicitly called by `get_string`. You don't usually need to use `close` unless you are only retrieving the result_code for a request and not interested in the content.
 write\_file<a class="cmnd" id="wc_write_file"></a>|`(file_name:string) -> int`<br>Downloads the binary content of the resource and stores it on the filesystem. Returns the number of bytes downloaded or -1 if an error occurred
 
-Request customization:
+#### Request customization:
 
 webclient method|Parameters and details
 :---|:---
@@ -1099,7 +1099,7 @@ set\_follow\_redirects<a class="cmnd" id="wc_set_follow_redirects"></a>|`(bool) 
 collect\_headers<a class="cmnd" id="wc_collect_headers"></a>|`( [header_name:string]* ) -> self`<br>Registers a list of header names that needs to be collected from the response. Pass multiple strings as separate arguments (not as a list).
 get\_header<a class="cmnd" id="wc_get_header"></a>|`(header_name:string) -> string`<br>Returns the header value for a header name (case sensitive). Returns "" (empty string) if no header.
 
-Static utility methods:
+#### Static utility methods:
 
 webclient static method|Parameters and details
 :---|:---
@@ -1124,7 +1124,7 @@ content\_send<a class="cmnd" id="ws_content_send"></a>|`(string) -> nil`<br>Send
 content\_button<a class="cmnd" id="ws_content_button"></a>|`([button:int]) -> nil`<br>Displays a standard button by code, using Tasmota localization. Possible values are `webserver.BUTTON_CONFIGURATION`, `webserver.BUTTON_INFORMATION`, `webserver.BUTTON_MAIN`, `webserver.BUTTON_MANAGEMENT`, `webserver.BUTTON_MODULE`. Default is `webserver.BUTTON_MAIN`.
 html\_escape<a class="cmnd" id="ws_html_escape"></a>|`(string) -> string`<br>Escapes characters to safe HTML.
 
-Low-level functions if you want to display custom pages and content:
+#### Low-level functions if you want to display custom pages and content:
 
 General Function|Parameters and details
 :---|:---
@@ -2224,10 +2224,10 @@ The core class is `light_state` which represents a virtual light.
 
 Methods|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_md5_init"></a>|`light_state.init(channels:int) -> instance`<br>Creates a `light_state` instance for a light with `channels` channels.<BR>Constants are:<BR>`light_state.RELAY` = `0`<BR>`light_state.DIMMER` = `1`<BR>`light_state.CT` = `2`<BR>`light_state.RGB` = `3`<BR>`light_state.RGBW` = `4`<BR>`light_state.RGBCT` = `5`
+init<a class="cmnd" id="light_state_init"></a>|`light_state.init(channels:int) -> instance`<br>Creates a `light_state` instance for a light with `channels` channels.<BR>Constants are:<BR>`light_state.RELAY` = `0`<BR>`light_state.DIMMER` = `1`<BR>`light_state.CT` = `2`<BR>`light_state.RGB` = `3`<BR>`light_state.RGBW` = `4`<BR>`light_state.RGBCT` = `5`
 signal_change|`signal_change() -> nil`<br>Called when a changed was triggered by Alexa.<BR>You can sub-class this class and override this method. Alternatively you can also poll for any change.
 
-`light_state` getters:
+#### `light_state` getters:
 
 Attributes|Parameters and details
 :---|:---
@@ -2244,7 +2244,7 @@ x<BR>y|`(float)` x/y color as floats (0.0 .. 1.0)
 mode_ct<BR>mode_rgb|`(bool)` light is in RGB or CT mode
 get|`get() -> map` returns the complete state of the light as a map<BR>Example:<BR>`{'rgb': '1E285A', 'hue': 230, 'type': 5, 'power': false, 'bri': 90, 'mode_rgb': true, 'sat': 170, 'mode_ct': false, 'channels': [30, 40, 90, 0, 0]}`
 
-`light_state` setters:
+#### `light_state` setters:
 
 Methods|Parameters and details
 :---|:---
@@ -2258,7 +2258,7 @@ set\_hue16sat|`set_hue16sat(hue16:int, sat:int) -> nil` sets hue16 and saturatio
 set\_rgb|`set_rgb(r:int, g:int, b=int) -> nil` sets red/green/blue channels (0..255 x 3)
 set\_xy|`set_xy(x:float, y:float) -> nil` sets color as x/y (0.0 .. 1.0 x 2)
 
-`light_state` static helper functions:
+#### `light_state` static helper functions:
 
 Methods|Parameters and details
 :---|:---
@@ -2302,7 +2302,7 @@ Note: the following are only available when compiling with `#define USE_ZIGBEE`
 
 Internally, the Tasmota Zigbee engine calls `callBerryZigbeeDispatcher()` at key points to allow your Berry code to take over and change messages on-the-fly.
 
-### `import zigbee`
+### `zigbee module`
 
 First step is to use `import zigbee` which returns an instance (monad) of `zb_coord()`.
 
@@ -2433,7 +2433,7 @@ zigbee.add_handler(my_handler)
 # zigbee.remove_handler(my_handler)
 ```
 
-The `attr_list` is of class `zcl_attribute_list` and can be accessed with `zigbee.zcl_attribute_list`.
+#### The `attr_list` is of class `zcl_attribute_list` and can be accessed with `zigbee.zcl_attribute_list`.
 
 Methods|Parameters and details
 :---|:---
@@ -2443,7 +2443,7 @@ item<BR>[x]|`item(index:int) -> instance` or `[index:int] -> instance`<BR>Retrie
 new\_head|`new_head(attribute:instance of zigbee.zcl_attribute_list) -> self`<BR>Adds a new attribute at the beginning (head) of the list
 new\_tail|`new_tail(attribute:instance of zigbee.zcl_attribute_list) -> self`<BR>Adds a new attribute at the end (tail) of the list
 
-Variables of `zcl_attribute_list` for the entire list and common to all attributes:
+#### Variables of `zcl_attribute_list` for the entire list and common to all attributes:
 
 Attributes (read or write)|Details
 :---|:---
@@ -2451,7 +2451,7 @@ Attributes (read or write)|Details
 `src_ep`|`uint8` source endpoint of the message
 `lqi`|`uint8` lqi for the message received (link quality)
 
-The `zcl_attribute_list` contains a list of `zcl_attribute` instance.
+#### The `zcl_attribute_list` contains a list of `zcl_attribute` instance.
 
 Attributes (read or write)|Details
 :---|:---
@@ -2469,7 +2469,7 @@ Attributes (read or write)|Details
 `attr_base`|`int` offset to be applied or `0`
 `attr_type`|`uint8` ZCL type byte for the received attribute
 
-`zcl_attribute_list` methods:
+#### `zcl_attribute_list` methods:
 
 Methods|Parameters and details
 :---|:---
