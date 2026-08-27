@@ -341,10 +341,10 @@ cmnd/ble_esp32/EQ3/001A2216A458/settime
 
 Set a custom time and date manually (byte-by-byte decimal to hexadecimal conversion):
 
-* Date and time: August 15th, 2026 at 14:00:00
-* Decimal representation: `26 - 08 - 15 - 14:00:00`
-* Hexadecimal conversion: `1A - 08 - 0F - 0E:00:00` (`YYMMDDHHMMSS` in hex)
-* Concatenated payload: `1A080F0E0000`
+* Date and time: August 15th, 2026 at 14:30:00
+* Decimal representation: `26 - 08 - 15 - 14:30:00`
+* Hexadecimal conversion: `1A - 08 - 0F - 0E:1E:00` (`YYMMDDHHMMSS` in hex)
+* Concatenated payload: `1A080F0E1E00`
 
 ```mqtt
 cmnd/ble_esp32/EQ3/001A2216A458/settime 1A080F0E0000
@@ -361,7 +361,7 @@ Alternatively, use this interactive generator to create the command payload for 
   </div>
   <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
 	<span>Resulting Command:</span>
-	<code id="trv-result" style="background-color: #e0e0e0; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 13px;">TRV 001A2216A458 settime ...</code>
+	<code id="trv-result" style="background-color: var(--md-default-bg-color); color: var(--md-typeset-color); padding: 5px 8px; border-radius: 4px; font-weight: bold; font-size: 13px; border: 1px solid #dcdcdc;">TRV &lt;MAC&gt; settime ...</code>
   </div>
 </div>
 
@@ -381,13 +381,14 @@ function generateTrvHex() {
   const mm = String(d.getMinutes()).padStart(2, '0');
   const ss = String(d.getSeconds()).padStart(2, '0');
   
+  // Helper function to convert numeric string values to a 2-digit uppercase hex string
   const toHex = val => parseInt(val, 10).toString(16).toUpperCase().padStart(2, '0');
   const hexStr = toHex(yy) + toHex(MM) + toHex(dd) + toHex(hh) + toHex(mm) + toHex(ss);
   
-  document.getElementById('trv-result').innerText = "TRV 001A2216A458 settime " + hexStr;
+  document.getElementById('trv-result').innerText = "TRV <MAC> settime " + hexStr;
 }
 
-// Zeit- und Datumsobjekt für die lokale Zeitzone des Nutzers erstellen
+// Create a date and time object based on the user's local timezone
 const localNow = new Date();
 const localYear = localNow.getFullYear();
 const localMonth = String(localNow.getMonth() + 1).padStart(2, '0');
@@ -396,7 +397,7 @@ const localHours = String(localNow.getHours()).padStart(2, '0');
 const localMinutes = String(localNow.getMinutes()).padStart(2, '0');
 const localSeconds = String(localNow.getSeconds()).padStart(2, '0');
 
-// Felder beim Laden der Seite exakt mit lokalen Werten füllen
+// Pre-fill input fields with the local date and time values on page load
 document.getElementById('trv-date').value = localYear + '-' + localMonth + '-' + localDay;
 document.getElementById('trv-time').value = localHours + ':' + localMinutes + ':' + localSeconds;
 </script>
