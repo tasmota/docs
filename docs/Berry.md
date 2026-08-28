@@ -1169,7 +1169,7 @@ close<a class="cmnd" id="tcpclient_close"></a>|`close() -> nil`<BR>Drops the cur
 write<a class="cmnd" id="tcpclient_write"></a>|`write(content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
 available<a class="cmnd" id="tcpclient_available"></a>|`available() -> int`<BR>Returns the number of bytes received in buffer and ready to be read.
 read<a class="cmnd" id="tcpclient_read"></a>|`read([max_len:int]) -> string`<BR>Returns all the bytes received in Rx buffer as `string`.<br>Optional `max_len` parameter limits the number of characters returned, or read as much as possible by default.
-readbytes<a class="cmnd" id="tcpclient_readbytes"></a>|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.
+readbytes<a class="cmnd" id="tcpclient_readbytes"></a>|`readbytes([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.
 
 Full example:
 
@@ -1214,7 +1214,7 @@ available<a class="cmnd" id="tcpclientasync_available"></a>|`available() -> int`
 close<a class="cmnd" id="tcpclientasync_close"></a>|`close() -> nil`<BR>Close the current connection and free the file descriptor.
 write<a class="cmnd" id="tcpclientasync_write"></a>|`write(content:string or bytes) -> int`<BR>Accepts either a string or a bytes buffer, returns the number of bytes sent. It's you responsibility to resend the missing bytes.<BR>Returns `0` if something went wrong.
 read<a class="cmnd" id="tcpclientasync_read"></a>|`read([max_len:int]) -> string`<BR>Returns all the bytes received in Rx buffer as `string`.<br>Optional `max_len` parameter limits the number of characters returned, or read as much as possible by default. However in the non-blocking version, limiting receive buffer will truncate (and lose) any extra data.
-readbytes<a class="cmnd" id="tcpclientasync_readbytes"></a>|`read([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.  However in the non-blocking version, limiting receive buffer will truncate (and lose) any extra data.
+readbytes<a class="cmnd" id="tcpclientasync_readbytes"></a>|`readbytes([max_bytes:int]) -> bytes()`<BR>Returns all the bytes received in Rx buffer as `bytes()`.<br>Optional `max_bytes` parameter limits the number of bytes returned, or read as much as possible by default.  However in the non-blocking version, limiting receive buffer will truncate (and lose) any extra data.
 info<a class="cmnd" id="tcpclientasync_info"></a>|`info() -> map`<BR>Returns a map with various information about the socket.<BR>Example: `{'listening': true, 'local_addr': '192.168.1.20', 'available': false, 'fd': 50, 'remote_addr': '192.168.1.54', 'connected': true, 'local_port': 64808, 'remote_port': 53469}`<BR>`fd`: the file descriptor number used internally<BR>`connected`, `listening`, `available`: values of corresponding methods<BR>`remote_addr`, `remote_port`: remote address used and remote port<BR>`local_addr`, `local_port`: local address used and local port.
 
 
@@ -1296,12 +1296,12 @@ When creating a local port, you need to use `udp->begin(<ip>, <port)>`. If `<ip>
 
 General Function|Parameters and details
 :---|:---
-udp()<a class="cmnd" id="udp_ctor"></a>|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
+udp()<a class="cmnd" id="udp_constructor"></a>|`udp() -> <instance udp>`<br>Creates an instance of `udp` class.
 begin<a class="cmnd" id="udp_begin"></a>|`begin(interface:string, port:int) -> bool`<BR>Create a UDP listener and sender on a specific interface (IP address) or on all interfaces if `interface` is an empty string<BR>Listen on a specific `port` number, or set `0` to choose a random free port for sending only<BR>Returns `true` if successful.
-begin_multicast<a class="cmnd" id="udp_begin_multicast"></a>|`begin(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
+begin_multicast<a class="cmnd" id="udp_begin_multicast"></a>|`begin_multicast(ip:string, port:int) -> bool`<BR>Create a UDP listener and sender on interface `ip` and `port`. `ip` must be a multicast address.<BR>Returns `true` if successful.
 close<a class="cmnd" id="udp_close"></a>|`close() -> bil`<BR>Closes UDP listener and sender, and frees resources. You can't send or receive anymore with this instance.
 send<a class="cmnd" id="udp_send"></a>|`send(addr:string, port:int, payload:bytes) -> bool`<BR>Sends a packet to address `addr`, port `port` and message as `bytes()` buffer.<BR>Returns `true` if successful.
-send_multicast<a class="cmnd" id="udp_send_multicast"></a>|`send(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.<BR>You can also send a multicast packet with `send` if you specify the multicast address and port.
+send_multicast<a class="cmnd" id="udp_send_multicast"></a>|`send_multicast(payload:bytes) -> bool`<BR>Sends a payload as `bytes()` buffer to the multicast address. `begin_multicast()` must have been previously called.<BR>Returns `true` if successful.<BR>You can also send a multicast packet with `send` if you specify the multicast address and port.
 read<a class="cmnd" id="udp_read"></a>|`read() -> bytes() or `nil`<BR>Reads any received udp packet as bytes() buffer, or `nil` if no packet was received.
 remote_ip<a class="cmnd" id="udp_remote_ip"></a>|`remote_ip (string or nil)`<BR>Instance variable containing the remote ip (as string) from the last successful `read()` command.
 remote_port<a class="cmnd" id="udp_remote_port"></a>|`remote_port (int or nil)`<BR>Instance variable containing the remote port (as int) from the last successful `read()` command.
@@ -1401,7 +1401,7 @@ mdns.add_service("_matterc","_udp", 5540, {"VP":"65521+32768", "SII":5000, "SAI"
 General Function|Parameters and details
 :---|:---
 start<a class="cmnd" id="mdns_start"></a>|`mdns.start([hostname: string]) -> nil`<br>Start or restart mDNS, specify a new hostname if needed or implicitly use `tasmota.hostname()` if none provided (default)
-set_hostname<a class="cmnd" id="mdns_set_hostname"></a>|`mdsn.set_hostname(hostname:string) -> nil`<br>Change the hostname
+set_hostname<a class="cmnd" id="mdns_set_hostname"></a>|`mdns.set_hostname(hostname:string) -> nil`<br>Change the hostname
 add_service<a class="cmnd" id="mdns_add_service"></a>|`mdns.add_service(service:string, proto:string, port:int, txt:map) -> nil`<br>Add a service declaration using the current hostname as instance name, and specify TXT fields as a `map`
 
 ### Addressable LEDs (WS2812, SK6812)
@@ -1531,11 +1531,11 @@ Tasmota Function|Parameters and details
 run<a class="cmnd" id="ULP_run"></a>|`ULP.run() -> nil`<br>Execute ULP program
 load<a class="cmnd" id="ULP_load"></a>|`ULP.load(code:bytes) -> nil`<br>Load ULP code from a bytes() buffer into memory
 set_mem<a class="cmnd" id="ULP_set_mem"></a>|`ULP.set_mem(addr:int, value:int) -> nil`<br>Set memory position in RTC_SLOW_MEM to value. Address and Value are 32-bit!!
-get_mem<a class="cmnd" id="ULP_get_mem"></a>|`ULP.set_mem(addr:int) -> int16_t`<br>Get value from memory position in RTC_SLOW_MEM. By hardware design only the lower 16-bit are usable, so this function already masks out the upper 16-bit
-gpio_init <a class="cmnd" id="ULP_gpio_init"></a>|`ULP.gpio_init(pin:int, mode:int) -> pin:int`<br>Makes a valid GPIO pin accessible to the ULP and sets the mode according to the enum 'rtc_gpio_mode_t', returns the same pin, but translated to the RTC system, which is the numbering scheme in the assembly code
-adc_config <a class="cmnd" id="ULP_adc_config"></a>|`ULP.adc_config(channel:int, attenuation:int, width:int) -> nil`<br>Configures ADC pin usage for the ULP according to the enums ' adc1_channel_t', 'adc_atten_t' and 'adc_bits_width_t'
-wake_period <a class="cmnd" id="ULP_wake_period"></a>|`ULP.wake_period(register:int, time:int) -> nil`<br>Configures one of 5 (0..4) wake timer registers with the time value in microseconds
-sleep <a class="cmnd" id="ULP_sleep"></a>|`ULP.wake_period([time:int]) -> nil`<br>Starts deep sleep mode and allow wake up by the ULP, with an optional time value in seconds an additional wake up timer gets started
+get_mem<a class="cmnd" id="ULP_get_mem"></a>|`ULP.get_mem(addr:int) -> int16_t`<br>Get value from memory position in RTC_SLOW_MEM. By hardware design only the lower 16-bit are usable, so this function already masks out the upper 16-bit
+gpio_init<a class="cmnd" id="ULP_gpio_init"></a>|`ULP.gpio_init(pin:int, mode:int) -> pin:int`<br>Makes a valid GPIO pin accessible to the ULP and sets the mode according to the enum 'rtc_gpio_mode_t', returns the same pin, but translated to the RTC system, which is the numbering scheme in the assembly code
+adc_config<a class="cmnd" id="ULP_adc_config"></a>|`ULP.adc_config(channel:int, attenuation:int, width:int) -> nil`<br>Configures ADC pin usage for the ULP according to the enums ' adc1_channel_t', 'adc_atten_t' and 'adc_bits_width_t'
+wake_period<a class="cmnd" id="ULP_wake_period"></a>|`ULP.wake_period(register:int, time:int) -> nil`<br>Configures one of 5 (0..4) wake timer registers with the time value in microseconds
+sleep<a class="cmnd" id="ULP_sleep"></a>|`ULP.sleep([time:int]) -> nil`<br>Starts deep sleep mode and allow wake up by the ULP, with an optional time value in seconds an additional wake up timer gets started
   
 More information (including suggestions for a toolchain) on the [ULP page](ULP.md).
   
@@ -1604,7 +1604,7 @@ match<a class="cmnd" id="re_match"></a>|`re.match(pattern:string or bytes, paylo
 match2<a class="cmnd" id="re_match2"></a>|`re.match2(pattern:string or bytes, payload:string [, offset:int]) -> list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `match` is that the first element contains the number of matched characters instead of the matched string, which saves memory for large matches.<br>Takes an optional second argument offset which indicates at which character to start the in the payload (default 0).
 searchall<a class="cmnd" id="re_searchall"></a>|`re.searchall(pattern:string or bytes, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of list of matches, or empty list of no match. `limit` allows to limit the number of matches.
 matchall<a class="cmnd" id="re_matchall"></a>|`re.matchall(pattern:string or bytes, payload:string [, limit:string]) -> list of list of strings`<br>Returns the list of matches, or empty list of no match. The difference with `searchall` is that there should not be any gaps between matches.  `limit` allows to limit the number of matches.
-split<a class="cmnd" id="re_split"></a>|`re.search(pattern:string or bytes, payload:string) -> list of strings`<br>Returns the list of strings from split, or a list with a single element containing the entire string if no match
+split<a class="cmnd" id="re_split"></a>|`re.split(pattern:string or bytes, payload:string) -> list of strings`<br>Returns the list of strings from split, or a list with a single element containing the entire string if no match
 compilebytes<a class="cmnd" id="re_compilebytes"></a>|`re.compilebytes(pattern:string) -> instance of bytes()`<br>Compiles the regex into a reusable faster bytecode. You can then use the `bytes()` compiled pattern as a replacement for the patter string
 compile<a class="cmnd" id="re_compile"></a>|**Deprecated**, use `compilebytes` instead.<br>`re.compile(pattern:string) -> instance of <re_pattern>`<br>Compiles the regex into a reusable faster bytecode. You can then call the following methods:<br>`search()`, `match()`, `split()` similarly to the module's functions.
 dump<a class="cmnd" id="re_dump"></a>|`re.dump(pattern:bytes) -> nil`<br>Prints to the console a dump of the compiled pattern.<br>Only if compiled with `#define USE_BERRY_DEBUG` and only for curiosity/debugging purpose.
