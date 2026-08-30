@@ -27,7 +27,8 @@ An ESP8266 with 2MB flash dual relay device with Energy Monitoring. Slightly sma
 
 The Shelly 2.5 model comes with a partially exposed programming/debug header which can be used to flash Tasmota on the device. A USB-to-UART adapter is needed as well as a reliable 3.3V with at least 350 mA drive capability. The following diagram shows the device pinout and power source voltage selection jumper.
 
-<img src="https://kb.shelly.cloud/__attachments/237502485/2.5-addon-interface.png?inst-v=c5a6a296-4215-467c-94e2-cd19f02ebcf8" height="250" />
+<img src="https://web.archive.org/web/20251119195539/https://kb.shelly.cloud/__attachments/237502485/2.5-addon-interface.png?inst-v=c5a6a296-4215-467c-94e2-cd19f02ebcf8" height="250" />
+
 
 The onboard connector is 1.27mm raster with 1mm diameter holes. Normal Dupont cables won't fit. To avoid damaging the pcb, use either a stripped 24 AWG Ethernet cable and breadboard as an adapter, or female header socket legs (see image below). The legs of a female header socket fit nicely. Solder them to custom-crimped Dupont wires for use with your USB-to-UART adapter. These often come with Wemos D1 Mini boards in multiple lengths.
 
