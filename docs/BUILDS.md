@@ -25,7 +25,8 @@ Note: the `minimal` variant is not listed as it shouldn't be used outside of the
 | USE_WEBSEND_RESPONSE      | - | - / - | - | - | - | - |
 | USE_EMULATION_HUE         | x | x / x | - | x | - | - |
 | USE_EMULATION_WEMO        | x | x / x | - | x | - | - |
-| USE_DISCOVERY             | - | - / - | - | - | - | - |
+| USE_EMULATION_SHELLY      | - | - / x | - | - | - | - |
+| USE_DISCOVERY             | - | - / x | - | - | - | - |
 | WEBSERVER_ADVERTISE       | - | x / - | x | - | - | x |
 | MQTT_HOST_DISCOVERY       | - | - / - | - | - | - | - |
 | USE_TIMERS                | x | x / x | x | x | x | x |
