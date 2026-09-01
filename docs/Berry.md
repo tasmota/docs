@@ -2109,7 +2109,7 @@ Memory will be released automatically by Berry's garbage collector after deletio
 
 img Function|Parameters and details
 :---|:---
-from_jpeg|`img.from_jpeg(jpeg_buffer:bytes[, type:img.type]) -> nil` Copy JPEG image as byte buffer to the buffer of an `img` instance. If optional image type is provided, this will be converted on the fly. This will not reallocate the image buffer, if the size and format does not change.
+from_jpg|`img.from_jpg(jpg_buffer:bytes[, type:img.type]) -> nil` Copy JPEG image as byte buffer to the buffer of an `img` instance. If optional image type is provided, this will be converted on the fly. This will not reallocate the image buffer, if the size and format does not change.
 from_buffer|`img.from_buffer(image_data:bytes,width:int:height:int,type:img.type) -> nil` Construct image from raw image data for the types `RGB565`, `RGB888` and `GRAYSCALE`.
 get_buffer|`img.get_buffer([descriptor:bytes]) -> image_data:bytes` Returns the raw image data for any supported type. For `RGB565`, `RGB888` and `GRAYSCALE` a descriptor can be provided to get a ROI (region of interest).
 convert_to|`img.convert_to(type:img.type) -> nil` Internal conversion of the image format.
