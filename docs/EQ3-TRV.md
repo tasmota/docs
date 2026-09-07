@@ -70,13 +70,22 @@ function.
 4. Confirm by pressing the control wheel shortly.
  
 !!! note "Pairing Process"
-
-    * **Older firmware** (up to 1.20): No pairing needed. Just turn Bluetooth on (`bLE` to `On`).
-    * **Newer firmware** (from 1.46): You must pair the device manually:
-        1. Press and hold the control wheel on the TRV for 3 seconds until `PAIr` flashes on the display.
-        2. Tasmota will automatically calculate the PIN and complete the pairing in the background.
-
-    *Note:* Make sure the Eqiva smartphone app is closed, as the TRV only connects to one device at a time.
+    Depending on the firmware version of your TRV, physical pairing may be required:
+    
+    * **No pairing needed:** On older versions, it is sufficient to just turn Bluetooth on (`bLE` to `On`).
+    * **Manual pairing required:** If the device does not connect automatically, you must pair it manually via the Tasmota console.
+    
+      **Important:** Place the ESP32 and the TRV within a few centimeters of each other during setup. Pairing will fail if the distance is too large due to low signal strength during the initial key exchange.
+      
+      1. Press and hold the control wheel on the TRV until `PAIr` is briefly displayed.
+      2. The TRV will then temporarily display a 6-digit PIN code in two sequential parts (e.g., `123-` followed by `-456`).
+      3. Combine these parts into a single 6-digit PIN (e.g., `123456`).
+      4. Open the Tasmota Web Console and execute the [`BLEPair`](Commands.md#blepair) command using the TRV's MAC address and the PIN:  
+         `BLEPair <MAC> <PIN>`
+    
+    *Tip:* If you see a `FAILNOSERVICE` message in the Tasmota log, this is a primary indicator that pairing is required. Monitor the log and repeat the `BLEPair` command a few times if necessary, until the log explicitly confirms that it has successfully paired.
+    
+    *Note: Make sure the Eqiva smartphone app is closed, as the TRV only connects to one device at a time.*
 
 Next you will need to make sure that BLE is enabled in Tasmota:
 
@@ -347,7 +356,7 @@ Set a custom time and date manually (byte-by-byte decimal to hexadecimal convers
 * Concatenated payload: `1A080F0E1E00`
 
 ```mqtt
-cmnd/ble_esp32/EQ3/001A2216A458/settime 1A080F0E0000
+cmnd/ble_esp32/EQ3/001A2216A458/settime 1A080F0E1E00
 ```
 
 Alternatively, use this interactive generator to create the command payload for any custom date and time:
