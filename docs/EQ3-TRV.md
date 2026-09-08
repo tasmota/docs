@@ -81,7 +81,7 @@ function.
       2. The TRV will then temporarily display a 6-digit PIN code in two sequential parts (e.g., `123-` followed by `-456`).
       3. Combine these parts into a single 6-digit PIN (e.g., `123456`).
       4. Open the Tasmota Web Console and execute the [`BLEPair`](Commands.md#blepair) command using the TRV's MAC address and the PIN:  
-         `BLEPair <MAC> <PIN>`
+         `BLEPair <MAC or BLEAlias> <PIN>`
     
     *Tip:* If you see a `FAILNOSERVICE` message in the Tasmota log, this is a primary indicator that pairing is required. Monitor the log and repeat the `BLEPair` command a few times if necessary, until the log explicitly confirms that it has successfully paired.
     

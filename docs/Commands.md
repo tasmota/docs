@@ -1093,7 +1093,7 @@ BLEMaxAge<a class="cmnd" id="blemaxage"></a>|Set the timeout for device adverts.
 BLEMode<a class="cmnd" id="blemode"></a>|Change the operational mode of the BLE driver.<BR>`BLEMode0` = disable regular BLE scans.<BR>`BLEMode1` = BLE scan on command only.<BR>`BLEMode2` = regular BLE scanning (default).
 BLEName<a class="cmnd" id="blename"></a>|Read or write the name of a BLE device.<BR>`BLEName mac|alias` = read the name of a device using 1800/2A00.<BR>`BLEName mac|alias` = write the name of a device using 1800/2A00 - many devices are read only.
 BLEOp<a class="cmnd" id="bleop"></a>|Perform a simple active BLE operation (read/write/notify).<BR>see separate description in source code
-BLEPair<a class="cmnd" id="blepair"></a>|Authenticate and pair with a protected BLE device.<BR>`BLEPair <mac> <pin>` = Send the 6-digit PIN to pair with the device.
+BLEPair<a class="cmnd" id="blepair"></a>|Authenticate and pair with a protected BLE device.<BR>`BLEPair <MAC or BLEAlias> <PIN>` = send the 6-digit PIN to pair with the device
 BLEPeriod<a class="cmnd" id="bleperiod"></a>|Set the period for publish of BLE data<BR>`<value>` = set interval in seconds
 BLEScan<a class="cmnd" id="blescan"></a>|Cause/Configure BLE a scan<BR>`BLEScan0 0..1` = enable or disable Active scanning. (an active scan will gather extra data from devices, including name)<BR>`BLEScan` = Trigger a 20s scan now if in BLEMode1<BR>`BLEScan n` = Trigger a scan now for n seconds if in BLEMode1
 IBeacon<a class="cmnd" id="ibeacon"></a>|Enable or disable the iBeacon driver<BR>`IBeacon` = Get current state<BR>`IBeacon 0` = Disable<BR>`IBeacon 1` = Enable
