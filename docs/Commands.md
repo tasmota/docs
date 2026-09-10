@@ -1093,7 +1093,7 @@ BLEMaxAge<a class="cmnd" id="blemaxage"></a>|Set the timeout for device adverts.
 BLEMode<a class="cmnd" id="blemode"></a>|Change the operational mode of the BLE driver.<BR>`BLEMode0` = disable regular BLE scans.<BR>`BLEMode1` = BLE scan on command only.<BR>`BLEMode2` = regular BLE scanning (default).
 BLEName<a class="cmnd" id="blename"></a>|Read or write the name of a BLE device.<BR>`BLEName mac|alias` = read the name of a device using 1800/2A00.<BR>`BLEName mac|alias` = write the name of a device using 1800/2A00 - many devices are read only.
 BLEOp<a class="cmnd" id="bleop"></a>|Perform a simple active BLE operation (read/write/notify).<BR>see separate description in source code
-BLEPair<a class="cmnd" id="blepair"></a>|Authenticate and pair with a protected BLE device.<BR>`BLEPair <MAC or BLEAlias> <PIN>` = send the 6-digit PIN to pair with the device
+BLEPair<a class="cmnd" id="blepair"></a>|Authenticate and pair with a protected BLE device.<BR>`BLEPair <mac or blealias> <PIN>` = send the 6-digit PIN to pair with the device
 BLEPeriod<a class="cmnd" id="bleperiod"></a>|Set the period for publish of BLE data<BR>`<value>` = set interval in seconds
 BLEScan<a class="cmnd" id="blescan"></a>|Cause/Configure BLE a scan<BR>`BLEScan0 0..1` = enable or disable Active scanning. (an active scan will gather extra data from devices, including name)<BR>`BLEScan` = Trigger a 20s scan now if in BLEMode1<BR>`BLEScan n` = Trigger a scan now for n seconds if in BLEMode1
 IBeacon<a class="cmnd" id="ibeacon"></a>|Enable or disable the iBeacon driver<BR>`IBeacon` = Get current state<BR>`IBeacon 0` = Disable<BR>`IBeacon 1` = Enable
@@ -1113,9 +1113,9 @@ MI32Keys<a class="cmnd" id="mi32keys"></a>|Add one or more decryption keys by ma
 MI32Option<x\> n<a class="cmnd" id="mi32option"></a>| Set driver options at runtime<BR>`x=0` - 0 -> sends only recently received sensor data, 1 -> aggregates all recent sensors data types<BR>`x=1` - 0 -> shows full sensor data at TELEPERIOD, 1 -> disable sensor data at TELEPERIOD<BR>`x=2` - 0 -> sensor data only at TELEPERIOD (default and "usual" Tasmota style), 1 -> direct bridging of BLE-data to mqtt-messages<BR>`x=4` - 0 -> always display battery info, 1 -> disable "bogus" battery info from LYWSD03MMC and MHOC401<BR>`x=5` - 0 -> show all relevant BLE sensors, 1 -> show only sensors with a BLEAlias<BR>`x=6` - 0 -> normal sensor message, 1 -> publish on `tele/<mi32topic>/<name>` 1 sensor on flat JSON (see [Mi32Topic](#mi32topic)), 2 -> same as 1 with sensor name key
 MI32Page<a class="cmnd" id="mi32page"></a>|Display/Set the sensors per page in the web view.<BR>`MI32page` = show sensors per page.<BR>`MI32page n` = Set sensors per page to n.
 MI32Period<a class="cmnd" id="mi32period"></a>|Display/Set the active scan and tele period for the MI32 driver.<BR>`MI32Period` = display the period in seconds.<BR>`MI32Period n` = Set the MI driver active read and tele period to n seconds.
-MI32Time<a class="cmnd" id="mi32time"></a>|`<x>` = set the time on the device in slot `x`.
+MI32Time<a class="cmnd" id="mi32time"></a>|Send the current system time of Tasmota to the specified BLE device.<br>`MI32Time <mac or blealias or slot>`
 MI32Topic<a class="cmnd" id="mi32topic"></a>|Topic to be used with Mi32Option6 > 0 (default to `tasmota_ble`)
-MI32Unit<a class="cmnd" id="mi32unit"></a>|`<x>` = set the current Tasmota temperature unit as the temp unit for sensor in slot `x`.
+MI32Unit<a class="cmnd" id="mi32unit"></a>|Toggle the temperature unit (Celsius / Fahrenheit) on the screen of the specified BLE device.<br>`MI32Unit <mac or blealias or slot>`
 
 ### Camera
 
