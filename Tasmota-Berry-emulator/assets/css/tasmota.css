@@ -1,0 +1,2669 @@
+/**
+ * Tasmota WebUI CSS Variables and Base Styles
+ * Based on Tasmota's embedded web interface design system
+ * Reference: .doc_for_ai/TASMOTA_WEBUI_CODING_GUIDE.md
+ */
+
+/* ============================================
+   CSS Custom Properties (Color Variables)
+   ============================================ */
+:root {
+    /* Background colors */
+    --c_bg: #252525;        /* Main background color */
+    --c_frm: #4f4f4f;       /* Form/fieldset background */
+
+    /* Text colors */
+    --c_ttl: #eaeaea;       /* Title text color */
+    --c_txt: #eaeaea;       /* Regular text color */
+    --c_txtwrn: #ff5661;    /* Warning text color */
+    --c_txtscc: #008000;    /* Success text color */
+
+    /* Button colors */
+    --c_btn: #1fa3ec;       /* Primary button color (blue) */
+    --c_btnoff: #08405e;    /* Disabled/off button color */
+    --c_btntxt: #faffff;    /* Button text color */
+    --c_btnhvr: #0e70a4;    /* Button hover color */
+    --c_btnrst: #d43535;    /* Reset/danger button color (red) */
+    --c_btnrsthvr: #931f1f; /* Reset button hover */
+    --c_btnsv: #47c266;     /* Save button color (green) */
+    --c_btnsvhvr: #5aaf6f;  /* Save button hover */
+
+    /* Input colors */
+    --c_in: #dddddd;        /* Input background */
+    --c_intxt: #000000;     /* Input text color */
+
+    /* Console colors */
+    --c_csl: #1f1f1f;       /* Console background */
+    --c_csltxt: #65c115;    /* Console text color (green) */
+
+    /* Tab colors */
+    --c_tab: #999999;       /* Tab color */
+    --c_tabtxt: #faffff;    /* Tab text color */
+    
+    /* Additional colors */
+    --c_dis: #888888;       /* Disabled element color */
+}
+
+/* ============================================
+   Base Element Styling (matches Tasmota exactly)
+   ============================================ */
+div, fieldset, input, select {
+    padding: 5px;
+    font-size: 1em;
+}
+
+fieldset {
+    background: var(--c_frm);
+}
+
+p {
+    margin: 0.5em 0;
+}
+
+/* ============================================
+   Input Styling
+   Reference: TASMOTA_WEBUI_CODING_GUIDE.md "Input Styling" section
+   ============================================ */
+
+/* Text inputs */
+input {
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    background: var(--c_in);
+    color: var(--c_intxt);
+    border: 1px solid var(--c_frm);
+    border-radius: 0.2rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--c_btn);
+}
+
+/* Checkboxes and radio buttons - matches original Tasmota styling */
+input[type=checkbox],
+input[type=radio] {
+    width: 1em;
+    margin-right: 6px;
+    vertical-align: -1px;
+}
+
+/* Labels for checkboxes/radios - inline display */
+label {
+    cursor: pointer;
+    display: inline;
+}
+
+/* Range sliders */
+input[type=range] {
+    width: 99%;
+    height: 20px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* Range slider track - WebKit */
+input[type=range]::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, #000, #fff);
+}
+
+/* Range slider thumb - WebKit */
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--c_btn);
+    border: 2px solid var(--c_btntxt);
+    margin-top: -5px;
+    cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+    background: var(--c_btnhvr);
+}
+
+/* Range slider track - Firefox */
+input[type=range]::-moz-range-track {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, #000, #fff);
+}
+
+/* Range slider thumb - Firefox */
+input[type=range]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--c_btn);
+    border: 2px solid var(--c_btntxt);
+    cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb:hover {
+    background: var(--c_btnhvr);
+}
+
+/* Select dropdowns */
+select {
+    width: 100%;
+    background: var(--c_in);
+    color: var(--c_intxt);
+    border: 1px solid var(--c_frm);
+    border-radius: 0.2rem;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--c_btn);
+}
+
+/* Textarea */
+textarea {
+    resize: vertical;
+    width: 98%;
+    height: 318px;
+    padding: 5px;
+    overflow: auto;
+    background: var(--c_bg);
+    color: var(--c_csltxt);
+    border: 1px solid var(--c_frm);
+    border-radius: 0.2rem;
+    font-family: monospace;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--c_btn);
+}
+
+/* Password field with toggle checkbox */
+input[type=password],
+input[type=text] {
+    padding: 5px 8px;
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+body {
+    text-align: center;
+    font-family: verdana, sans-serif;
+    background: var(--c_bg);
+}
+
+/* ============================================
+   Table Styling
+   ============================================ */
+td {
+    padding: 0px;
+}
+
+/* ============================================
+   Button System
+   ============================================ */
+button {
+    border: 0;
+    border-radius: 0.3rem;
+    background: var(--c_btn);
+    color: var(--c_btntxt);
+    line-height: 2.4rem;
+    font-size: 1.2rem;
+    width: 100%;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--c_btnhvr);
+}
+
+/* Danger/Reset button (red) */
+.bred {
+    background: var(--c_btnrst);
+}
+
+.bred:hover {
+    background: var(--c_btnrsthvr);
+}
+
+/* Save/Success button (green) */
+.bgrn {
+    background: var(--c_btnsv);
+}
+
+.bgrn:hover {
+    background: var(--c_btnsvhvr);
+}
+
+/* ============================================
+   Link Styling
+   ============================================ */
+a {
+    color: var(--c_btn);
+    text-decoration: none;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.p {
+    float: left;
+    text-align: left;
+}
+
+.q {
+    float: right;
+    text-align: right;
+}
+
+/* Range slider container with gradient background */
+.r {
+    border-radius: 0.3em;
+    padding: 2px;
+    margin: 4px 2px;
+}
+
+/* Hue slider gradient (rainbow) */
+.r-hue {
+    background-image: linear-gradient(to right, #800, #f00 5%, #ff0 20%, #0f0 35%, #0ff 50%, #00f 65%, #f0f 80%, #f00 95%, #800);
+}
+
+/* Saturation slider gradient */
+.r-sat {
+    background-image: linear-gradient(to right, #ccc, #6aff00);
+}
+
+/* Brightness slider gradient (black to white) */
+.r-bri {
+    background-image: linear-gradient(to right, #000, #fff);
+}
+
+/* Brightness slider with boost zone (semi-linear: 0-100 in 3/4, 100-200 in 1/4) */
+/* 0-75% slider = 0-100 brightness (black to white), 75-100% slider = 100-200 brightness (white to violet) */
+/* Thin dark marker at ~74% visual position to align with thumb at 75% slider value */
+/* (thumb center doesn't align perfectly with background % due to thumb width) */
+.r-bri-boost {
+    background-image: linear-gradient(to right, #000 0%, #fff 73.1%, #666 73.1%, #666 74.2%, #fff 74.2%, #e8d0ff 87%, #d0a0ff 100%);
+}
+
+/* Custom gradient - can be set via inline style */
+.r input[type=range] {
+    background: transparent;
+}
+
+.r input[type=range]::-webkit-slider-runnable-track {
+    background: transparent;
+}
+
+.r input[type=range]::-moz-range-track {
+    background: transparent;
+}
+
+.hf {
+    display: none;
+}
+
+/* ============================================
+   Additional utility classes for simulator
+   ============================================ */
+
+/* Text colors */
+.txt-warn {
+    color: var(--c_txtwrn);
+}
+
+.txt-success {
+    color: var(--c_txtscc);
+}
+
+/* Off state button */
+.boff {
+    background: var(--c_btnoff);
+}
+
+/* Disabled button styling */
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    background: var(--c_btn);
+}
+
+.bred:disabled:hover {
+    background: var(--c_btnrst);
+}
+
+.bgrn:disabled:hover {
+    background: var(--c_btnsv);
+}
+
+/* Legacy disabled class */
+.bdis {
+    background: var(--c_dis);
+    cursor: not-allowed;
+}
+
+.bdis:hover {
+    background: var(--c_dis);
+}
+
+/* ============================================
+   Status Messages (for simulator feedback)
+   ============================================ */
+.status {
+    padding: 0.5em;
+    margin: 0.5em 0;
+}
+
+.status.success {
+    color: var(--c_txtscc);
+}
+
+.status.error {
+    color: var(--c_txtwrn);
+}
+
+/* ============================================
+   Console styling (for simulator)
+   Matches Tasmota console appearance
+   ============================================ */
+.console {
+    background: var(--c_csl);
+    color: var(--c_csltxt);
+    font-family: monospace;
+    padding: 5px;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+/* Console textarea - Tasmota style */
+.console-output {
+    resize: both;  /* Allow horizontal and vertical resize */
+    width: 100%;
+    height: 200px;
+    padding: 5px;
+    overflow: auto;
+    background: var(--c_csl);
+    color: var(--c_csltxt);
+    border: 1px solid gray;
+    border-radius: 0;
+    font-family: monospace;
+    font-size: 1em;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-sizing: border-box;
+}
+
+/* Let browser show native resize handle with diagonal lines */
+
+.console-output:focus {
+    outline: none;
+    border-color: var(--c_btn);
+}
+
+/* Console container fieldset */
+.console-fieldset {
+    background: var(--c_frm);
+}
+
+/* Console header with controls */
+.console-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.console-header label {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+/* Auto-scroll checkbox styling */
+.console-header input[type=checkbox] {
+    width: 1em;
+    margin-right: 6px;
+}
+
+/* Console timestamp styling */
+.console-timestamp {
+    color: var(--c_tab);
+    font-size: 0.85em;
+}
+
+/* Console message types */
+.console-info {
+    color: var(--c_csltxt);
+}
+
+.console-warn {
+    color: var(--c_txtwrn);
+}
+
+.console-error {
+    color: var(--c_txtwrn);
+    font-weight: bold;
+}
+
+.console-success {
+    color: var(--c_txtscc);
+}
+
+/* Use default browser scrollbar styling (like original Tasmota Console) */
+
+/* ============================================
+   Responsive Layout
+   Mobile-first design with min-width:340px
+   Reference: Task 8.6 - Implement responsive layout
+   ============================================ */
+
+/* Main container - mobile-first with min-width */
+.main-container {
+    background: var(--c_bg);
+    text-align: left;
+    display: inline-block;
+    color: var(--c_txt);
+    min-width: 340px;
+    max-width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 5px;
+}
+
+/* Touch-friendly button sizing */
+button {
+    min-height: 44px;  /* Apple's recommended minimum touch target */
+    touch-action: manipulation;  /* Prevent double-tap zoom */
+}
+
+/* Touch-friendly input sizing */
+input,
+select,
+textarea {
+    min-height: 44px;
+    touch-action: manipulation;
+}
+
+/* Smaller height for checkboxes and radios */
+input[type=checkbox],
+input[type=radio] {
+    min-height: auto;
+    width: 1.2em;
+    height: 1.2em;
+}
+
+/* Range slider touch optimization */
+input[type=range] {
+    min-height: 44px;
+    padding: 10px 0;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+}
+
+/* LED canvas container - responsive */
+#led-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#led-canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Fieldset responsive adjustments */
+fieldset {
+    margin: 0 0 10px 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+fieldset legend {
+    padding: 0 5px;
+}
+
+/* Table responsive layout */
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+table td {
+    vertical-align: middle;
+}
+
+/* Status display - now handled by .led-status-compact */
+
+/* ============================================
+   Media Queries - Responsive Breakpoints
+   ============================================ */
+
+/* Extra small devices (phones, less than 400px) */
+@media screen and (max-width: 399px) {
+    .main-container {
+        min-width: 320px;
+        padding: 0 3px;
+    }
+    
+    button {
+        font-size: 1rem;
+        line-height: 2.2rem;
+    }
+    
+    fieldset {
+        padding: 8px;
+    }
+    
+    textarea,
+    .console-output {
+        height: 150px;
+        font-size: 0.9em;
+    }
+    
+    #code-editor {
+        height: 150px !important;
+    }
+    
+    h2 {
+        font-size: 1.3em;
+    }
+    
+    h3 {
+        font-size: 1.1em;
+    }
+}
+
+/* Small devices (phones, 400px to 599px) */
+@media screen and (min-width: 400px) and (max-width: 599px) {
+    .main-container {
+        min-width: 340px;
+    }
+    
+    textarea,
+    .console-output {
+        height: 180px;
+    }
+    
+    #code-editor {
+        height: 180px !important;
+    }
+}
+
+/* Medium devices (tablets, 600px to 899px) */
+@media screen and (min-width: 600px) and (max-width: 899px) {
+    .main-container {
+        min-width: 400px;
+        max-width: 600px;
+    }
+    
+    textarea,
+    .console-output {
+        height: 220px;
+    }
+    
+    #code-editor {
+        height: 220px !important;
+    }
+    
+    /* Two-column button layout for tablets */
+    .button-row {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .button-row button {
+        flex: 1;
+    }
+}
+
+/* Large devices (desktops, 900px and up) */
+@media screen and (min-width: 900px) {
+    .main-container {
+        min-width: 500px;
+        max-width: 700px;
+    }
+    
+    textarea,
+    .console-output {
+        height: 250px;
+    }
+    
+    #code-editor {
+        height: 250px !important;
+    }
+}
+
+/* High DPI / Retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Ensure crisp rendering on high DPI screens */
+    button,
+    input,
+    select {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Landscape orientation on mobile */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    textarea,
+    .console-output {
+        height: 120px;
+    }
+    
+    #code-editor {
+        height: 120px !important;
+    }
+    
+    fieldset {
+        margin-bottom: 5px;
+    }
+    
+    p {
+        margin: 0.3em 0;
+    }
+}
+
+/* Print styles - hide interactive elements */
+@media print {
+    button,
+    input[type=range],
+    .console-fieldset {
+        display: none;
+    }
+    
+    .main-container {
+        background: white;
+        color: black;
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    button,
+    input,
+    select {
+        transition: none;
+        -webkit-transition: none;
+    }
+}
+
+/* Dark mode preference (already dark by default, but ensure consistency) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}
+
+/* ============================================
+   Touch Device Optimizations
+   ============================================ */
+
+/* Prevent text selection on buttons during touch */
+button {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Active state for touch feedback */
+button:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+}
+
+/* Hover states only for non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+    button:hover {
+        background: var(--c_btnhvr);
+    }
+    
+    .bred:hover {
+        background: var(--c_btnrsthvr);
+    }
+    
+    .bgrn:hover {
+        background: var(--c_btnsvhvr);
+    }
+}
+
+/* Touch devices - remove hover effects that can stick */
+@media (hover: none) {
+    button:hover {
+        background: var(--c_btn);
+    }
+    
+    .bred:hover {
+        background: var(--c_btnrst);
+    }
+    
+    .bgrn:hover {
+        background: var(--c_btnsv);
+    }
+}
+
+/* ============================================
+   Accessibility Improvements
+   ============================================ */
+
+/* Focus visible for keyboard navigation */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--c_btn);
+    outline-offset: 2px;
+}
+
+/* Skip link for accessibility (hidden until focused) */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--c_btn);
+    color: var(--c_btntxt);
+    padding: 8px;
+    z-index: 100;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+
+/* ============================================
+   LED Strip Visualization Styling
+   Task 9.1 - Style LED visualization as Tasmota fieldset
+   Reference: .doc_for_ai/Tasmota main page.png
+   ============================================ */
+
+/* LED Canvas Container */
+.led-canvas-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: var(--c_csl);
+    border: 1px solid var(--c_tab);
+    border-radius: 0.3em;
+    padding: 4px 8px;
+    margin-bottom: 6px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.2s ease;
+}
+
+/* Toolbar row below canvas (status + controls on same line) */
+.led-toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4px;
+    gap: 12px;
+}
+
+/* Status indicators group (left side) */
+.led-status-group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+/* Control buttons group (right side) */
+.led-controls-group {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+/* Compact outline buttons for led-container */
+.led-btn {
+    min-height: 22px;
+    line-height: 1.2rem;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    width: auto;
+    background: transparent;
+    border: 2px solid var(--c_btn);
+    color: var(--c_btntxt);
+}
+
+.led-btn:hover {
+    background: rgba(31, 163, 236, 0.2);
+    border-color: var(--c_btnhvr);
+}
+
+.led-btn.bgrn {
+    background: transparent;
+    border-color: var(--c_btnsv);
+}
+
+.led-btn.bgrn:hover {
+    background: rgba(71, 194, 102, 0.2);
+    border-color: var(--c_btnsvhvr);
+}
+
+.led-btn.bred {
+    background: transparent;
+    border-color: var(--c_btnrst);
+}
+
+.led-btn.bred:hover {
+    background: rgba(212, 53, 53, 0.2);
+    border-color: var(--c_btnrsthvr);
+}
+
+/* Compact status items */
+.led-status-compact {
+    font-size: 0.75em;
+    color: var(--c_tab);
+    padding: 1px 4px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 0.2em;
+    text-align: center;
+    white-space: nowrap;
+    font-family: monospace;
+}
+
+/* Fixed width for indicators to prevent layout shift */
+#status-display {
+    min-width: 52px;
+    display: inline-block;
+}
+
+#fps-display {
+    min-width: 62px;
+    display: inline-block;
+}
+
+.led-status-compact.status-ready {
+    color: var(--c_csltxt);
+}
+
+.led-status-compact.status-running {
+    color: var(--c_btnsv);
+    font-weight: bold;
+}
+
+.led-status-compact.status-stopped {
+    color: var(--c_txtwrn);
+}
+
+.led-status-compact.status-error {
+    color: var(--c_btnrst);
+    font-weight: bold;
+}
+
+/* Sticky state - floats at top when scrolled */
+.led-canvas-container.sticky-horizontal {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--c_tab);
+    border-top: none;
+    border-radius: 0 0 0.3em 0.3em;
+    /* left and width are set dynamically by JS */
+}
+
+
+
+/* Placeholder to maintain layout when sticky */
+.led-canvas-placeholder {
+    display: none;
+    background: transparent;
+    border-radius: 0.3em;
+    margin-bottom: 6px;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.led-canvas-placeholder.active {
+    display: block;
+}
+
+#led-canvas {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--c_frm);
+    border-radius: 2px;
+}
+
+/* LED Status Bar - legacy styles kept for compatibility */
+
+/* LED Configuration Section */
+.led-config-section {
+    padding-top: 2px;
+}
+
+.led-config-section table {
+    width: 100%;
+}
+
+.led-config-section td {
+    vertical-align: middle;
+    padding: 2px 0;
+}
+
+.led-config-section label {
+    display: block;
+    font-size: 0.95em;
+}
+
+/* Number input for LED length */
+.led-config-section input[type=number] {
+    width: 80px;
+    min-height: 36px;
+    text-align: center;
+    font-size: 1em;
+}
+
+/* Select dropdown styling */
+.led-config-section select {
+    min-height: 36px;
+}
+
+/* Range slider in config section */
+.led-config-section .r {
+    margin: 0;
+    padding: 2px;
+}
+
+.led-config-section input[type=range] {
+    min-height: 30px;
+    padding: 5px 0;
+}
+
+/* Pixel size label */
+#pixel-size-label {
+    display: inline-block;
+    min-width: 35px;
+    text-align: right;
+}
+
+
+
+/* LED Fieldset specific styling */
+#led-fieldset {
+    background: var(--c_frm);
+}
+
+
+
+#led-fieldset legend {
+    color: var(--c_ttl);
+}
+
+/* Animation state indicator */
+.animation-state-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.animation-state-indicator.running {
+    background: var(--c_btnsv);
+    animation: pulse-indicator 1s infinite;
+}
+
+.animation-state-indicator.stopped {
+    background: var(--c_tab);
+}
+
+.animation-state-indicator.error {
+    background: var(--c_btnrst);
+}
+
+@keyframes pulse-indicator {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Responsive adjustments for LED visualization */
+@media screen and (max-width: 399px) {
+    .led-toolbar {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .led-status-group {
+        gap: 4px;
+    }
+    
+    .led-status-compact {
+        font-size: 0.65em;
+        padding: 1px 3px;
+    }
+    
+    .led-controls-group {
+        gap: 3px;
+    }
+    
+    .led-btn {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+    }
+    
+    .led-config-section table tr {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .led-config-section table td {
+        width: 100% !important;
+        padding: 5px 0;
+    }
+    
+    .led-config-section input[type=number] {
+        width: 100%;
+    }
+    
+    /* Sticky adjustments for small screens */
+    .led-canvas-container.sticky-horizontal {
+        max-width: 100%;
+        left: 0;
+        transform: none;
+        border-radius: 0;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .led-canvas-container {
+        padding: 6px 12px;
+    }
+    
+    .led-status-row {
+        gap: 10px;
+    }
+    
+    .led-status-compact {
+        font-size: 0.8em;
+        padding: 2px 5px;
+    }
+    
+    /* Sticky adjustments for larger screens */
+    .led-canvas-container.sticky-horizontal {
+        max-width: 700px;
+    }
+}
+
+
+/* ============================================
+   Animation Controls Styling
+   Task 9.2 - AnimationControls component
+   Reference: TASMOTA_WEBUI_CODING_GUIDE.md
+   ============================================ */
+
+/* Controls fieldset */
+#controls-fieldset {
+    background: var(--c_frm);
+}
+
+/* Control status area */
+.control-status-area {
+    margin-top: 10px;
+    padding: 5px 0;
+    text-align: center;
+}
+
+.status-msg {
+    font-size: 0.9em;
+    padding: 4px 10px;
+    border-radius: 0.2em;
+}
+
+.status-msg.success {
+    color: var(--c_txtscc);
+    background: rgba(0, 128, 0, 0.1);
+}
+
+.status-msg.error {
+    color: var(--c_txtwrn);
+    background: rgba(255, 86, 97, 0.1);
+}
+
+.status-msg.info {
+    color: var(--c_csltxt);
+    background: rgba(101, 193, 21, 0.1);
+}
+
+/* Parameter slider container */
+.param-slider-container {
+    margin-bottom: 10px;
+}
+
+.param-slider-container label {
+    font-size: 0.95em;
+    color: var(--c_txt);
+}
+
+/* Parameter slider wrapper with gradient (Tasmota style) */
+.param-slider-container .r {
+    border-radius: 0.3em;
+    padding: 2px;
+    margin: 4px 0;
+}
+
+/* Range slider inside parameter container */
+.param-slider-container input[type=range] {
+    width: 100%;
+    height: 20px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+/* WebKit slider track - transparent to show gradient background */
+.param-slider-container input[type=range]::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 4px;
+    background: transparent;
+}
+
+/* WebKit slider thumb */
+.param-slider-container input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--c_btn);
+    border: 2px solid var(--c_btntxt);
+    margin-top: -5px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.param-slider-container input[type=range]::-webkit-slider-thumb:hover {
+    background: var(--c_btnhvr);
+}
+
+/* Firefox slider track */
+.param-slider-container input[type=range]::-moz-range-track {
+    height: 8px;
+    border-radius: 4px;
+    background: transparent;
+}
+
+/* Firefox slider thumb */
+.param-slider-container input[type=range]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--c_btn);
+    border: 2px solid var(--c_btntxt);
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.param-slider-container input[type=range]::-moz-range-thumb:hover {
+    background: var(--c_btnhvr);
+}
+
+/* Parameters section styling */
+#parameters-section {
+    margin-top: 10px;
+}
+
+#parameters-section > div:first-child {
+    color: var(--c_ttl);
+    font-size: 0.95em;
+    margin-bottom: 8px;
+}
+
+#parameters-container:empty {
+    display: none;
+}
+
+#parameters-container:empty + #parameters-section > div:first-child {
+    display: none;
+}
+
+/* Hide parameters section header when container is empty */
+#parameters-section:has(#parameters-container:empty) > div:first-child {
+    display: none;
+}
+
+/* Responsive adjustments for controls */
+@media screen and (max-width: 399px) {
+    .param-slider-container input[type=range]::-webkit-slider-thumb {
+        width: 22px;
+        height: 22px;
+        margin-top: -7px;
+    }
+    
+    .param-slider-container input[type=range]::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+
+/* ============================================
+   Advanced Configuration Section in LED Strip Panel
+   ============================================ */
+
+/* Reuse library-header styles for advanced section */
+#led-fieldset .library-header {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--c_bg);
+}
+
+.faders-section {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--c_bg);
+}
+
+/* ============================================
+   Brightness Section in LED Strip Panel
+   ============================================ */
+
+.brightness-section {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+.brightness-section .r {
+    margin: 2px 0 0 0;
+}
+
+.brightness-section input[type=range] {
+    min-height: 24px;
+    padding: 4px 0;
+}
+
+.brightness-section input[type=range]::-webkit-slider-thumb {
+    width: 18px;
+    height: 18px;
+}
+
+.brightness-section input[type=range]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+}
+
+/* Slider labels (0%, 100%, overexpose) */
+.slider-labels {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65em;
+    color: var(--c_txt);
+    margin-top: 1px;
+    padding: 0 2px;
+    opacity: 0.7;
+}
+
+.slider-labels span:nth-child(2) {
+    position: absolute;
+    left: 75%;
+    transform: translateX(-50%);
+}
+
+/* Semi-linear brightness slider container */
+.brightness-slider-container {
+    position: relative;
+}
+
+/* Magnetic snap visual feedback - green glow on thumb when snapped to 100% */
+.brightness-slider-container.snapped input[type=range]::-webkit-slider-thumb {
+    box-shadow: 0 0 6px var(--c_btnsv);
+}
+
+.brightness-slider-container.snapped input[type=range]::-moz-range-thumb {
+    box-shadow: 0 0 6px var(--c_btnsv);
+}
+
+/* ============================================
+   Vertical Faders Styling
+   Mixer-style vertical sliders for animation parameters
+   ============================================ */
+
+.faders-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+    padding: 2px 0;
+}
+
+/* Individual fader container */
+.fader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+/* Fader number label (top) */
+.fader-num {
+    font-size: 0.7em;
+    color: var(--c_ttl);
+    font-weight: bold;
+    margin-bottom: 1px;
+    line-height: 1;
+}
+
+/* Fader track wrapper - more compact */
+.fader-wrapper {
+    position: relative;
+    width: 20px;
+    height: 70px;
+    background: linear-gradient(to bottom, #222, #333);
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+/* Fader track (center line) */
+.fader-track {
+    position: absolute;
+    width: 3px;
+    height: 62px;
+    background: #444;
+    left: 50%;
+    top: 4px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* Fader fill (shows value) */
+.fader-fill {
+    position: absolute;
+    width: 3px;
+    background: var(--c_btn);
+    left: 50%;
+    bottom: 4px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    height: var(--fader-height, 26px);
+    transition: height 0.05s ease-out;
+}
+
+/* Fader handle */
+.fader-handle {
+    position: absolute;
+    width: 16px;
+    height: 10px;
+    background: linear-gradient(to bottom, #666, #444);
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(var(--fader-height, 26px) - 1px);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    transition: bottom 0.05s ease-out;
+}
+
+.fader-handle::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background: #888;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 1px;
+}
+
+/* Fader value display */
+.fader-value {
+    font-size: 0.65em;
+    color: var(--c_csltxt);
+    margin-top: 2px;
+    margin-bottom: 0;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* Fader name label (bottom, optional) */
+.fader-name {
+    font-size: 0.6em;
+    color: var(--c_txt);
+    margin-top: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1.1;
+}
+
+/* Hover effect */
+.fader-wrapper:hover .fader-fill {
+    background: var(--c_btnhvr);
+}
+
+/* Active/dragging state */
+.fader-wrapper:active .fader-handle,
+.fader-wrapper.dragging .fader-handle {
+    background: linear-gradient(to bottom, #777, #555);
+    box-shadow: 0 1px 6px rgba(31, 163, 236, 0.4);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 499px) {
+    .fader-wrapper {
+        width: 18px;
+        height: 50px;
+    }
+    
+    .fader-track {
+        height: 42px;
+    }
+    
+    .fader-handle {
+        width: 14px;
+        height: 8px;
+    }
+    
+    .fader-num {
+        font-size: 0.65em;
+    }
+    
+    .fader-value {
+        font-size: 0.6em;
+    }
+    
+    .fader-name {
+        font-size: 0.55em;
+    }
+}
+
+
+/* ============================================
+   Code Editor Styling
+   Task 9.3 - Custom token-based syntax highlighting
+   Reference: Tasmota theme with DSL/Berry support
+   ============================================ */
+
+/* Code editor fieldset - prevent expansion from error container */
+#code-editor-fieldset {
+    contain: inline-size;
+}
+
+/* Error message container (between code editor and compile button) */
+.code-error-container {
+    background: var(--c_csl);
+    border: 1px solid var(--c_btnrst);
+    border-radius: 0.3em;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-bottom: 0;
+    color: var(--c_txtwrn);
+    font-size: 0.9em;
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+/* Editor container (fieldset wrapper) */
+.code-editor-container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+/* Editor wrapper - handles resize and positioning */
+.code-editor-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    min-height: 120px;
+    max-height: 600px;
+    overflow: hidden;
+    resize: both;
+    background: var(--c_csl);
+    border: 1px solid var(--c_tab);
+    border-radius: 0.3em;
+    box-sizing: border-box;
+}
+
+/* Shared styles for textarea and highlight pre */
+.code-editor-textarea,
+.code-editor-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 10px;
+    border: none;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre;
+    overflow: auto;
+    box-sizing: border-box;
+    tab-size: 2;
+    -moz-tab-size: 2;
+}
+
+/* Textarea - transparent foreground for input */
+.code-editor-textarea {
+    z-index: 2;
+    color: transparent;
+    background: transparent;
+    caret-color: var(--c_csltxt);
+    resize: none;
+    outline: none;
+}
+
+.code-editor-textarea::selection {
+    background: rgba(31, 163, 236, 0.3);
+}
+
+.code-editor-textarea::-moz-selection {
+    background: rgba(31, 163, 236, 0.3);
+}
+
+/* Highlight pre - background with syntax colors */
+.code-editor-highlight {
+    z-index: 1;
+    background: var(--c_csl);
+    color: var(--c_csltxt);
+    pointer-events: none;
+}
+
+.code-editor-highlight code {
+    display: block;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    white-space: pre;
+}
+
+/* ============================================
+   Syntax Highlighting Token Colors
+   ============================================ */
+
+/* Comments - muted gray */
+.code-comment {
+    color: #6a9955;
+    font-style: italic;
+}
+
+/* Strings - orange/brown */
+.code-string {
+    color: #ce9178;
+}
+
+/* Numbers - light green */
+.code-number {
+    color: #b5cea8;
+}
+
+/* Keywords - blue/purple */
+.code-keyword {
+    color: #569cd6;
+    font-weight: bold;
+}
+
+/* Built-in functions - cyan */
+.code-builtin {
+    color: #4ec9b0;
+}
+
+/* Properties - light blue */
+.code-property {
+    color: #9cdcfe;
+}
+
+/* Color names - actual color representation */
+.code-color {
+    color: #dcdcaa;
+}
+
+/* Operators - white/light */
+.code-operator {
+    color: #d4d4d4;
+}
+
+/* Punctuation - gray */
+.code-punctuation {
+    color: #808080;
+}
+
+/* Identifiers - default text color */
+.code-identifier {
+    color: var(--c_csltxt);
+}
+
+/* ============================================
+   Error Highlighting
+   ============================================ */
+
+/* Error line background */
+.code-error-line {
+    display: inline-block;
+    width: 100%;
+    background: rgba(255, 86, 97, 0.2);
+    border-left: 3px solid var(--c_txtwrn);
+    margin-left: -10px;
+    padding-left: 7px;
+}
+
+/* ============================================
+   Transpiled Code Indicator
+   ============================================ */
+
+/* Visual indicator for transpiled Berry code */
+.code-editor-textarea.transpiled-readonly {
+    border-left: 3px solid #4ec9b0;
+}
+
+/* Transpiled code info banner */
+.code-editor-transpiled-banner {
+    background: rgba(78, 201, 176, 0.15);
+    color: #4ec9b0;
+    padding: 4px 10px;
+    font-size: 0.85em;
+    border-bottom: 1px solid rgba(78, 201, 176, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.code-editor-transpiled-banner::before {
+    content: "⚡";
+}
+
+/* ============================================
+   Language Toggle Radio Buttons
+   ============================================ */
+
+.code-editor-lang-toggle {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 8px;
+    padding: 0;
+}
+
+.code-editor-lang-toggle label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.95em;
+}
+
+.code-editor-lang-toggle input[type="radio"] {
+    width: 1.1em;
+    height: 1.1em;
+    margin-right: 5px;
+    min-height: auto;
+}
+
+/* ============================================
+   Responsive Adjustments for Code Editor
+   ============================================ */
+
+@media screen and (max-width: 399px) {
+    .code-editor-wrapper {
+        height: 180px;
+        min-height: 100px;
+    }
+    
+    .code-editor-textarea,
+    .code-editor-highlight {
+        font-size: 12px;
+        padding: 8px;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 599px) {
+    .code-editor-wrapper {
+        height: 200px;
+    }
+    
+    .code-editor-textarea,
+    .code-editor-highlight {
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .code-editor-wrapper {
+        height: 280px;
+    }
+}
+
+/* Touch device adjustments */
+@media (hover: none) {
+    .code-editor-textarea {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+}
+
+
+/* ============================================
+   Berry Input Styling
+   Task 8.5.1 - Berry arbitrary input for debugging
+   ============================================ */
+
+/* Hint text above input */
+.berry-input-hint {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--c_bg);
+    font-size: 0.8em;
+    color: var(--c_tab);
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+/* Berry input textarea */
+.berry-input {
+    width: 100%;
+    min-height: 44px;
+    height: 60px;
+    padding: 8px;
+    resize: vertical;
+    background: var(--c_in);
+    color: var(--c_intxt);
+    border: 1px solid var(--c_frm);
+    border-radius: 0.3em;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    box-sizing: border-box;
+}
+
+.berry-input:focus {
+    outline: none;
+    border-color: var(--c_btn);
+    box-shadow: 0 0 3px rgba(31, 163, 236, 0.3);
+}
+
+.berry-input::placeholder {
+    color: var(--c_tab);
+    font-style: italic;
+}
+
+/* Run code button */
+.berry-input-run-btn {
+    margin-top: 8px;
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 399px) {
+    .berry-input {
+        font-size: 12px;
+        height: 50px;
+    }
+    
+    .berry-input-hint {
+        font-size: 0.75em;
+    }
+    
+    .berry-input-run-btn {
+        font-size: 0.9rem;
+    }
+}
+
+/* Touch device adjustments */
+@media (hover: none) {
+    .berry-input {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+}
+
+
+/* ============================================
+   Animation Library Styling
+   Task 13.2 - AnimationLibrary component (Tasmota style)
+   Reference: TASMOTA_WEBUI_CODING_GUIDE.md
+   ============================================ */
+
+/* Library container (embedded in Animation Code fieldset) */
+#animation-library-container {
+    padding: 0;
+}
+
+/* Library header */
+.library-header {
+    margin-bottom: 8px;
+}
+
+.library-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    background: var(--c_bg);
+    padding: 6px 10px;
+    border-radius: 0.3em;
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.library-header-row:hover {
+    background: #2a2a2a;
+}
+
+.library-title {
+    color: var(--c_ttl);
+    font-size: 1em;
+}
+
+/* Title hover effect (when row is hovered) */
+.library-header-row:hover .library-title {
+    color: var(--c_btn);
+}
+
+.library-count {
+    color: var(--c_tab);
+    font-size: 0.85em;
+    margin-left: auto;
+}
+
+/* Toggle arrow */
+.library-toggle {
+    font-size: 0.85em;
+    color: var(--c_txt);
+    width: 16px;
+    text-align: center;
+}
+
+.library-header-row:hover .library-toggle {
+    color: var(--c_btn);
+}
+
+/* Library content (collapsible) */
+.library-content {
+    padding-top: 4px;
+}
+
+/* Search input */
+.library-search {
+    margin-bottom: 10px;
+}
+
+.library-search input {
+    width: 100%;
+    padding: 8px 10px;
+    background: var(--c_in);
+    color: var(--c_intxt);
+    border: 1px solid var(--c_bg);
+    border-radius: 0.2rem;
+    font-size: 0.95em;
+    box-sizing: border-box;
+}
+
+.library-search input:focus {
+    outline: none;
+    border-color: var(--c_btn);
+}
+
+.library-search input::placeholder {
+    color: var(--c_tab);
+    opacity: 0.8;
+}
+
+/* Category container */
+.library-category {
+    margin-bottom: 10px;
+    background: var(--c_bg);
+    border-radius: 0.3em;
+    padding: 8px;
+}
+
+.library-category:last-child {
+    margin-bottom: 0;
+}
+
+/* Category header */
+.library-category-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--c_frm);
+}
+
+.library-category-name {
+    color: var(--c_ttl);
+    font-size: 0.95em;
+}
+
+.library-category-count {
+    color: var(--c_tab);
+    font-size: 0.85em;
+}
+
+/* Category items container */
+.library-category-items {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+/* Example button - Tasmota style (compact single-line) */
+.library-example-btn {
+    width: 100%;
+    min-height: 36px;
+    padding: 6px 10px;
+    background: var(--c_frm);
+    color: var(--c_txt);
+    border: 1px solid transparent;
+    border-radius: 0.3rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.library-example-btn:hover {
+    background: var(--c_btnhvr);
+    color: var(--c_btntxt);
+}
+
+.library-example-btn.selected {
+    background: var(--c_btn);
+    color: var(--c_btntxt);
+    border-color: var(--c_btnsv);
+}
+
+.library-example-btn:active {
+    transform: scale(0.98);
+}
+
+/* Example number */
+.library-example-number {
+    font-size: 0.8em;
+    color: var(--c_tab);
+    font-weight: normal;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 28px;
+}
+
+/* Example name */
+.library-example-name {
+    font-weight: bold;
+    font-size: 0.9em;
+    line-height: 1.2;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Example description */
+.library-example-desc {
+    font-size: 0.8em;
+    color: var(--c_tab);
+    line-height: 1.2;
+    opacity: 0.9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+.library-example-btn:hover .library-example-desc,
+.library-example-btn.selected .library-example-desc {
+    color: var(--c_btntxt);
+    opacity: 0.8;
+}
+
+/* No results message */
+.library-no-results {
+    text-align: center;
+    color: var(--c_tab);
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Flat list (when no categories) */
+.library-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 399px) {
+    .library-example-btn {
+        padding: 8px;
+        min-height: 40px;
+    }
+    
+    .library-example-name {
+        font-size: 0.85em;
+    }
+    
+    .library-example-desc {
+        font-size: 0.7em;
+    }
+    
+    .library-category {
+        padding: 6px;
+    }
+}
+
+/* Keep single column layout on all screen sizes for compact view */
+@media screen and (min-width: 600px) {
+    .library-category-items {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .library-items {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+/* Touch device adjustments */
+@media (hover: none) {
+    .library-example-btn:hover {
+        background: var(--c_frm);
+        color: var(--c_txt);
+    }
+    
+    .library-example-btn:hover .library-example-desc {
+        color: var(--c_tab);
+    }
+    
+    .library-example-btn.selected:hover {
+        background: var(--c_btn);
+        color: var(--c_btntxt);
+    }
+    
+    .library-example-btn.selected:hover .library-example-desc {
+        color: var(--c_btntxt);
+    }
+}
+
+
+/* ============================================
+   Loading Overlay Styling
+   Task 14.5 - Add loading states for WASM module
+   ============================================ */
+
+/* Loading overlay - full screen */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(37, 37, 37, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+}
+
+.loading-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Loading container */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px;
+    background: var(--c_frm);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    min-width: 280px;
+    max-width: 400px;
+}
+
+/* Loading spinner - animated circle */
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--c_bg);
+    border-top-color: var(--c_btn);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Loading text */
+.loading-text {
+    color: var(--c_txt);
+    font-size: 1.1em;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Progress bar container */
+.loading-progress {
+    width: 100%;
+    height: 8px;
+    background: var(--c_bg);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Progress bar fill */
+.loading-progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--c_btn), var(--c_btnhvr));
+    width: 0%;
+    transition: width 0.3s ease-out;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(31, 163, 236, 0.5);
+}
+
+/* Loading error state */
+.loading-text.error {
+    color: var(--c_txtwrn);
+}
+
+/* Responsive adjustments for loading overlay */
+@media screen and (max-width: 399px) {
+    .loading-container {
+        min-width: 240px;
+        padding: 30px 20px;
+        gap: 15px;
+    }
+    
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border-width: 3px;
+    }
+    
+    .loading-text {
+        font-size: 1em;
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .loading-spinner {
+        animation: none;
+        border-top-color: var(--c_btn);
+        opacity: 0.7;
+    }
+    
+    .loading-overlay {
+        transition: none;
+    }
+    
+    .loading-progress-bar {
+        transition: none;
+    }
+}
+
+
+/* ============================================
+   Export Dialog Styling
+   Task 15.2 - Export UI controls (Tasmota style)
+   Reference: Requirements 11.1.1, 11.1.2, 11.1.6, 11.1.8
+   ============================================ */
+
+/* Export button in LED toolbar */
+.led-btn.export-btn {
+    background: transparent;
+    border-color: var(--c_tab);
+    color: var(--c_tab);
+}
+
+.led-btn.export-btn:hover {
+    background: rgba(153, 153, 153, 0.2);
+    border-color: var(--c_txt);
+    color: var(--c_txt);
+}
+
+/* Export dialog overlay */
+.export-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.export-dialog-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Export dialog container */
+.export-dialog {
+    background: var(--c_frm);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    min-width: 300px;
+    max-width: 400px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+}
+
+.export-dialog-overlay.visible .export-dialog {
+    transform: scale(1);
+}
+
+/* Export dialog header */
+.export-dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--c_bg);
+}
+
+.export-dialog-title {
+    color: var(--c_ttl);
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.export-dialog-close {
+    background: transparent;
+    border: none;
+    color: var(--c_tab);
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    min-height: 30px;
+    line-height: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.export-dialog-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--c_txt);
+}
+
+/* Export dialog body */
+.export-dialog-body {
+    padding: 15px;
+}
+
+/* Export option group */
+.export-option-group {
+    margin-bottom: 15px;
+}
+
+.export-option-label {
+    display: block;
+    color: var(--c_ttl);
+    font-size: 0.95em;
+    margin-bottom: 8px;
+}
+
+/* FPS radio button group */
+.export-fps-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.export-fps-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.export-fps-option input[type="radio"] {
+    width: 1.1em;
+    height: 1.1em;
+    margin-right: 5px;
+    min-height: auto;
+}
+
+.export-fps-option span {
+    color: var(--c_txt);
+    font-size: 0.95em;
+}
+
+/* Format radio button group */
+.export-format-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.export-format-option {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    padding: 8px 10px;
+    background: var(--c_bg);
+    border-radius: 0.3em;
+    border: 1px solid transparent;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.export-format-option:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.export-format-option:has(input:checked) {
+    border-color: var(--c_btn);
+    background: rgba(31, 163, 236, 0.1);
+}
+
+.export-format-option input[type="radio"] {
+    width: 1.1em;
+    height: 1.1em;
+    margin-right: 8px;
+    margin-top: 2px;
+    min-height: auto;
+    flex-shrink: 0;
+}
+
+.export-format-name {
+    color: var(--c_txt);
+    font-size: 0.95em;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.export-format-info {
+    color: var(--c_tab);
+    font-size: 0.85em;
+}
+
+/* Duration input */
+.export-duration-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.export-duration-input input[type="number"] {
+    width: 80px;
+    min-height: 36px;
+    text-align: center;
+    font-size: 1em;
+}
+
+.export-duration-input span {
+    color: var(--c_tab);
+    font-size: 0.9em;
+}
+
+/* Export info text */
+.export-info {
+    background: var(--c_bg);
+    border-radius: 0.3em;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 0.85em;
+    color: var(--c_tab);
+}
+
+.export-info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.export-info-row:last-child {
+    margin-bottom: 0;
+}
+
+.export-info-label {
+    color: var(--c_txt);
+}
+
+.export-info-value {
+    color: var(--c_csltxt);
+    font-family: monospace;
+}
+
+/* Export progress section */
+.export-progress-section {
+    display: none;
+    margin-bottom: 15px;
+}
+
+.export-progress-section.visible {
+    display: block;
+}
+
+.export-progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 0.9em;
+}
+
+.export-progress-text {
+    color: var(--c_txt);
+}
+
+.export-progress-percent {
+    color: var(--c_csltxt);
+    font-family: monospace;
+}
+
+/* Export progress bar */
+.export-progress-bar-container {
+    width: 100%;
+    height: 12px;
+    background: var(--c_bg);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.export-progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--c_btn), var(--c_btnhvr));
+    width: 0%;
+    transition: width 0.1s ease-out;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(31, 163, 236, 0.4);
+}
+
+/* Export progress bar animation during encoding */
+.export-progress-bar.encoding {
+    background: linear-gradient(
+        90deg,
+        var(--c_btn) 0%,
+        var(--c_btnhvr) 50%,
+        var(--c_btn) 100%
+    );
+    background-size: 200% 100%;
+    animation: progress-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes progress-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Export dialog footer */
+.export-dialog-footer {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    border-top: 1px solid var(--c_bg);
+}
+
+.export-dialog-footer button {
+    flex: 1;
+    min-height: 40px;
+}
+
+/* Export button states */
+.export-btn-start {
+    background: var(--c_btnsv);
+}
+
+.export-btn-start:hover {
+    background: var(--c_btnsvhvr);
+}
+
+.export-btn-start:disabled {
+    background: var(--c_dis);
+    cursor: not-allowed;
+}
+
+.export-btn-cancel {
+    background: var(--c_btnrst);
+}
+
+.export-btn-cancel:hover {
+    background: var(--c_btnrsthvr);
+}
+
+/* File size warning */
+.export-size-warning {
+    display: none;
+    background: rgba(255, 86, 97, 0.15);
+    border: 1px solid var(--c_txtwrn);
+    border-radius: 0.3em;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    color: var(--c_txtwrn);
+    font-size: 0.85em;
+}
+
+.export-size-warning.visible {
+    display: block;
+}
+
+.export-size-warning::before {
+    content: "⚠ ";
+}
+
+/* Export complete state */
+.export-complete-section {
+    display: none;
+    text-align: center;
+    padding: 8px 0;
+}
+
+.export-complete-section.visible {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.export-complete-text {
+    color: var(--c_btnsv);
+}
+
+.export-complete-size {
+    color: var(--c_btnsv);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 399px) {
+    .export-dialog {
+        min-width: 280px;
+        max-width: 95%;
+    }
+    
+    .export-dialog-header {
+        padding: 10px 12px;
+    }
+    
+    .export-dialog-body {
+        padding: 12px;
+    }
+    
+    .export-fps-options {
+        gap: 10px;
+    }
+    
+    .export-dialog-footer {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .export-dialog-footer button {
+        width: 100%;
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .export-dialog-overlay,
+    .export-dialog,
+    .export-progress-bar {
+        transition: none;
+    }
+    
+    .export-progress-bar.encoding {
+        animation: none;
+    }
+}
