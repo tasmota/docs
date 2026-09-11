@@ -20,7 +20,7 @@ ILI9488 TFT|SPI
 GC9A01|SPI
 SH1106 OLED display|I^2^C
 SH1107|SPI
-SSD1306 OLED display|I^2^C
+SSD1306 OLED display|I^2^C<br>SPI
 SSD1331|SPI
 ST7262|RGB (ESP32S3)
 ST7735<br>ST7735S|SPI
@@ -297,8 +297,14 @@ RGB 16 bit interface: (ESP32-S3 only)
 All signals must be given. Unused pins may be set to -1. If you specify a `*` char the pin number is derived from the Tasmota GPIO GUI.  
 The CS and DC pins must be the standard pins e.g. `SPI_CS` or `SPI_DC`.  
 
-there are RGB displays that also need an SPI initialisation. in this case specify the Init sequence with :IS,SCLK,MOSI,CS,RESET   
-there are RGB displays that also need an I2C initialisation. in this case specify the Init sequence with :II,BUS,ADDR (BUS = i2c bus nr 1 or 2, ADDR = adress of i2c device)  
+`:IS`
+
+There are RGB displays that also need an SPI initialisation. in this case specify the Init sequence with :IS,SCLK,MOSI,CS,RESET   
+
+
+`:II`
+
+There are RGB displays that also need an I2C initialisation. in this case specify the Init sequence with :II,BUS,ADDR (BUS = i2c bus nr 1 or 2, ADDR = adress of i2c device)  
 
 !!! i2c example
 ```haskell
@@ -341,13 +347,11 @@ single entry defines a delay in milliseconds
     ```
     
 `:I`  
-Initial register setup for the display controller. (`IC` marks that the controller is using command mode even with command parameters)
-All values are in hex.
+Initial register setup for the display controller. (`:IC` marks that the controller is using SPI command mode even with command parameters). All values are in hex.
 
 On I^2^C all hex values are sent to I^2^C.
 
-On SPI the first value is the command, then the number of arguments and the the arguments itself (lower 4 bits: 0..F).
-High 4 bits are used to add a pause after the command:
+On SPI the first value is the command, then the number of arguments and then the arguments itself. The number of arguments are the lower 4 bits: 0..F. The high 4 bits are used to add a pause after the command:
 
 Second byte|Pause
 :---|:---
@@ -429,12 +433,19 @@ the appropriate coordinate convervsions are defined via pseudo opcodes:<br>
 bit 7 = swap x,y<br>
 
 `:A`  
-3 OPCODES to set address window _(all but epaper displays)_
+3 OPCODES to set address window _(all but epaper displays and 1 bit per pixel displays)_
 
 1. set column opcode  
 2. set row opcode  
 3. start write opcode  
 4. pixel size (optional)  
+
+2 OFFSETS for 1 bit per pixel displays
+
+1. x offset
+2. y offset
+3. not used
+4. not used
 
 `:P`  
 Pixel transfer size (default = 16 bit RGB) _(optional)_
