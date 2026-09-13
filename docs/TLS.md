@@ -34,6 +34,12 @@ or
 #define MQTT_FINGERPRINT2      0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
 ```
 
+The fingerprint may change after the MQTT server is reconfigured. To fix connection problems, you can clear *one* of the stored fingerprints and tell Tasmota to relearn the fingerprint automatically on the next connection. It is important only to clear *one* of the two stored fingerprints in order to avoid to make the device vulnerable. The console command for clearing Fingerprint1 is (for Fingerprint2 just swap the number):
+```
+MqttFingerprint1 00
+```
+Only do this if you are sure the changed fingerprint does not indicate a security problem.
+
 #### Option 2: Disable Fingerprint
 You can completely disable server fingerprint validation, which means that Tasmota will not check the server's identity. This also means that your traffic can possibly be intercepted and read/changed, so this option should only be used on trusted networks, i.e. with an MQTT on your local network. **YOU HAVE BEEN WARNED!**
 
