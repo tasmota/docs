@@ -474,8 +474,10 @@ Common buttons should work across multiple models
 
 ### AppleTV Gen4
 
-| button     | code                                                    |
-| ---------- | ------------------------------------------------------- |
+| button     | code                                                    | notes                                                                                           |
+| ---------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Power Off  | {"Protocol":"NEC","Bits":32,"Data":"0xA7E1547F"}        | Does not toggle, stays off with repeated commands                                               |
+| Power On   | {"Protocol":"NEC","Bits":32,"Data":"0xA7E1347F"}        | Does not toggle, or trigger other actions (vs. powering on with "menu")                         |
 | Up         | {"Protocol":"NEC","Bits":32,"Data":"0x77E15080"}        |
 | Down       | {"Protocol":"NEC","Bits":32,"Data":"0x77E13080"}        |
 | Left       | {"Protocol":"NEC","Bits":32,"Data":"0x77E19080"}        |
