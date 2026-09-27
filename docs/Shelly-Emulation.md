@@ -6,21 +6,17 @@ description: Present a Tasmota ESP32 device as a Shelly Gen2 Pro 2PM
 
 Shelly emulation presents a Tasmota device as a generation 2 **Shelly Pro 2PM** (`SPSW-202PE16EU`). It is intended for local controllers that discover and communicate with Shelly devices using mDNS and the [Shelly Gen2 RPC protocol](https://shelly-api-docs.shelly.cloud/gen2/General/RPCProtocol/), including the Sigenergy stack and its mySigen app.
 
-??? tip "This feature is included in standard `tasmota32` binaries"
+??? failure "This feature is not included in precompiled binaries"
 
-    Shelly emulation is disabled at runtime by default. Standard `tasmota32` builds include the web server and mDNS discovery, so they advertise `_shelly._tcp` without requiring a custom build.
-
-    Some specialized ESP32 variants can include Shelly emulation without mDNS discovery. In those builds, `/shelly` and `/rpc` remain available, but controllers cannot discover the device automatically.
-
-    When [compiling your build](Compile-your-build), add the following to `user_config_override.h`:
+    Shelly emulation is only available for ESP32. When [compiling your build](Compile-your-build), add the following to `user_config_override.h`:
 
     ```c++
-    #define USE_WEBSERVER
-    #define USE_EMULATION_SHELLY
-    #define USE_DISCOVERY
+    #ifndef USE_EMULATION_SHELLY
+    #define USE_EMULATION_SHELLY    // (ESP32 only) Enable Shelly emulation (+8k code)
+    #endif
     ```
 
-    `USE_EMULATION` is enabled automatically when `USE_EMULATION_SHELLY` is defined.
+    `USE_EMULATION` is enabled automatically when `USE_EMULATION_SHELLY` is defined. The emulation also requires `USE_WEBSERVER`, and controllers can only discover the device automatically if the build includes `USE_DISCOVERY` (mDNS). Both are included in standard `tasmota32` builds.
 
 ## Enable Shelly emulation
 
