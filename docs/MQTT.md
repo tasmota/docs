@@ -6,6 +6,26 @@ If you have no knowledge of what MQTT is, you can learn about it from [MQTT Esse
 ## Warning
 All ESP32 devices (including all varaiants like `ESP32c<x>` and `ESP32s<x>`) natively support encrypted MQTT over TLS. ESP8266 do not natively support TLS unless you compile your own variant with TLS support. Unencrypted MQTT should be limited to own LAN, external unencrypted communication is a very serious security flaw, your device can become a malware bot!
 
+## MQTT protocol version
+
+Tasmota uses MQTT 3.1.1 by default. MQTT 5.0 is an optional compile-time feature; it is not selected in the WebUI or by an MQTT command. To enable it in a custom build, add this to `user_config_override.h`:
+
+```arduino
+#define MQTT_VERSION MQTT_VERSION_5_0
+```
+
+An MQTT 5 build initially connects using MQTT 5.0. If the broker explicitly reports that MQTT 5 is unsupported, Tasmota reconnects once using MQTT 3.1.1 for the lifetime of that client. Other connection failures do not cause a downgrade. The console identifies the negotiated protocol after connection, for example `MQT: Connected (MQTT 5.0)` or `MQT: Connected (MQTT 3.1.1)`.
+
+MQTT 5 support is intentionally focused on interoperable request/response operation. Standard Tasmota topics, commands, telemetry, retained messages, and existing MQTT 3.1.1 integrations continue to work unchanged.
+
+Optional MQTT 5 build flags are:
+
+| Define | Effect |
+| --- | --- |
+| `USE_MQTT_DETAILED_LOGGING` | Log MQTT 5 PUBLISH packets and their properties at `DEBUG_MORE` |
+| `USE_MQTT_DETAILED_LOGGING_BINARY` | Also log raw MQTT 5 packets as hexadecimal at `DEBUG_MORE` |
+| `USE_MQTT_QOS` | Enable outbound QoS 1 and QoS 2 acknowledged delivery; normal Tasmota publishing remains QoS 0 |
+
 ## Configure MQTT 
 If you flashed a precompiled .bin or didn't enter MQTT info in `user_config_override.h` before compiling you have to configure it on your device first.
 
@@ -21,7 +41,7 @@ Once MQTT is enabled you need to set it up using **Configuration -> Configure MQ
 
 For a basic setup you only need to set **Host**, **User** and **Password** but it is recommended to change **Topic** to avoid issues. Each device should have a unique **Topic**.
 
-- **Host** = your MQTT broker address or IP (**mDNS is not available in the official Tasmota builds**, means no `.local` domain!) 
+- **Host** = your MQTT broker address or IP. `MqttHost 0` (or `MqttHost ""`) clears the configured host; `.local` is not accepted as an explicit `MqttHost` value. An empty command payload only displays the current host. Broker discovery after clearing the host requires the optional `MQTT_HOST_DISCOVERY` build flag, which is disabled by default.
 - **Port** = your MQTT broker port (default port is set to 1883)
 - **Client** = device's unique identifier. In 99% of cases it's okay to leave it as is, however some Cloud-based MQTT brokers require a ClientID connected to your account.  **Can not be identical to Topic!**
 - **User** = username for authenticating on your MQTT broker
@@ -108,6 +128,14 @@ While most MQTT commands will result in a message in JSON format the power statu
 
 Telemetry data will be sent by prefix `tele` like `tele/tasmota/SENSOR {"Time":"2017-02-16T10:13:52", "DS18B20":{"Temperature":20.6}}`
 
+### MQTT 5 request/response
+
+When MQTT 5 is enabled, an incoming MQTT command that includes a Response Topic receives an additional response on that topic. The normal Tasmota `stat/...` response is still published, so existing subscribers remain compatible. The MQTT 5 response is QoS 0, non-retained, and copies the request's Correlation Data when supplied.
+
+This is useful when one client publishes a command and needs a reply on a private topic. The Response Topic must be a valid, non-empty publish topic without MQTT wildcards. Request/response context applies only while the command is handled synchronously; it does not carry into delayed actions, timers, or later Backlog processing.
+
+Berry MQTT subscriptions can use this feature with `mqtt.is_request()` and `mqtt.respond(payload)`. In an MQTT 5 callback, `mqtt.metadata()` exposes `qos`, `retain`, and, when supplied, `response_topic` and `correlation_data`; `mqtt.protocol()` returns the effective protocol level (`5` or `4`).
+
 ## MQTT Topic Definition
 
 ### FullTopic
@@ -183,6 +211,12 @@ The full LWT topic can be found in the tasmota console at boot:
 ```
 15:51:51.281 MQT: tele/tasmota_XXXXXX/LWT = Online (retained)
 ```
+
+### Keepalive and delayed PINGRESP
+
+Tasmota sends a PINGREQ after one configured [`MqttKeepAlive`](Commands.md#mqttkeepalive) interval without traffic. To tolerate delayed PINGRESP packets, the default build allows two unanswered PINGREQ packets before it closes the connection; a PINGRESP resets this count. Thus, with the default `MqttKeepAlive 30`, the connection normally closes only after a third idle interval without any PINGRESP.
+
+For a custom build, `MQTT_MAX_PING_OUTSTANDING` controls this limit. It accepts `1..4`; `1` restores the former single-unanswered-PINGREQ behavior. The default is `2`.
     
 ## Retained MQTT Messages
 
@@ -283,7 +317,7 @@ Sometimes, something wrong can happen and you might need to check return codes.
 
 A return code can be found in the console, example output for Return Code = `5` : `MQT: Connect failed to xxxx:1883, rc 5. Retry in 10 sec`
 
-Below table provides more information about it. The original values are related to [PubSubClient.h constants](https://pubsubclient.knolleary.net/api.html#state).
+Below table provides more information about the compatibility return code. MQTT 5 connection failures are mapped to these values so existing diagnostics retain their meaning.
 
 |Code |Constant name |Description |
 |-|-|-|
@@ -298,3 +332,5 @@ Below table provides more information about it. The original values are related 
 |3|MQTT_CONNECT_UNAVAILABLE|the server was unable to accept the connection|
 |4|MQTT_CONNECT_BAD_CREDENTIALS|the username/password were rejected|
 |5|MQTT_CONNECT_UNAUTHORIZED|the client was not authorized to connect|
+
+For MQTT 5, the explicit broker connection reason codes map as follows: unsupported protocol version (`0x84`) → `1`; invalid client ID (`0x85`) → `2`; bad user name or password (`0x86`) → `4`; not authorized (`0x87`) → `5`; server unavailable (`0x88`) or busy (`0x89`) → `3`. Other MQTT 5 failure reason codes are reported as `-2` (`MQTT_CONNECT_FAILED`).
