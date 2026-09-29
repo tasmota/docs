@@ -318,26 +318,52 @@ MtrUpdate {"Name":"Light0", "Power":1}
 
 If the endpoint is valid, the returned payload contains the entire state of the endpoint, similar to `MtrInfo` command.
 
-List of attributes supported by endpoints:
+List of attributes supported by virtual endpoints:
 
-Attribute|Type of endpoint|Description
+`MtrUpdate` only updates an endpoint whose type is virtual (`v_*`). Attribute names are case-insensitive, but the names below are returned in their canonical form by `MtrInfo` and `MtrUpdate`. A virtual endpoint accepts the attributes inherited from its base plug-in; for example, `v_light3` accepts `Power`, `Bri`, `Hue`, and `Sat`.
+
+Attribute|Virtual endpoint type|Description
 :---|:---|:---
-Power|Relay, all Lights|`0`/`1` report Power change
-Bri|Lights|`0..254` report Brightness change
-CT|Light 2|`153..500` White Temperature in mireds
-Hue|Ligth 3|`0..254` Hue converted from 0..360 to 0..254
-Sat|Light 3|`0..254` Saturation
-Contact|Contact|`0`/`1` state of the Contact sensor
-Occupancy|Occupancy|`0`/`1` state of the Occupancy sensor
-Humidity|Humidity|`0..10000` Humidity in 1/100th of percentage
-Illuminance|Illuminance|`0..65534` Illuminance with formula `log10(val + 1) * 10000`
-Pressure|Pressure|Pressure in `hPa`
-Temperature|Temperature|`-32767..32767` Temperature in 1/100th of °C
-Rain|Rain|`0`/`1` change rain sensor state°C
-Waterleak|Waterleak|`0`/`1` change rain sensor state
-FanMode|Fan|`0`: Off<br>`1`: Low (33%)<br>`2`: Med (66%)<br>`3`: High (100%)
-FanSpeed|Fan|`0..100` Fan speed in percentage
-FanSpeed255|Fan|`0..255` Fan speed in a range more suitable for Rules and PWM
+Power|`v_relay`, `v_relay_power`, `v_light0`, `v_light1`, `v_light2`, `v_light3`, `v_hvac_option`|`0`/`1` On/Off state
+Bri|`v_light1`, `v_light2`, `v_light3`|`0..254` brightness
+CT|`v_light2`|`153..500` colour temperature in mireds (or `200..380` when Alexa emulation is enabled)
+Hue|`v_light3`|`0..254` hue, mapped to Tasmota's `0..360` range
+Sat|`v_light3`|`0..254` saturation
+Voltage|`v_relay_power`|RMS voltage in volts
+Current|`v_relay_power`|RMS current in amperes
+ActivePower|`v_relay_power`|Active power in watts; this name avoids ambiguity with the `Power` On/Off state
+ApparentPower|`v_relay_power`|Apparent power in VA
+ReactivePower|`v_relay_power`|Reactive power in var
+Factor|`v_relay_power`|Power factor, normally `0..1`
+Frequency|`v_relay_power`|Frequency in Hz
+FanMode|`v_fan`|`0`: Off; `1`: Low; `2`: Medium; `3`: High
+FanSpeed|`v_fan`|`0..100` fan speed in percent
+FanSpeed255|`v_fan`|`0..255` fan speed, convenient for Rules and PWM
+ShutterPos|`v_garage`|Current position: `0` closed to `100` open
+ShutterTarget|`v_garage`|Target position: `0` closed to `100` open
+ShutterDirection|`v_garage`|`-1` closing, `0` stopped, `1` opening
+SystemMode|`v_hvac`|Thermostat mode: `0` Off, `1` Auto, `3` Cool, `4` Heat, `7` Fan only, `8` Dry
+Temp|`v_hvac`|Set both cooling and heating setpoints, in hundredths of °C
+CoolSetpoint|`v_hvac`|Cooling setpoint, in hundredths of °C
+HeatSetpoint|`v_hvac`|Heating setpoint, in hundredths of °C
+LocalTemperature|`v_hvac`|Measured local temperature, in hundredths of °C
+Temperature|`v_temperature`|Temperature in Tasmota's configured unit; Matter reports hundredths of °C
+Humidity|`v_humidity`|Relative humidity in hundredths of percent (`0..10000`)
+Pressure|`v_pressure`|Pressure in hPa
+Illuminance|`v_illuminance`|Raw illuminance in lux; Matter reports `log10(value + 1) * 10000`
+Flow|`v_flow`|Flow in m³/h; Matter reports the value ×10
+Moisture|`v_soil`|Soil moisture in percent (`0..100`)
+Contact|`v_contact`|`0`/`1` contact state
+Occupancy|`v_occupancy`|`0`/`1` occupancy state
+Rain|`v_rain`|`0`/`1` rain state
+Waterleak|`v_waterleak`|`0`/`1` water-leak state
+AirQuality|`v_airquality`|Air-quality enum: `0` Unknown, `1` Good, `4` Poor
+CO2|`v_airquality`|Carbon-dioxide concentration
+NO2|`v_airquality`|Nitrogen-dioxide concentration
+PM1|`v_airquality`|PM1 concentration
+PM2.5|`v_airquality`|PM2.5 concentration
+PM10|`v_airquality`|PM10 concentration
+TVOC|`v_airquality`|Total volatile organic compounds concentration
 
 
 Keep in mind that many values are in the range `0..254` because `255` is an invalid value (this comes from Zigbee).

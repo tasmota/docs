@@ -18,35 +18,55 @@ The plugin system is designed to have different implementations for different ty
 
 Endpoint `root` (0) is managed by the `matter.Plugin_Root` class because of its specific behavior.
 
-We provide currently the following classes:
+The registered plug-in types below are current for the Matter 1.6.1 implementation. The `TYPE` value is the value saved in an endpoint configuration. `Matter_Plugin_Device`, `Matter_Plugin_Sensor`, and `Matter_Plugin_Sensor_Boolean` are base classes, not selectable endpoint types.
 
-| Plug-in class           | Description                                       | Bridge | Virtual |
-| ----------------------- | ------------------------------------------------- |--------|---------|
-| Plugin_Device           | Generic device (abstract)                         |        |         |
-| Plugin_Root             | Root node (type 0x0016)                           |        |         |
-| Plugin_Aggregator       | Aggregator for Bridge mode (type 0x000E)          |        |         |
-| Plugin_OnOff            | Simple On/Off Plug (type 0x010A)                  |  x     |    x    |
-| Plugin_Light0           | Light with 0 channel (OnOff) (type 0x0100)        |  x     |    x    |
-| Plugin_Light1           | Light with 1 channels (Dimmer) (type 0x0101)      |  x     |    x    |
-| Plugin_Light2           | Light with 2 channels (CT) (type 0x010C)          |  x     |    x    |
-| Plugin_Light3           | Light with 3 channels (RGB) (type 0x010D)         |  x     |    x    |
-| Plugin_Fan              | Fan (type 0x002B) Virtual only                    |        |    x    |
-| Plugin_Sensor           | Generic Sensor class (abstract)                   |        |         |
-| Plugin_Sensor_Temp      | Temperature Sensor (type 0x0302)                  |  x     |    x    |
-| Plugin_Sensor_Pressure  | Pressure Sensor (type 0x0305)                     |  x     |    x    |
-| Plugin_Sensor_Illuminance | Light/Illuminance Sensor (type 0x0106)          |  x     |    x    |
-| Plugin_Sensor_Humidity  | Humidity Sensor (type 0x0307)                     |  x     |    x    |
-| Plugin_Sensor_Flow      | Flow Sensor (type 0x0306)                         |  x     |    x    |
-| Plugin_Sensor_Boolean   | Generic Booleand Sensor class (abstract)          |        |         |
-| Plugin_Sensor_Occupancy | Occupancy Sensor linked to a swithch (type 0x0107)|  x     |    x    |
-| Plugin_Sensor_Contact   | Contact Sensor (type 0x0015)                      |  x     |    x    |
-| Plugin_Sensor_OnOff     | OnOff Sensor (type 0x0850)                        |        |         |
-| Plugin_Sensor_Rain      | Rain Sensor (type 0x0044)                         |  x     |    x    |
-| Plugin_Sensor_Waterleak | Water Leak Sensor (type 0x0043)                   |  x     |    x    |
-| Plugin_Sensor_Air_Quality | Air Quality Sensor (co2, pm...) (type 0x002C)   |  x     |    x    |
-| Plugin_Sensor_GenericSwitch_Btn | Generic switch for Buttons (type 0x000F)  |        |         |
-| Plugin_Shutter          | Shutter (type 0x0202)                             |        |         |
-| Plugin_Shutter_Tilt     | Shutter with Tilt control (type 0x0202)           |        |         |
+| Plug-in class | `TYPE` | Description / Matter device type |
+| --- | --- | --- |
+| `Matter_Plugin_Root` | `root` | Root node (`0x0016`, rev. 5) |
+| `Matter_Plugin_Aggregator` | `aggregator` | Aggregator (`0x000E`, rev. 1), used by a bridge |
+| `Matter_Plugin_Light0` | `light0` | On/Off Light (`0x0100`) |
+| `Matter_Plugin_Light1` | `light1` | Dimmable Light (`0x0101`) |
+| `Matter_Plugin_Light2` | `light2` | Color Temperature Light (`0x010C`) |
+| `Matter_Plugin_Light3` | `light3` | Extended Color Light (`0x010D`) |
+| `Matter_Plugin_OnOff` | `relay` | On/Off Plug-in Unit (`0x010A`) |
+| `Matter_Plugin_OnOff_Power` | `relay_power` | On/Off Plug-in Unit plus Electrical Sensor (`0x010A` + `0x0510`) |
+| `Matter_Plugin_Fan` | `fan` | Fan (`0x002B`) |
+| `Matter_Plugin_GarageDoor` | `garage` | Closure / garage door (`0x0230`, rev. 1) |
+| `Matter_Plugin_Shutter` | `shutter` | Window Covering (`0x0202`) |
+| `Matter_Plugin_ShutterTilt` | `shutter+tilt` | Window Covering with tilt (`0x0202`) |
+| `Matter_Plugin_Thermostat` | `thermostat` | Generic thermostat model (`0x0301`); `v_hvac` provides the current usable integration |
+| `Matter_Plugin_Sensor_Temp` | `temperature` | Temperature Sensor (`0x0302`) |
+| `Matter_Plugin_Sensor_Pressure` | `pressure` | Pressure Sensor (`0x0305`) |
+| `Matter_Plugin_Sensor_Illuminance` | `illuminance` | Light Sensor (`0x0106`) |
+| `Matter_Plugin_Sensor_Humidity` | `humidity` | Humidity Sensor (`0x0307`) |
+| `Matter_Plugin_Sensor_Flow` | `flow` | Flow Sensor (`0x0306`) |
+| `Matter_Plugin_Sensor_Soil` | `soil` | Soil Sensor (`0x0045`, rev. 1) |
+| `Matter_Plugin_Sensor_Contact` | `contact` | Contact Sensor (`0x0015`) |
+| `Matter_Plugin_Sensor_Occupancy` | `occupancy` | Occupancy Sensor (`0x0107`) |
+| `Matter_Plugin_Sensor_OnOff` | `onoff` | On/Off Sensor (`0x0850`) |
+| `Matter_Plugin_Sensor_Rain` | `rain` | Rain Sensor (`0x0044`) |
+| `Matter_Plugin_Sensor_Waterleak` | `waterleak` | Water Leak Detector (`0x0043`) |
+| `Matter_Plugin_Sensor_Air_Quality` | `airquality` | Air Quality Sensor (`0x002C`), with optional CO₂, NO₂, PM, and TVOC measurements |
+| `Matter_Plugin_Sensor_GenericSwitch_Btn` | `gensw_btn` | Generic Switch (`0x000F`) |
+
+HTTP bridge plug-ins have `http_` types and extend the corresponding local implementation:
+
+| Classes | `TYPE` values |
+| --- | --- |
+| Lights and relays | `http_light0`, `http_light1`, `http_light2`, `http_light3`, `http_relay`, `http_relay_power` |
+| Sensors | `http_temperature`, `http_pressure`, `http_illuminance`, `http_humidity`, `http_flow`, `http_soil`, `http_contact`, `http_occupancy`, `http_rain`, `http_waterleak`, `http_airquality` |
+
+Each HTTP bridge type also has a dynamically registered MQTT alias: replace `http_` with `mqtt_` (for example, `http_light1` → `mqtt_light1`). MQTT bridge plug-ins reuse the HTTP bridge class; they receive commands and state updates through MQTT rather than HTTP polling.
+
+Virtual plug-ins have `v_` types and can be updated with [`MtrUpdate`](Matter.md#mtrupdate-command):
+
+| Classes | `TYPE` values |
+| --- | --- |
+| Lights and relays | `v_light0`, `v_light1`, `v_light2`, `v_light3`, `v_relay`, `v_relay_power` |
+| Appliances | `v_fan`, `v_garage`, `v_hvac`, `v_hvac_option` |
+| Sensors | `v_temperature`, `v_pressure`, `v_illuminance`, `v_humidity`, `v_flow`, `v_soil`, `v_contact`, `v_occupancy`, `v_rain`, `v_waterleak`, `v_airquality` |
+
+Zigbee bridge plug-ins are virtual internally and set `ZIGBEE = true`: `z_light0`, `z_light1`, `z_light2`, `z_temp`, `z_humidity`, `z_pressure`, and `z_occupancy`.
 
 **Bridge**: Tasmota is able to act as a Bridge to other Tasmota devices (ESP8266 or ESP32) and drive them via the HTTP API.
 
@@ -55,37 +75,83 @@ We provide currently the following classes:
 Plugins Hierarchy:
 ```
 Matter_Plugin
-+--- Matter_Plugin_Root
-+--- Matter_Plugin_Aggregator
-+--+ Matter_Plugin_Device
-   |--+ Matter_Plugin_Light0
-   |  +--+ Matter_Plugin_Light1
-   |  |  +--- Matter_Plugin_Light2
-   |  |  +--- Matter_Plugin_Light3
-   |  +--- Matter_Plugin_OnOff
-   +--+ Matter_Plugin_Fan
-   +--+ Matter_Plugin_Shutter
-   |  +--- Matter_Plugin_ShutterTilt
-   +--+ Matter_Plugin_Sensor
-   |  +--+ Matter_Plugin_Sensor_Humidity
-   |     +--- Matter_Plugin_Zigbee_Humidity
-   |  +--+ Matter_Plugin_Sensor_Temperature
-   |     +--- Matter_Plugin_Zigbee_Temperature
-   |  +--+ Matter_Plugin_Sensor_Pressure
-   |     +--- Matter_Plugin_Zigbee_Pressure
-   |  +--- Matter_Plugin_Sensor_Illuminance
-   |  +--- Matter_Plugin_Sensor_Flow
-   +--+ Matter_Plugin_Sensor_Boolean
-   |  +--- Matter_Plugin_Sensor_Contact
-   |  +--- Matter_Plugin_Sensor_Occupancy
-   |  +--- Matter_Plugin_Sensor_OnOff
-   |  +--- Matter_Plugin_Sensor_Rain
-   |  +--- Matter_Plugin_Sensor_WaterLeak
-   +--- Matter_Plugin_Sensor_AirQuality
-   +--- Matter_Plugin_Sensor_GenericSwitch_Btn
+├── Matter_Plugin_Root
+├── Matter_Plugin_Aggregator
+└── Matter_Plugin_Device
+    ├── Matter_Plugin_Light0
+    │   ├── Matter_Plugin_Light1
+    │   │   ├── Matter_Plugin_Light2
+    │   │   │   ├── Matter_Plugin_Bridge_Light2
+    │   │   │   ├── Matter_Plugin_Virt_Light2
+    │   │   │   └── Matter_Plugin_Zigbee_Light2
+    │   │   ├── Matter_Plugin_Light3
+    │   │   │   ├── Matter_Plugin_Bridge_Light3
+    │   │   │   └── Matter_Plugin_Virt_Light3
+    │   │   ├── Matter_Plugin_Bridge_Light1
+    │   │   └── Matter_Plugin_Virt_Light1
+    │   ├── Matter_Plugin_OnOff
+    │   │   ├── Matter_Plugin_OnOff_Power
+    │   │   │   ├── Matter_Plugin_Bridge_OnOff_Power
+    │   │   │   └── Matter_Plugin_Virt_OnOff_Power
+    │   │   └── Matter_Plugin_Virt_OnOff
+    │   ├── Matter_Plugin_Bridge_Light0
+    │   │   └── Matter_Plugin_Bridge_OnOff
+    │   ├── Matter_Plugin_Virt_Light0
+    │   └── Matter_Plugin_Zigbee_Light0
+    ├── Matter_Plugin_Fan
+    │   └── Matter_Plugin_Virt_Fan
+    ├── Matter_Plugin_GarageDoor
+    │   └── Matter_Plugin_Virt_GarageDoor
+    ├── Matter_Plugin_Shutter
+    │   └── Matter_Plugin_ShutterTilt
+    ├── Matter_Plugin_Thermostat
+    │   └── Matter_Plugin_Virt_HVAC
+    ├── Matter_Plugin_Sensor
+    │   ├── Matter_Plugin_Sensor_Temp
+    │   │   ├── Matter_Plugin_Bridge_Sensor_Temp
+    │   │   ├── Matter_Plugin_Virt_Sensor_Temp
+    │   │   └── Matter_Plugin_Zigbee_Temperature
+    │   ├── Matter_Plugin_Sensor_Humidity
+    │   │   ├── Matter_Plugin_Bridge_Sensor_Humidity
+    │   │   ├── Matter_Plugin_Virt_Sensor_Humidity
+    │   │   └── Matter_Plugin_Zigbee_Humidity
+    │   ├── Matter_Plugin_Sensor_Pressure
+    │   │   ├── Matter_Plugin_Bridge_Sensor_Pressure
+    │   │   ├── Matter_Plugin_Virt_Sensor_Pressure
+    │   │   └── Matter_Plugin_Zigbee_Pressure
+    │   ├── Matter_Plugin_Sensor_Illuminance
+    │   │   ├── Matter_Plugin_Bridge_Sensor_Illuminance
+    │   │   └── Matter_Plugin_Virt_Sensor_Illuminance
+    │   ├── Matter_Plugin_Sensor_Flow
+    │   │   ├── Matter_Plugin_Bridge_Sensor_Flow
+    │   │   └── Matter_Plugin_Virt_Sensor_Flow
+    │   └── Matter_Plugin_Sensor_Soil
+    │       ├── Matter_Plugin_Bridge_Sensor_Soil
+    │       └── Matter_Plugin_Virt_Sensor_Soil
+    ├── Matter_Plugin_Sensor_Boolean
+    │   ├── Matter_Plugin_Sensor_Contact
+    │   │   ├── Matter_Plugin_Bridge_Sensor_Contact
+    │   │   └── Matter_Plugin_Virt_Sensor_Contact
+    │   ├── Matter_Plugin_Sensor_Occupancy
+    │   │   ├── Matter_Plugin_Bridge_Sensor_Occupancy
+    │   │   ├── Matter_Plugin_Virt_Sensor_Occupancy
+    │   │   └── Matter_Plugin_Zigbee_Occupancy
+    │   ├── Matter_Plugin_Sensor_OnOff
+    │   ├── Matter_Plugin_Sensor_Rain
+    │   │   ├── Matter_Plugin_Bridge_Sensor_Rain
+    │   │   └── Matter_Plugin_Virt_Sensor_Rain
+    │   └── Matter_Plugin_Sensor_Waterleak
+    │       ├── Matter_Plugin_Bridge_Sensor_Waterleak
+    │       └── Matter_Plugin_Virt_Sensor_Waterleak
+    ├── Matter_Plugin_Sensor_Air_Quality
+    │   ├── Matter_Plugin_Bridge_Sensor_Air_Quality
+    │   └── Matter_Plugin_Virt_Sensor_Air_Quality
+    └── Matter_Plugin_Sensor_GenericSwitch_Btn
+
+Matter_Plugin_Virt_HVAC_Option : Matter_Plugin_OnOff
 ```
 
-All endpoints that support `Bridge`, `Virtual` and `Zigbee` have `Matter_Plugin_Bridge_<name>`, `Matter_Plugin_Virt_<name>` and `Matter_Plugin_Zigbee_<name>` subclasses.
+Only the variants shown in the tree exist. In particular, there are no HTTP/MQTT or Zigbee bridge variants for fans, shutters, garage doors, or thermostats.
 
 
 ## Plugin superclass
