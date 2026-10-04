@@ -118,6 +118,8 @@ OpenTherm integration supports the following commands.
 - `ot_twater`           Get/Set domestic hot water temperature
 - `ot_save_setpoints`   Save central heating and domestic hot water temperatures
 - `ot_ch`               Activate/Deactivate central heating
+- `ot_tboiler2`         Get/Set the temperature of the second central heating circuit (CH2)
+- `ot_ch2`              Activate/Deactivate the second central heating circuit (CH2)
 
 ### ot_flags command
 
@@ -128,7 +130,7 @@ OpenTherm integration supports the following flags:
 - `CH`   - If set, activate central heating permanently, following the `ot_tboiler` setpoint value. If disabled and `CHOD` is set, it follows the `Diagnostics` flag. Otherwise, heating is controlled by the `ot_ch` status
 - `COOL` - Enable cooling, if supported. Refer to your boiler manual.
 - `OTC`  - Enable external temperature compensation thermistor. Refer to your boiler manual.
-- `CH2`  - Enable auxiliary central heating. Refer to your boiler manual.
+- `CH2`  - Enable auxiliary central heating. Refer to your boiler manual. Its flow temperature is set with `ot_tboiler2`
 
 !!! note
     During the first run, `ot_flags` is set to the `CHOD,DHW`. Hot water setpoint set to 36-degree Celsius and central heating temperature set to 85 degree celsius
@@ -205,6 +207,26 @@ To set OpenTherm flags, type `ot_flags DHW,CH,OTC`
 
 !!! warning
     `ot_ch 0` won't turn the boiler off, if `CHOD` flag is set and external thermostat requires heat
+
+### ot_tboiler2 command
+
+`ot_tboiler2` sets the flow temperature of the second central heating circuit (OpenTherm data-id 8, `TsetCH2`). It is sent only while CH2 is enabled (`CH2` flag or `ot_ch2 1`) and, like `ot_tboiler`, only when the value changed by more than the setpoint tolerance. After a restart the CH2 setpoint starts with the saved central heating setpoint.
+
+```
+14:20:04 CMD: ot_tboiler2 45
+14:20:04 MQT: stat/boiler/RESULT = {"ot_tboiler2":45.0}
+```
+
+The telemetry then contains `BTMP2` (requested and acknowledged CH2 setpoint, same format as `BTMP`) and `TB2`, the CH2 flow temperature (data-id 31), if the boiler supports it.
+
+### ot_ch2 command
+
+`ot_ch2` enables or disables the second central heating circuit at runtime, like `ot_ch` does for the first one. It does not write the settings; use the `CH2` flag of `ot_flags` for the state after a restart.
+
+```
+14:21:10 CMD: ot_ch2 0
+14:21:10 MQT: stat/boiler/RESULT = {"ot_ch2":0}
+```
 
 ## Setting Hot Water temperature
 
