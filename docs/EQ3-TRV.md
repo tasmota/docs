@@ -268,6 +268,7 @@ If the TRV runs the [custom firmware](#custom-firmware), these fields are additi
 ```json
 {
 	"BattLevel": 91,
+	"BattVolt":2.731,
 	"Ambient": 20.6
 }
 ```
@@ -292,6 +293,7 @@ If the TRV runs the [custom firmware](#custom-firmware), these fields are additi
 | state | Child lock status (disables the physical buttons on the TRV): `locked` or `unlocked`. |
 | battery | Battery status of the TRV (`GOOD` or `LOW`). |
 | BattLevel | Battery level of the TRV in percent. |
+| BattVolt | Battery voltage of the TRV in Volt. |
 | Ambient | Ambient room temperature reported by the TRV. |
 | holidayend | End date and time of holiday mode. |
 | windowtemp | Configured temperature for the window open detection. |
