@@ -191,6 +191,7 @@ nav:
     - Tasmota-Application.md
     - TensorFlow Lite: TFL.md
     - Touch GPIOs: TouchPin.md
+    - Hardware Dump: HwDump.md
     - Safeboot Partition Layout: Safeboot.md
     - Supported Devices: "https://templates.blakadder.com/esp32"
   - Smart Home Integrations:

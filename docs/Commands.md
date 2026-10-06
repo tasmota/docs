@@ -178,6 +178,7 @@ GPIOs<a class="cmnd" id="gpios"></a>|Show list of available [components](Compone
 GPIO<a class="cmnd" id="gpio"></a>|Show current [component](Components#gpio-overview) assignments of the Module's configurable GPIO<BR>`255` / `All` Show [component](Components#gpio-overview) assignments for all the devices available GPIO<BR>
 GPIO<x\><a class="cmnd" id="gpiox"></a>|`<component>` = assign a [component](Components) to `Gpio<x>`
 GPIORead<x\><a class="cmnd" id="gpioread"></a>|Perform a digitalRead on each configured GPIO to show input state
+HwDump<a class="cmnd" id="hwdump"></a>|*ESP32<x> only*, requires `#define USE_HWDUMP`<BR>Dump to the log the full hardware configuration of GPIO pads (IO_MUX, GPIO matrix routing, pulls, drive strength, levels) and peripherals (LEDC, RMT, I2S, SPI, I2C, UART, USB-Serial-JTAG, RTC_IO/LP_IO, sleep). [Read more...](HwDump)
 I2CScan0<a class="cmnd" id="i2cscan0"></a>|*ESP32 only* Scan both I<sup>2</sup>C busses and show addresses for found devices
 I2CScan<a class="cmnd" id="i2cscan"></a>|Scan I<sup>2</sup>C bus and show addresses for found devices
 I2CDriver<a class="cmnd" id="i2cdriver"></a>|Enable / Disable I<sup>2</sup>C sensor drivers. [Read more...](I2CDEVICES)<BR>
