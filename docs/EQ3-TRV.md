@@ -52,7 +52,7 @@ There is a custom firmware available for the eQ-3 thermostat. Please visit the [
 
 Using this custom firmware provides significant advantages and introduces new features to Tasmota:
 
-- Passive Telemetry: The firmware periodically broadcasts its state via BTHome v2 beacons. Tasmota can read these advertisements directly from the air to update device states instantly. At the moment Tasmota only supports unencrypted beacons.
+- Passive Telemetry: The firmware periodically broadcasts its state via BTHome v2 beacons. Tasmota can read these advertisements directly from the air to update device states instantly. When the beacons are encrypted, it is indicated by the 🔑 symbol. In that case, use the [`MI32Keys`](Commands.md#mi32keys) command to tell Tasmota the decryption key, that you have configured in the custom firmware web app.
 - Enhanced Data Fields: Through these broadcasts, Tasmota can now capture and display the ambient room temperature and the precise battery level as a percentage, alongside valve position and operation modes.
 - Better Battery Life: Since Tasmota processes the passive broadcasts, the need for continuous, energy-draining connection-based polling cycles is drastically reduced.
 - Pairing Options: The custom firmware offers pair-less connection options and a settable pairing PIN. Removing the requirement for a PIN makes the initial connection of the TRV to Tasmota very easy. For enhanced security, the pairing PIN can be enabled and paired later on.
@@ -63,9 +63,9 @@ The eQ-3 TRV has 3 modes of operation:
 
 | Mode | Description |
 | :--- | :--- |
-| auto | Follows the week program. A temperature different from the week program can be set at any time, but at the next programmed timeslot the valve will switch back to the preset temperature. |
-| manual | Keeps the current requested temperature. |
-| holiday | Keeps the temperature set for the holiday duration and then automatically switches back to *auto* mode and running the week program. |
+| 🕗 auto | Follows the week program. A temperature different from the week program can be set at any time, but at the next programmed timeslot the valve will switch back to the preset temperature. |
+| ✋ manual | Keeps the current requested temperature. |
+| 🌴 holiday | Keeps the temperature set for the holiday duration and then automatically switches back to *auto* mode and running the week program. |
 
 These 3 modes can be set and configured using different commands
 described below.
@@ -176,11 +176,11 @@ Commands must follow the syntax `TRV <MAC> <subcommand> [options]` as explained 
 | <a class="cmnd" id="day"></a>day | Switch to the configured comfort temperature. |
 | <a class="cmnd" id="night"></a>night | Switch to the configured reduction temperature. |
 | <a class="cmnd" id="setdaynight"></a>setdaynight | `<daytemp> <nighttemp>` = set the comfort and reduction temperature |
-| <a class="cmnd" id="boost"></a>boost | `[<value>]` = activate boost mode (valve opens 80% for 5 minutes). This is the default when no parameter is given.<br>`0` / `off` = deactivate boost mode (same as [`unboost`](#unboost))<br>Note: Boost mode stops automatically after 5 minutes. |
+| <a class="cmnd" id="boost"></a>boost 🔥 | `[<value>]` = activate boost mode (valve opens 80% for 5 minutes). This is the default when no parameter is given.<br>`0` / `off` = deactivate boost mode (same as [`unboost`](#unboost))<br>Note: Boost mode stops automatically after 5 minutes. |
 | <a class="cmnd" id="unboost"></a>unboost | Deactivate boost mode. |
-| <a class="cmnd" id="lock"></a>lock | `[<value>]` = disable TRV buttons (child lock). This is the default when no parameter is given.<br>`0` / `off` = enable TRV buttons (same as [`unlock`](#unlock)) |
+| <a class="cmnd" id="lock"></a>lock 🔒 | `[<value>]` = disable TRV buttons (child lock). This is the default when no parameter is given.<br>`0` / `off` = enable TRV buttons (same as [`unlock`](#unlock)) |
 | <a class="cmnd" id="unlock"></a>unlock | Enable TRV buttons. |
-| <a class="cmnd" id="window"></a>window | `<value>` = set window state of the TRV<br>`0` = set window state to `closed`<br>`1` = set window state to `open`<br>Attention: When you set the window state to `open` on a TRV with stock firmware, the TRV will never leave that state until you set it to `closed` via `window 0`. When your TRV is running the [custom firmware](#custom-firmware), the normal window open countdown is started. |
+| <a class="cmnd" id="window"></a>window 🪟 | `<value>` = set window state of the TRV<br>`0` = set window state to `closed`<br>`1` = set window state to `open`<br>Attention: When you set the window state to `open` on a TRV with stock firmware, the TRV will never leave that state until you set it to `closed` via `window 0`. When your TRV is running the [custom firmware](#custom-firmware), the normal window open countdown is started. |
 | <a class="cmnd" id="settime"></a>settime | `[<time>]` = synchronize the current Tasmota time to the TRV if no parameter is given.<br>To send a custom time, provide it in the `yyMMddhhmmss` format (byte-by-byte decimal to hexadecimal conversion ) or use the [Hex Generator](#hex-generator).<br>Note: If your ESP32 Tasmota is not synchronized with a valid date and time, running this command without parameters will set an incorrect time and date on the TRV. |
 | <a class="cmnd" id="setprofile"></a>setprofile | `<day> <temperature>-<timeslot>,<temperature>-<timeslot>,...` = set the temperature schedule for the given day<br>`0` = Saturday, `1` = Sunday, ... `6` = Friday<br>It is also possible to group days: `7` = weekend, `8` = workday, `9` = everyday.<br>Up to seven pairs can be provided. Each temperature is maintained **until** the associated time.<br>Syntax: `<day> <temperature>-<timeslot>,<temperature>-<timeslot>` (e.g., `8 21.0-07:30,18.0-22:00,16.0-24:00`)<br>Note: The last timeslot must always end at `24:00`, otherwise a default temperature is applied to the remaining time. |
 | <a class="cmnd" id="reqprofile"></a>reqprofile | `<day>` = read the temperature schedule for the given day<br>`0` = Saturday, `1` = Sunday, ... `6` = Friday |
