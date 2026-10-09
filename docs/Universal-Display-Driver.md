@@ -464,7 +464,7 @@ dimmer opcode _(optional)_
 LVGL _(optional)_
   
 1. number of display lines flushed at once (min 10) the lower the lesser memory needed  
-2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader,<br>bit 3: `8` inverted busy line on epaper displays.<br>bit 4: `16` swap black and white in monochrome pictures (pushcolors, needed for bw pictures on epaper displays).
+2. bit 0: DMA enables (`0` for no DMA, 1 use DMA) - not supported on all displays<br>bit 1: selects color swap, 2 = swap 16 bit color<br>bit 2: enable async DMA, `0` wait for DMA to complete before returning, `4` run DMA async in the background. This later mode is only valid if the SPI bus is not shared between the display and any other SPI device like SD Card Reader,<br>bit 3: `8` inverted busy line on epaper displays.<br>bit 4: `16` swap black and white in monochrome pictures (pushcolors, needed for bw pictures on epaper displays).<br>bit 5: `32` allocate LVGL draw buffers preferably in PSRAM instead of internal memory, falling back to internal memory if PSRAM is unavailable. This saves internal memory and is recommended for high resolution ESP32-P4 MIPI-DSI displays, typically with flush lines set to the display height (ex: `:B,600,32` for a 1024x600 display). Not recommended for other displays, where rendering into PSRAM is slower.
 
 `:T`  
 Wait times used for E-paper display  
