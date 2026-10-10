@@ -1,0 +1,6 @@
+.cmnd:target {
+    display: block;
+    height: 4rem; /*same height as header*/
+    margin-top: -4rem; /*same height as header*/
+    visibility: hidden;
+}
