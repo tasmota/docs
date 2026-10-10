@@ -47,7 +47,8 @@ The registered plug-in types below are current for the Matter 1.6.1 implementati
 | `Matter_Plugin_Sensor_Rain` | `rain` | Rain Sensor (`0x0044`) |
 | `Matter_Plugin_Sensor_Waterleak` | `waterleak` | Water Leak Detector (`0x0043`) |
 | `Matter_Plugin_Sensor_Air_Quality` | `airquality` | Air Quality Sensor (`0x002C`), with optional CO₂, NO₂, PM, and TVOC measurements |
-| `Matter_Plugin_Sensor_GenericSwitch_Btn` | `gensw_btn` | Generic Switch (`0x000F`) |
+| `Matter_Plugin_Sensor_GenericSwitch_Btn` | `gensw_btn` | Generic Switch (`0x000F`), mapped to a Tasmota button |
+| `Matter_Plugin_Virt_Sensor_GenericSwitch_Btn` | `v_gensw` | Virtual Generic Switch (`0x000F`) for remote completed gestures |
 
 HTTP bridge plug-ins have `http_` types and extend the corresponding local implementation:
 
@@ -64,6 +65,7 @@ Virtual plug-ins have `v_` types and can be updated with [`MtrUpdate`](Matter.md
 | --- | --- |
 | Lights and relays | `v_light0`, `v_light1`, `v_light2`, `v_light3`, `v_relay`, `v_relay_power` |
 | Appliances | `v_fan`, `v_garage`, `v_hvac`, `v_hvac_option` |
+| Buttons | `v_gensw` |
 | Sensors | `v_temperature`, `v_pressure`, `v_illuminance`, `v_humidity`, `v_flow`, `v_soil`, `v_contact`, `v_occupancy`, `v_rain`, `v_waterleak`, `v_airquality` |
 
 Zigbee bridge plug-ins are virtual internally and set `ZIGBEE = true`: `z_light0`, `z_light1`, `z_light2`, `z_temp`, `z_humidity`, `z_pressure`, and `z_occupancy`.
@@ -147,6 +149,7 @@ Matter_Plugin
     │   ├── Matter_Plugin_Bridge_Sensor_Air_Quality
     │   └── Matter_Plugin_Virt_Sensor_Air_Quality
     └── Matter_Plugin_Sensor_GenericSwitch_Btn
+        └── Matter_Plugin_Virt_Sensor_GenericSwitch_Btn
 
 Matter_Plugin_Virt_HVAC_Option : Matter_Plugin_OnOff
 ```

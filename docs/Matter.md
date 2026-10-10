@@ -357,6 +357,7 @@ Contact|`v_contact`|`0`/`1` contact state
 Occupancy|`v_occupancy`|`0`/`1` occupancy state
 Rain|`v_rain`|`0`/`1` rain state
 Waterleak|`v_waterleak`|`0`/`1` water-leak state
+Presses|`v_gensw`|Completed Generic Switch gesture: integer `1..5`; each command emits one gesture
 AirQuality|`v_airquality`|Air-quality enum: `0` Unknown, `1` Good, `4` Poor
 CO2|`v_airquality`|Carbon-dioxide concentration
 NO2|`v_airquality`|Nitrogen-dioxide concentration
@@ -367,6 +368,24 @@ TVOC|`v_airquality`|Total volatile organic compounds concentration
 
 
 Keep in mind that many values are in the range `0..254` because `255` is an invalid value (this comes from Zigbee).
+
+### Virtual Generic Switch/Button
+
+The `v_gensw` endpoint represents a remote button or completed button gesture. Add a virtual **Generic Switch/Button** endpoint in **Configuration → Configure Matter**, assign it a name, and send a gesture with `MtrUpdate`:
+
+```text
+MtrUpdate {"Name":"Wall button 1","Presses":1}
+```
+
+`Presses` must be an integer from `1` through `5`. The value selects the gesture count: `1` is a single press, `2` is a double press, and so on. Repeated commands are separate gestures. The endpoint returns to the released state after each gesture. Omitting `Presses` queries the endpoint state; invalid values return an error and publish no events. Long presses are not supported.
+
+A remote Tasmota device can send the command directly with `WebSend`, without an MQTT broker:
+
+```text
+ON Button1#State=10 DO WebSend [192.0.2.1] MtrUpdate {"Name":"Wall button 1","Presses":1} ENDON
+```
+
+Use the bridge's normal WebSend authentication syntax when a web password is configured. These commands are not idempotent: automatic retries can repeat the button action.
 
 ### Full Example
 
