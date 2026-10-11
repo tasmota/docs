@@ -157,7 +157,7 @@ Invoke-RestMethod -Method POST -Body ('{"deviceid":"","data":{"downloadUrl": "' 
 **Note:** If flashing is successful, a new **tasmota-XXXXXXXX** access point will be created.  
 Connect to this AP to configure Tasmota to connect to your WiFi network. 
 
-You're now ready to [configure tasmota](https://tasmota.github.io/docs/Getting-Started/#using-web-ui).
+You're now ready to [configure tasmota](https://tasmota.github.io/docs/Getting-Started/#initial-configuration).
 
 <!--
 ## Using the Itead DIY tool

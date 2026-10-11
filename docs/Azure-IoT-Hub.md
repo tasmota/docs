@@ -57,7 +57,7 @@ Following the directions here: [https://tasmota.github.io/docs/Compile-your-buil
 
 ### 3. Flash your device and configure for WiFi
 
-Flash your device as [discussed here](https://tasmota.github.io/docs/Getting-Started/#flashing) and then configure the WiFi as [discussed here](https://tasmota.github.io/docs/Getting-Started/#using-web-ui).
+Flash your device as [discussed here](https://tasmota.github.io/docs/Getting-Started/#flashing) and then configure the WiFi as [discussed here](https://tasmota.github.io/docs/Getting-Started/#initial-configuration).
 
 ### 4. Configure your device for you Azure IoT Hub
 
@@ -141,7 +141,7 @@ Following the directions here: [https://tasmota.github.io/docs/Compile-your-buil
 
 !!! tip If you configured the WiFi in the config file, no WiFi configuration needed.
 
-Flash your device as [discussed here](https://tasmota.github.io/docs/Getting-Started/#flashing) and then configure the WiFi as [discussed here](https://tasmota.github.io/docs/Getting-Started/#using-web-ui).
+Flash your device as [discussed here](https://tasmota.github.io/docs/Getting-Started/#flashing) and then configure the WiFi as [discussed here](https://tasmota.github.io/docs/Getting-Started/#initial-configuration).
 
 ### 5. Verify your automatic (DPS) configuration
 
