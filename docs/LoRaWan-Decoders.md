@@ -1,7 +1,7 @@
 # LoRaWan Decoders
 
 * [Introduction](#introduction)
-* [Adding Payload Data Decoding](#adding-payload-data-decodingadding_payload_data_decoding)
+* [Adding Payload Data Decoding](#adding-payload-data-decoding)
   * [Example LwDecoded MQTT message](#example-lwdecoded-mqtt-message)
 * [Files](#files)
 * [How to use the Device Decoder feature](#how-to-use-the-device-decoder-feature)
