@@ -216,6 +216,14 @@
             }
         };
         
+        // Newer Emscripten versions no longer expose Module.calledRun.
+        // berry-simulator.js and berry-vm.js poll Module.calledRun, so set it
+        // ourselves once the runtime is initialized. berry.js reuses this
+        // pre-defined Module object ("var Module = typeof Module != 'undefined' ? Module : {}").
+        window.Module = window.Module || {};
+        window.Module.onRuntimeInitialized = function() {
+            window.Module.calledRun = true;
+        };
         // Required by Berry's print() function - called by _js_writebuffer in be_port.c
         window.writeOutputText = function(text) {
             if (window.consoleManager) {
@@ -692,14 +700,14 @@
                     ']\n' +
                     '\n' +
                     '# define a color attribute cycles color in space\n' +
-                    'color rainbow_rich_color = rich_palette(\n' +
+                    'color rainbow_rich_color = rich_palette_color(\n' +
                     '    colors=rainbow_with_white,\n' +
                     '    period=0,\n' +
                     '    transition_type=SINE\n' +
                     ')\n' +
                     '\n' +
                     '# define a gradient across the whole strip\n' +
-                    'animation back_pattern = palette_gradient_animation(\n' +
+                    'animation back_pattern = palette_gradient(\n' +
                     '    color_source = rainbow_rich_color,\n' +
                     '    shift_period = 5s\n' +
                     ')\n' +
