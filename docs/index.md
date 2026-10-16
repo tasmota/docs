@@ -15,20 +15,22 @@ Incredibly expandable and flexible.
 
 [![Latest release](https://img.shields.io/github/downloads/arendst/Tasmota/total.svg?style=flat-square&color=green)](http://ota.tasmota.com/tasmota/release) [![License](https://img.shields.io/github/license/arendst/Tasmota.svg?style=flat-square)](https://github.com/arendst/Tasmota/blob/development/LICENSE.txt) [![Chat](https://img.shields.io/discord/479389167382691863.svg?style=flat-square&color=blueviolet)](https://discord.gg/Ks2Kzd4) [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg?style=flat-square)](https://paypal.me/tasmota)
 
-<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v15.6.0">Tasmota v15.6.0 Sylvie</a></span>
+<span style="font-size: 1.5rem">Current Release<BR><a href="https://github.com/arendst/Tasmota/releases/tag/v16.0.0">Tasmota v16.0.0 Theo</a></span>
 
 ## New Features
 
-- Support for BLE BTHome in binary tasmota32-bluetooth.bin
-- Shelly Pro 2PM emulation for ESP32 (Emulation 3)
-- TLS support for EC P-384 curve in server certificate 
-- Fixes regressions from version v15.5.0
+- Support for ESP32-C61 and ESP32-P4R3
+- Support for MQTT 5.0
+- MiELHVAC enhancements
+- DALI-2 input device support
+- Matter support for additional device models
+- Fixes security and regressions from version v15.6.0
 
 See [release notes](https://github.com/arendst/Tasmota/releases/) for a complete list of new features, changes and bug fixes.
 
 ## Why Tasmota?
 
-Tasmota is open-source firmware born for the **ESP8266**/**ESP8285**, now covering the whole ESP32 family: **ESP32**, **ESP32-S2**, **ESP32-S3**, **ESP32-C3**, **ESP32-C5**, **ESP32-C6**, **ESP32-P4**, with PSRAM and USB/CDC support where available.
+Tasmota is open-source firmware born for the **ESP8266**/**ESP8285**, now covering the whole ESP32 family: **ESP32**, **ESP32-S2**, **ESP32-S3**, **ESP32-C3**, **ESP32-C5**, **ESP32-C6**, **ESP32-C61**, **ESP32-P4**, **ESP32-P4R3**, with PSRAM and USB/CDC support where available.
 
 It talks MQTT (v3.1.1 or v5) to your own broker or a cloud one over TLS ([AWS IoT Core](../AWS-IoT/) and [Azure IoT Hub](../Azure-IoT-Hub/)), or runs entirely standalone with no server at all — your choice.
 
