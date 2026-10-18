@@ -39,7 +39,7 @@ Note that the only configuration stored is the [`SetOption115`](Commands.md#seto
 
 The following passive BLE receivers are supported:
 1) MI32 Sensors
-2) BTHome sensors
+2) BTHome V2 sensors
 3) iBeacon
 
 ### 1. MI32 Sensors
@@ -246,7 +246,7 @@ Backlog Rule1 on Time#Minute=30 do MI32Battery endon; Rule1 1
 
 This will update every day at 00:30 AM.
 
-### 2. BTHome Sensors
+### 2. BTHome V2 Sensors
 
 ??? failure "This feature is included only in tasmota32-bluetooth.bin"
 
@@ -255,17 +255,18 @@ This will update every day at 00:30 AM.
     #define USE_MI_ESP32       // (ESP32 only) Add support for ESP32 as a BLE-bridge (+9k2 mem, +292k flash)
     ```
 
-BTHome is an energy effective but flexible BLE format to broadcast data with Bluetooth and allows you to create your own DIY BLE sensors. More information about the BTHome BLE format and projects that use the format can be found on the BTHome website.
+BTHome is an energy effective but flexible BLE format to broadcast data with Bluetooth and allows you to create your own DIY BLE sensors. More information about the BTHome BLE format and projects that use the format can be found on the [BTHome website](https://bthome.io/).
 
 <img src="../_media/bluetooth/BTHomeSensorsGui.png" width=200 align="right">
 For Tasmota a BTHome sensor is handled just like a MI32 sensor.
 
 #### IoTorero
 
-IoTorero is using encryption for a BTHome sensor. You will need to enter a 32 character hexadecimal encryption key called the bindkey. The default bindkey is '48656c6c6f204254486f6d65210d0a00'. The command to be used is `MI32Keys <MAC>=<bindkey>` like `MI32Keys 0C3D5E54C3E9=48656c6c6f204254486f6d65210d0a00`.
+IoTorero is using encryption for a BTHome sensor. You will need to enter a 32 character hexadecimal encryption key called the bindkey. The default bindkey is `48656c6c6f204254486f6d65210d0a00` and is currently the same for all known sensor types. The command to be used is `MI32Keys <MAC>=<bindkey>` like `MI32Keys 0C3D5E54CDE7=48656c6c6f204254486f6d65210d0a00`.
 
-To decrypt multiple IoTorero sensors using their default bindkey you might want to enter command `MI32Keys 0C3D5EFFFFFF=48656c6c6f204254486f6d65210d0a00`. This will mask all sensors with a MAC of `0C3D5Exxxxxx` using the same bindkey. 
+To decrypt multiple IoTorero sensors using their default bindkey you might want to enter command `MI32Keys 0C3D5EFFFFFF=48656c6c6f204254486f6d65210d0a00`. This will mask all sensors with a MAC of `0C3D5Exxxxxx` using the same bindkey. Notice that the Door Contact uses a different MAC address group but the same bindkey. In that case use `mi32keys 5C5310FFFFFF=48656c6c6f204254486f6d65210d0a00`.
 
+The default name of the sensor (BTHome54CDE7) can be changed by using the `BLEAlias` command like `BLEAlias 0C3D5E54CDE7=IoTorero_Presence`
 
 ### 3. iBeacon
 
