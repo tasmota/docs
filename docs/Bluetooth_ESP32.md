@@ -279,7 +279,7 @@ To change the default bindkey to any key you like or update the sensor firmware 
 
 #### Seeed Studio Arduino BTHome example code
 
-With the [example code](https://wiki.seeedstudio.com/esphome_xiao_w5500_ethernet_adapter/#bthome), any ESP32 model can be used as a BTHome sensor. The software can also be used to test Tasmota's ability to decode BTHome object ids.
+With the [example code](https://wiki.seeedstudio.com/esphome_xiao_w5500_ethernet_adapter/#bthome), any ESP32 model with bluetooth support can be used as a BTHome sensor. The software can also be used to test Tasmota's ability to decode BTHome object ids.
 
 
 ### 3. iBeacon
