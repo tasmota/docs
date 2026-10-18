@@ -141,6 +141,20 @@ rotary.set_group(g)
 
 Touch screen are supported natively via Universal Display driver.
 
+The LVGL pointer input device can be accessed from Berry, for example to read the last touch point or state. `lv.indev(nil).get_next()` returns the first input device; the end of the list is reached when `indev._p` is a null pointer.
+
+```berry
+var indev = lv.indev(nil).get_next()      # first input device
+if indev.get_type() == lv.INDEV_TYPE_POINTER
+  var p = lv.point()
+  indev.get_point(p)
+  var pressed = (indev.get_state() == lv.INDEV_STATE_PRESSED)
+  print(f"x={p.x} y={p.y} pressed={pressed}")
+end
+```
+
+To show a dot under the finger, see [Touch pointer](#touch-pointer).
+
 Let's go into the details of this example.
 
 ### Starting LVGL
@@ -304,6 +318,28 @@ Then download the file to your local computer. The file format is uncompressed B
 Warning: due to internal implementation limitations, the image is stored upside down. Don't forget to vertically revert the image.
 
 ![screenshot-1642356919](https://user-images.githubusercontent.com/49731213/149672598-3ed79c40-7a7e-42e0-9bd9-9ec1a997ae69.png)
+
+### Touch pointer
+
+!!!note "New in Tasmota v16.0.0.1"
+
+`lv.touch_pointer(enable:bool [, color:int|lv.color [, size:int]]) -> bool` displays a dot under the finger while the screen is touched. This is useful for demos, screen recordings, or to check the calibration of a touch screen.
+
+``` berry
+lv.start()
+lv.touch_pointer(true)                    # red dot, 30 pixels
+lv.touch_pointer(true, 0x00FF00, 20)      # change to a green dot, 20 pixels
+lv.touch_pointer(false)                   # disable
+```
+
+- `color` is either an `int` as `0xRRGGBB` or an `lv.color`. Default is red `0xFF0000`.
+- `size` is the diameter in pixels. Default is `30`.
+- Calling it again changes the color and size. Omitted arguments keep their previous values.
+- Returns `false` if LVGL is not started or if there is no touch input device.
+
+The dot is the LVGL cursor of the first pointer input device: LVGL moves it at each touch read, on `lv.layer_sys()` above all screens, and it does not intercept touches. LVGL cannot detach a cursor once set, so disabling the pointer only hides it.
+
+In HASPmota, use the `touch_pointer` attribute instead, see [HASPmota touch pointer](HASPmota.md#touch-pointer).
 
 
 ### PNG Image support

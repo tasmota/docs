@@ -1150,6 +1150,25 @@ Events sent:
 - `{"hasp":{"p0b0":{"idle":"long"}}}` is sent when screen is turned off
 - `{"hasp":{"p0b0":{"idle":"off"}}}` is sent when screen is turned on again after a press on the screen
 
+### Touch pointer
+
+!!!note "New in Tasmota v16.0.0.1"
+
+Displays a dot under the finger while the screen is touched. This is useful for demos, screen recordings, or to check the calibration of a touch screen. It is a thin wrapper around [`lv.touch_pointer()`](LVGL.md#touch-pointer).
+
+Parameters are associated to `p0b0` (page `0` item `0`):
+
+```json
+{"page":0,"id":0,"touch_pointer":"#FF0000","touch_pointer_size":30}
+```
+
+Parameters:
+
+- `touch_pointer`: `true` to enable with the default red color, `false` to disable, or a color (ex: `"#00FF00"`) which also enables it.
+- `touch_pointer_size`: diameter in pixels. Default: `30`.
+
+The dot is drawn above all pages, including page `0`, and does not intercept touches. If there is no touch screen, HASPmota logs `HSP: 'touch_pointer' needs a touch screen`.
+
 ### Update sensor value via rules
 
 You can automatically adjust attributes `val` and `text` from sensor values via a simple rule engine.
