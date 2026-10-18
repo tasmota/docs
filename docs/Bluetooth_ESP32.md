@@ -277,6 +277,11 @@ To decrypt multiple IoTorero sensors using their default bindkey you might want 
 
 To change the default bindkey to any key you like or update the sensor firmware you can use their [BTHome Config Tool](https://athom-tech.github.io/bthome-sensor/BTHome_Config.html) on a browser with bluetooth support. Android is known to work.
 
+#### Seeed Studio Arduino BTHome example code
+
+With the [example code](https://wiki.seeedstudio.com/esphome_xiao_w5500_ethernet_adapter/#bthome), any ESP32 model can be used as a BTHome sensor. The software can also be used to test Tasmota's ability to decode BTHome object ids.
+
+
 ### 3. iBeacon
 
 Hear adverts from BLE devices, and produce MQTT messages containing RSSI and other information about them.  Break out iBeacon specific data if present.
