@@ -260,6 +260,8 @@ BTHome is an energy effective but flexible BLE format to broadcast data with Blu
 <img src="../_media/bluetooth/BTHomeSensorsGui.png" width=200 align="right">
 For Tasmota a BTHome sensor is handled just like a MI32 sensor.
 
+Notice that following commands do not store their data persistently. Therefor I suggest to use an `autoexec.bat` file containing the individual commands to be executed at restart.
+
 #### IoTorero
 
 IoTorero is using encryption for a BTHome sensor. You will need to enter a 32 character hexadecimal encryption key called the bindkey. The default bindkey is `48656c6c6f204254486f6d65210d0a00` and is currently the same for all known sensor types. The command to be used is `MI32Keys <MAC>=<bindkey>` like `MI32Keys 0C3D5E54CDE7=48656c6c6f204254486f6d65210d0a00`.
