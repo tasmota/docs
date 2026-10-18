@@ -66,6 +66,31 @@
                 </div>
             </div>
             
+            <!-- Timeline Section (collapsible): 2D view of the next 30 s, time going down -->
+            <div class="library-header timeline-section">
+                <div id="timeline-toggle-row" class="library-header-row">
+                    <span id="timeline-toggle" class="library-toggle">▶</span>
+                    <span class="library-title"><b>Timeline</b></span>
+                    <span id="timeline-summary" class="library-count">30 s view of the animation</span>
+                </div>
+                <div id="timeline-content" class="library-content" style="display:none;">
+                    <div class="timeline-toolbar">
+                        <button id="timeline-render" class="led-btn bgrn" title="Compute the next 30 seconds of the animation">Render 30 s</button>
+                        <button id="timeline-download" class="led-btn" title="Download the timeline as PNG (without time axis)" disabled>Download PNG</button>
+                        <span id="timeline-status" class="timeline-status"></span>
+                    </div>
+                    <div id="timeline-progress" class="timeline-progress">
+                        <div class="timeline-progress-bar"></div>
+                    </div>
+                    <div id="timeline-view" class="timeline-view">
+                        <div class="timeline-frame">
+                            <canvas id="timeline-canvas" width="1" height="1"></canvas>
+                            <canvas id="timeline-axis" class="timeline-axis"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Advanced Configuration Section (collapsible) -->
             <div class="library-header">
                 <div class="library-header-row" onclick="toggleAdvancedSection()">
@@ -263,6 +288,7 @@
     <script src="apng.js"></script>
     <script src="apng-exporter.js"></script>
     <script src="export-ui.js"></script>
+    <script src="timeline.js"></script>
     <script src="berry-simulator.js"></script>
     <script>
         // Advanced section toggle state
@@ -1173,6 +1199,11 @@
                 if (window.consoleManager) {
                     window.consoleManager.info('Export ready');
                 }
+            }
+            
+            // Initialize Timeline (2D time-evolution view)
+            if (typeof window.initTimeline === 'function') {
+                window.initTimeline();
             }
             
             // Initialize configuration persistence

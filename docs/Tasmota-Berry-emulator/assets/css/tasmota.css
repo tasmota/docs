@@ -2667,3 +2667,106 @@ textarea:focus-visible {
         animation: none;
     }
 }
+
+/* ============================================
+   Timeline Section in LED Strip Panel
+   2D time-evolution view: one column per LED, time going down
+   ============================================ */
+
+.timeline-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 4px 0 6px 0;
+}
+
+.timeline-status {
+    color: var(--c_tab);
+    font-size: 0.85em;
+    margin-left: 4px;
+}
+
+.timeline-status-error {
+    color: var(--c_txtwrn);
+}
+
+.timeline-status-outdated {
+    color: #f0c040;
+}
+
+/* Gentle pulse on the Render button when the timeline is outdated */
+.led-btn.timeline-attention {
+    animation: timeline-attention 1.6s ease-in-out infinite;
+}
+
+@keyframes timeline-attention {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(71, 194, 102, 0); }
+    50% { box-shadow: 0 0 0 3px rgba(71, 194, 102, 0.35); }
+}
+
+/* Thin progress bar shown while rendering */
+.timeline-progress {
+    display: none;
+    height: 4px;
+    background: var(--c_bg);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.timeline-progress.visible {
+    display: block;
+}
+
+.timeline-progress-bar {
+    height: 100%;
+    width: 0;
+    background: var(--c_btnsv);
+    transition: width 0.1s linear;
+}
+
+/* Same framing as the LED canvas container, so columns line up with the LEDs.
+   The negative margin cancels the 5px side padding of the section and of its
+   content div (global 'div' rule), giving the same width as #led-container. */
+.timeline-view {
+    display: none;
+    margin: 0 -10px;
+    background: var(--c_csl);
+    border: 1px solid var(--c_tab);
+    border-radius: 0.3em;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+.timeline-view.has-image {
+    display: block;
+}
+
+.timeline-frame {
+    position: relative;
+    padding: 0;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+#timeline-canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--c_frm);
+    border-radius: 2px;
+    image-rendering: pixelated;
+}
+
+/* Time axis overlay (not part of the downloaded PNG) */
+.timeline-axis {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    pointer-events: none;
+}
