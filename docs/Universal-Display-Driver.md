@@ -20,6 +20,7 @@ ILI9488 TFT|SPI
 GC9A01|SPI
 SH1106 OLED display|I^2^C
 SH1107|SPI
+SH8601 AMOLED (LilyGo T-Encoder-Pro)|QSPI
 SSD1306 OLED display|I^2^C<br>SPI
 SSD1331|SPI
 ST7262|RGB (ESP32S3)
@@ -189,6 +190,42 @@ RT
 #
 ```
 
+### CHSC5816 example
+
+The CHSC5816 uses 32-bit register addresses, read with `RDLM`. Example from the LilyGo T-Encoder-Pro. Configure GPIO `TS RST` to the touch reset pin, then add:
+
+```
+:UTI,CHSC58,I1,2E,*,-1
+RDLM 20000018 4
+CP 43
+RTF
+MV 1 1
+CPR 48
+RTF
+RT
+:UTT
+RDLM 2000002C 8
+CP FF
+RTF
+MV 1 1
+LIM 1
+RT
+:UTX
+MVB 1 5
+MVB 0 2
+AND 0FFF
+RT
+:UTY
+MV 5 1
+AND F0
+SCL 0 16
+MVB 0 3
+RT
+#
+```
+
+`:UTI` checks the `CH` of the `CHSC` signature. In the 8 bytes at `0x2000002C`, byte 0 is `FF` for a valid report and byte 1 is the number of fingers. X is `((A[5] & 0x0F) << 8) | A[2]` and Y is `((A[5] & 0xF0) << 4) | A[3]`; `SCL 0 16` does the shift by 4.
+
 ### Simple resitive touch example
 
 ```
@@ -216,7 +253,7 @@ You are now done.
 !!! info "uDisplay is included in all pre-compiled display binaries, for ESP8266 and ESP32. If you compile yourself, you need to `#define USE_UNIVERSAL_DISPLAY`"
 
 Universal Display Driver or uDisplay is a way to define your display settings using a simple text file and easily add it to Tasmota.
-uDisplay is `DisplayModel 17`. It supports I2C and hardware or software SPI (3 or 4 wire), 8,16 Bit parallel and RGB interface. The driver must be enabled by OPTION A3 on any GPIO pin. 
+uDisplay is `DisplayModel 17`. It supports I2C and hardware or software SPI (3 or 4 wire), QSPI (quad SPI), 8,16 Bit parallel and RGB interface. The driver must be enabled by OPTION A3 on any GPIO pin. 
 
 The driver is enabled by compiling with `#define USE_UNIVERSAL_DISPLAY` and setting an unused GPIO to `Option A3`.
 
@@ -242,7 +279,7 @@ Header line describes the main features of the display (comma separated, no spac
 2. x size in pixels
 3. y size in pixels
 4. bits per pixel (1 for bw displays, 16 for color displays)
-5. hardware interface used either I2C or SPI
+5. hardware interface used either I2C, SPI, QSPI, PAR, RGB or DSI
 
 `I2C`  
   
@@ -266,6 +303,60 @@ SPI interface:
 7. RESET pin
 8. MISO pin
 9. SPI Speed in MHz
+  
+`QSPI`  
+
+!!!note "New in Tasmota v16.0.0.1"
+
+Quad SPI interface (ESP32 only), used by AMOLED controllers like SH8601, CO5300 or RM67162:
+  
+1. Number (1 = hardware SPI2, 2 = hardware SPI3 when available on the SoC)
+2. CS pin
+3. CLK pin
+4. D0 pin
+5. D1 pin
+6. D2 pin
+7. D3 pin
+8. Backlight pin (usually `-1`, AMOLED panels control brightness with a command, see `:D`)
+9. RESET pin
+10. QSPI Speed in MHz (usually 40)
+11. Pixel data lines _(optional)_: `4` (default) or `1`
+
+Pins must be given explicitly, `*` is not replaced for QSPI. There is no DC pin.
+
+QSPI controllers expect each command in its own CS frame with a special header: `02 00 <cmd> 00` for commands and parameters on one data line, and `32 00 2C 00` followed by pixels on four data lines. The driver adds this framing itself, so `:I`, `:A`, `:R`, `:0`..`:3`, `:i`, `:o`, `:O` and `:D` contain plain MIPI DCS opcodes, the same as for an SPI display.
+
+With pixel data lines set to `1`, pixels are sent with `02 00 2C 00` on D0 only, so D1 to D3 are not used. Screen updates are about 4 times slower. Use it as a workaround when one of D1 to D3 has a bad contact, which shows as wrong colors in rectangles of the screen. Example: `:H,SH8601,390,390,16,QSPI,2,10,12,11,13,7,14,-1,4,40,1`
+
+!!! example "SH8601 390x390 AMOLED of the LilyGo T-Encoder-Pro"
+
+```haskell
+:H,SH8601,390,390,16,QSPI,2,10,12,11,13,7,14,-1,4,40
+:S,2,1,1,0,150,185
+:I
+11,80
+13,00
+20,00
+3A,01,05
+53,01,28
+51,01,00
+58,01,00
+29,A0
+:o,28
+:O,29
+:A,2A,2B,2C,16
+:R,36
+:0,00,00,00,00
+:1,00,00,00,00
+:2,C0,00,00,00
+:3,C0,00,00,00
+:i,20,21
+:D,51
+:B,40,00
+#
+```
+
+Brightness is set with the `51` command (`:D,51`), so `DisplayDimmer` works without a backlight pin. SH8601 does not support 90° rotations, only 0° and 180° (`00` and `C0`).
   
 `PAR`  
 
@@ -458,7 +549,7 @@ invert display opcodes
 2. inversion on  
 
 `:D`  
-dimmer opcode _(optional)_
+dimmer opcode _(optional)_, sent followed by the brightness byte (0..255) on SPI, QSPI and I2C displays
 
 `:B`  
 LVGL _(optional)_
@@ -666,6 +757,11 @@ HN = hex number
 
 `RDW HWN` = read one byte  (from word adress)  
 `RDWM HWN DN` = read n bytes (from word adress)  
+
+`RDL HLN` = read one byte  (from 32-bit big-endian adress)  
+`RDLM HLN DN` = read n bytes (from 32-bit big-endian adress)  
+
+If an I2C read fails or returns fewer bytes than requested, the script stops and returns 0 and the array is cleared, so stale data is never reported as a touch.  
 
 `WR HN HN` = write one byte  (to bytes adress)  
 `WRW HWN HN` = write one byte (to word adress)  
