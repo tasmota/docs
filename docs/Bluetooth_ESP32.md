@@ -36,7 +36,13 @@ This is compiled by default in the Bluetooth firmware, but you need to enable it
 Note that the only configuration stored is the [`SetOption115`](Commands.md#setoption115) to turn BLE on and off.  All other configurations can be set at boot if necessary using Rules.
 
 ## Passive BLE Receivers
-### MI32 Sensors
+
+The following passive BLE receivers are supported:
+1) MI32 Sensors
+2) BTHome sensors
+3) iBeacon
+
+### 1. MI32 Sensors
 
 ??? failure "This feature is included only in tasmota32-bluetooth.bin"
 
@@ -240,7 +246,28 @@ Backlog Rule1 on Time#Minute=30 do MI32Battery endon; Rule1 1
 
 This will update every day at 00:30 AM.
 
-### iBeacon
+### 2. BTHome Sensors
+
+??? failure "This feature is included only in tasmota32-bluetooth.bin"
+
+    When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+    ```c++
+    #define USE_MI_ESP32       // (ESP32 only) Add support for ESP32 as a BLE-bridge (+9k2 mem, +292k flash)
+    ```
+
+BTHome is an energy effective but flexible BLE format to broadcast data with Bluetooth and allows you to create your own DIY BLE sensors. More information about the BTHome BLE format and projects that use the format can be found on the BTHome website.
+
+<img src="../_media/bluetooth/BTHomeSensorsGui.png" width=200 align="right">
+For Tasmota a BTHome sensor is handled just like a MI32 sensor.
+
+#### IoTorero
+
+IoTorero is using encryption for a BTHome sensor. You will need to enter a 32 character hexadecimal encryption key called the bindkey. The default bindkey is '48656c6c6f204254486f6d65210d0a00'. The command to be used is `MI32Keys <MAC>=<bindkey>` like `MI32Keys 0C3D5E54C3E9=48656c6c6f204254486f6d65210d0a00`.
+
+To decrypt multiple IoTorero sensors using their default bindkey you might want to enter command `MI32Keys 0C3D5EFFFFFF=48656c6c6f204254486f6d65210d0a00`. This will mask all sensors with a MAC of `0C3D5Exxxxxx` using the same bindkey. 
+
+
+### 3. iBeacon
 
 Hear adverts from BLE devices, and produce MQTT messages containing RSSI and other information about them.  Break out iBeacon specific data if present.
 
