@@ -31,7 +31,7 @@ Be aware, enabling of the native BLE on ESP32 has an impact on Wi-Fi performance
 If only controlling BLE devices, then scanning can be disabled, which will minimize Wi-Fi impact.
 BLE can be enabled from the web UI menus.
 
-To solve the issue of WiFi interference use an ethernet connected device like [Seeed studio XIAO ESP32S3 W5500 PoE Ethernet adapter](https://wiki.seeedstudio.com/xiao_w5500_ethernet_adapter/)
+!!! tip "To solve the issue of WiFi interference use an ethernet connected device like [Seeed studio XIAO ESP32S3 W5500 PoE Ethernet adapter](https://wiki.seeedstudio.com/xiao_w5500_ethernet_adapter/)"
 
 This is compiled by default in the Bluetooth firmware, but you need to enable it using the webUI **Configure BLE** button or [`SetOption115 1`](Commands.md#setoption115) command.
 
