@@ -257,42 +257,43 @@ This will update every day at 00:30 AM.
 
 BTHome is an energy effective but flexible BLE format to broadcast data with Bluetooth and allows you to create your own DIY BLE sensors. More information about the BTHome BLE format and projects that use the format can be found on the [BTHome website](https://bthome.io/).
 
-<img src="../_media/bluetooth/BTHomeSensorsGui.png" width=200 align="right">
 For Tasmota a BTHome sensor is handled just like a MI32 sensor.
 
 The subscript number as seen in the picture is the BTHome object id for binary sensors as shown in the table below.
 
+<img src="../_media/bluetooth/BTHomeSensorsGui.png" width=200 align="right">
+
 Subscript | Property | Result |
------------|----------|-------------|
-15 | generic boolean | 0 (False = Off), 1 (True = On)
-16 | power | 0 (False = Off), 1 (True = On)
-17 | opening | 0 (False = Closed), 1 (True = Open)
+-----------|----------|-------------
+15 | generic boolean | 0 (False = Off)<br>1 (True = On)
+16 | power | 0 (False = Off)<br>1 (True = On)
+17 | opening | 0 (False = Closed)<br>1 (True = Open)
    |         |
-21 | battery | 0 (False = Normal), 1 (True = Low)
-22 | battery charging	| 0 (False = Not Charging), 1 (True = Charging)
-23 | carbon monoxide  | 0 (False = Not detected). 1 (True = Detected)
-24 | cold | 0 (False = Normal), 1 (True = Cold)
-25 | connectivity	| 0 (False = Disconnected), 1 (True = Connected)
-26 | door | 0 (False = Closed), 1 (True = Open)
-27 | garage door | 0 (False = Closed), 1 (True = Open)
-28 | gas | 0 (False = Clear), 1 (True = Detected)
-29 | heat | 0 (False = Normal), 1 (True = Hot)
-30 | light | 0 (False = No light), 1 (True = Light detected)
-31 | lock | 0 (False = Locked), 1 (True = Unlocked)
-32 | moisture | 0 (False = Dry), 1 (True = Wet)
-33 | motion | 0 (False = Clear), 1 (True = Detected)
-34 | moving | 0 (False = Not moving), 1 (True = Moving)
-35 | occupancy | 0 (False = Clear), 1 (True = Detected)
-36 | plug | 0 (False = Unplugged), 1 (True = Plugged in)
-37 | presence | 0 (False = Away), 1 (True = Home)
-38 | problem | 0 (False = OK), 1 (True = Problem)
-39 | running | 0 (False = Not Running), 1 (True = Running)
-40 | safety | 0 (False = Unsafe), 1 (True = Safe)
-41 | smoke | 0 (False = Clear), 1 (True = Detected)
-42 | sound | 0 (False = Clear), 1 (True = Detected)
-43 | tamper | 0 (False = Off), 1 (True = On)
-44 | vibration | 0 (False = Clear), 1 (True = Detected)
-45 | window | 0 (False = Closed), 1 (True = Open)
+21 | battery | 0 (False = Normal)<br>1 (True = Low)
+22 | battery charging	| 0 (False = Not Charging)<br>1 (True = Charging)
+23 | carbon monoxide  | 0 (False = Not detected)<br>1 (True = Detected)
+24 | cold | 0 (False = Normal)<br>1 (True = Cold)
+25 | connectivity	| 0 (False = Disconnected)<br>1 (True = Connected)
+26 | door | 0 (False = Closed)<br>1 (True = Open)
+27 | garage door | 0 (False = Closed)<br>1 (True = Open)
+28 | gas | 0 (False = Clear)<br>1 (True = Detected)
+29 | heat | 0 (False = Normal)<br>1 (True = Hot)
+30 | light | 0 (False = No light)<br>1 (True = Light detected)
+31 | lock | 0 (False = Locked)<br>1 (True = Unlocked)
+32 | moisture | 0 (False = Dry)<br>1 (True = Wet)
+33 | motion | 0 (False = Clear)<br>1 (True = Detected)
+34 | moving | 0 (False = Not moving)<br>1 (True = Moving)
+35 | occupancy | 0 (False = Clear)<br>1 (True = Detected)
+36 | plug | 0 (False = Unplugged)<br>1 (True = Plugged in)
+37 | presence | 0 (False = Away)<br>1 (True = Home)
+38 | problem | 0 (False = OK)<br>1 (True = Problem)
+39 | running | 0 (False = Not Running)<br>1 (True = Running)
+40 | safety | 0 (False = Unsafe)<br>1 (True = Safe)
+41 | smoke | 0 (False = Clear)<br>1 (True = Detected)
+42 | sound | 0 (False = Clear)<br>1 (True = Detected)
+43 | tamper | 0 (False = Off)<br>1 (True = On)
+44 | vibration | 0 (False = Clear)<br>1 (True = Detected)
+45 | window | 0 (False = Closed)<br>1 (True = Open)
 
 !!! note
     The following commands do not store their data persistently; therefore, I suggest to use an `autoexec.bat` file containing the individual commands to be executed at restart.
