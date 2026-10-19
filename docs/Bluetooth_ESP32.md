@@ -32,7 +32,7 @@ If only controlling BLE devices, then scanning can be disabled, which will minim
 BLE can be enabled from the web UI menus.
 
 !!! tip 
-    To solve the issue of Wi-Fi interference use an ethernet connected device like [Seeed studio XIAO ESP32S3 W5500 PoE Ethernet adapter](https://wiki.seeedstudio.com/xiao_w5500_ethernet_adapter/) and disable Wi-Fi with command `wifi 0`
+    To solve the issue of Wi-Fi interference use an ethernet connected device like [Seeed studio XIAO ESP32S3 W5500 PoE Ethernet adapter](https://wiki.seeedstudio.com/xiao_w5500_ethernet_adapter/) and disable Wi-Fi with command `wifi 0`.
 
 This is compiled by default in the Bluetooth firmware, but you need to enable it using the webUI **Configure BLE** button or [`SetOption115 1`](Commands.md#setoption115) command.
 
@@ -295,10 +295,7 @@ Subscript | Property | Result |
 44 | vibration | 0 (False = Clear)<br>1 (True = Detected)
 45 | window | 0 (False = Closed)<br>1 (True = Open)
 
-!!! note
-    The following commands do not store their data persistently; therefore, I suggest to use an `autoexec.bat` file containing the individual commands to be executed at restart.
-
-The default name of a sensor (`BTHome54CDE7`) can be changed by using the `BLEAlias` command like `BLEAlias 0C3D5E54CDE7=IoTorero_Presence`
+The default name of a sensor (`BTHome54CDE7`) can be changed by using the [`BLEAlias`](Commands.md#blealias) command like `BLEAlias 0C3D5E54CDE7=IoTorero_Presence`
 
 #### Shelly
 
@@ -306,11 +303,11 @@ Shelly BTHome sensors do not use encryption and can be used out-of-the-box with 
 
 #### IoTorero (Athom)
 
-IoTorero is using encryption for a BTHome sensor. You will need to enter a 32 character hexadecimal encryption key called the bindkey. The default bindkey is `48656c6c6f204254486f6d65210d0a00` and is currently the same for all known sensor types. The command to be used is `MI32Keys <MAC>=<bindkey>` like `MI32Keys 0C3D5E54CDE7=48656c6c6f204254486f6d65210d0a00`.
+IoTorero is using encryption for a BTHome sensor. You will need to enter a 32 character hexadecimal encryption key called the bind_key. The default bind_key is `48656c6c6f204254486f6d65210d0a00` and is currently the same for all known sensor types. The command to be used is [`Mi32Keys`](Commands.md#mi32keys) like `MI32Keys 0C3D5E54CDE7=48656c6c6f204254486f6d65210d0a00`.
 
-To decrypt multiple IoTorero sensors using their default bindkey you might want to enter command `MI32Keys 0C3D5EFFFFFF=48656c6c6f204254486f6d65210d0a00`. This will mask all sensors with a MAC of `0C3D5Exxxxxx` using the same bindkey. Notice that the Door Contact uses a different MAC address group but the same bindkey. In that case use `mi32keys 5C5310FFFFFF=48656c6c6f204254486f6d65210d0a00`.
+To decrypt multiple IoTorero sensors using their default bind_key you might want to enter command `MI32Keys 0C3D5EFFFFFF=48656c6c6f204254486f6d65210d0a00`. This will mask all sensors with a MAC of `0C3D5Exxxxxx` using the same bind_key. Notice that the Door Contact uses a different MAC address group but the same bind_key. In that case use `mi32keys 5C5310FFFFFF=48656c6c6f204254486f6d65210d0a00`.
 
-To change the default bindkey to any key you like or update the sensor firmware you can use their [BTHome Config Tool](https://athom-tech.github.io/bthome-sensor/BTHome_Config.html) on a browser with bluetooth support. Android is known to work.
+To change the default bind_key to any key you like or update the sensor firmware you can use their [BTHome Config Tool](https://athom-tech.github.io/bthome-sensor/BTHome_Config.html) on a browser with bluetooth support. Android is known to work.
 
 #### Seeed Studio Arduino BTHome example code
 
