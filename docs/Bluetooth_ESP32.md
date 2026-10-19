@@ -41,9 +41,9 @@ Note that the only configuration stored is the [`SetOption115`](Commands.md#seto
 ## Passive BLE Receivers
 
 The following passive BLE receivers are supported:
-1) MI32 Sensors
-2) BTHome V2 sensors
-3) iBeacon
+1. MI32 Sensors
+2. BTHome V2 sensors
+3. iBeacon
 
 ### 1. MI32 Sensors
 
