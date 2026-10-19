@@ -31,9 +31,11 @@ Be aware, enabling of the native BLE on ESP32 has an impact on Wi-Fi performance
 If only controlling BLE devices, then scanning can be disabled, which will minimize Wi-Fi impact.
 BLE can be enabled from the web UI menus.
 
+To solve the issue of WiFi interference use an ethernet connected device like [Seeed studio XIAO ESP32S3 W5500 PoE Ethernet adapter](https://wiki.seeedstudio.com/xiao_w5500_ethernet_adapter/)
+
 This is compiled by default in the Bluetooth firmware, but you need to enable it using the webUI **Configure BLE** button or [`SetOption115 1`](Commands.md#setoption115) command.
 
-Note that the only configuration stored is the [`SetOption115`](Commands.md#setoption115) to turn BLE on and off.  All other configurations can be set at boot if necessary using Rules.
+Note that the only configuration stored is the [`SetOption115`](Commands.md#setoption115) to turn BLE on and off.  All other configurations can be set at boot if necessary using Rules or an `autoexec.bat` file
 
 ## Passive BLE Receivers
 
