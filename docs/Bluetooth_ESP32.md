@@ -296,29 +296,29 @@ Subscript | Property | Result |
 44 | vibration | 0 (False = Clear)<br>1 (True = Detected)
 45 | window | 0 (False = Closed)<br>1 (True = Open)
 
-The default name of a sensor (`BTHome54CDE7`) can be changed by using the [`BLEAlias`](Commands.md#blealias) command like
+You can change the default name of a sensor (`BTHome54CDE7`) by using the [`BLEAlias`](Commands.md#blealias) command like
 
 `BLEAlias 0C3D5E54CDE7=IoTorero_Presence`
 
 #### Shelly
 
-Shelly BTHome sensors do not use encryption and can be used out-of-the-box with Tasmota.
+Current Shelly BTHome sensors do not use encryption so can be used out-of-the-box with Tasmota.
 
 #### IoTorero (Athom)
 
-IoTorero is using encryption for a BTHome sensor. You will need to enter a 32 character hexadecimal encryption key called the bind_key. The default bind_key is `48656c6c6f204254486f6d65210d0a00` and is currently the same for all known sensor types. The command to be used is [`Mi32Keys`](Commands.md#mi32keys) like
+IoTorero is using encryption for BTHome sensors. You will need to enter a 32 character hexadecimal encryption key called the bind_key. The default bind_key is `48656c6c6f204254486f6d65210d0a00` and is currently the same for all known sensor types. The command to use is [`Mi32Keys`](Commands.md#mi32keys) like
 
-`MI32Keys 0C3D5E54CDE7=48656c6c6f204254486f6d65210d0a00`
+`Mi32Keys 0C3D5E54CDE7=48656c6c6f204254486f6d65210d0a00`
 
 To decrypt multiple IoTorero sensors using their default bind_key you might want to enter command
 
-`MI32Keys 0C3D5EFFFFFF=48656c6c6f204254486f6d65210d0a00`
+`Mi32Keys 0C3D5EFFFFFF=48656c6c6f204254486f6d65210d0a00`
 
 This will mask all sensors with a MAC of `0C3D5Exxxxxx` using the same bind_key. Notice that the Door Contact uses a different MAC address group but the same bind_key. In that case use
 
-`mi32keys 5C5310FFFFFF=48656c6c6f204254486f6d65210d0a00`
+`Mi32Keys 5C5310FFFFFF=48656c6c6f204254486f6d65210d0a00`
 
-To change the default bind_key to any key you like or update the sensor firmware you can use their [BTHome Config Tool](https://athom-tech.github.io/bthome-sensor/BTHome_Config.html) on a browser with bluetooth support. Android is known to work.
+To change the default bind_key to any key you like or update the sensor firmware you can use their [BTHome Config Tool](https://athom-tech.github.io/bthome-sensor/BTHome_Config.html) in a webbrowser with bluetooth support. Chrome on Android is known to work.
 
 #### Seeed Studio Arduino BTHome example code
 
