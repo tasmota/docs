@@ -31,7 +31,8 @@ Be aware, enabling of the native BLE on ESP32 has an impact on Wi-Fi performance
 If only controlling BLE devices, then scanning can be disabled, which will minimize Wi-Fi impact.
 BLE can be enabled from the web UI menus.
 
-!!! tip "To solve the issue of Wi-Fi interference use an ethernet connected device like [Seeed studio XIAO ESP32S3 W5500 PoE Ethernet adapter](https://wiki.seeedstudio.com/xiao_w5500_ethernet_adapter/) and disable Wi-Fi with command `wifi 0`"
+!!! tip 
+    To solve the issue of Wi-Fi interference use an ethernet connected device like [Seeed studio XIAO ESP32S3 W5500 PoE Ethernet adapter](https://wiki.seeedstudio.com/xiao_w5500_ethernet_adapter/) and disable Wi-Fi with command `wifi 0`
 
 This is compiled by default in the Bluetooth firmware, but you need to enable it using the webUI **Configure BLE** button or [`SetOption115 1`](Commands.md#setoption115) command.
 
@@ -225,28 +226,25 @@ MI32Option1 1|Stops button press occuring at TELEPERIOD times
 MI32Option2 2|Sends message on button press
 
 !!! tip
-Two button switches are btn 1 and 3 (not 1 and 2)
+    Two button switches are btn 1 and 3 (not 1 and 2)
 
-!!! tip
-If BLEAlias is used then an alias for C1A2A3A4A5A6 must be included, along with the alias for the unique switch
-
-```haskell
-BLEAlias c1a2a3a40048=LoungeBtn
-BLEAlias c1a2a3a4a5a6=AnyButton
-```
+!!! tip 
+    If BLEAlias is used then an alias for C1A2A3A4A5A6 must be included, along with the alias for the unique switch
+    ```haskell
+    BLEAlias c1a2a3a40048=LoungeBtn
+    BLEAlias c1a2a3a4a5a6=AnyButton
+    ```
 
 #### MI32-Commands
 
 Full list of available [Mi Sensors commands](Commands.md#ble-mi-sensors).
 
 !!! tip
-If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a rule:
-
-```haskell
-Backlog Rule1 on Time#Minute=30 do MI32Battery endon; Rule1 1
-```
-
-This will update every day at 00:30 AM.
+    If you really want to read battery for LYWSD02, Flora and CGD1, consider doing it once a day with a rule:
+    ```haskell
+    Backlog Rule1 on Time#Minute=30 do MI32Battery endon; Rule1 1
+    ```
+    This will update every day at 00:30 AM.
 
 ### 2. BTHome V2 Sensors
 
