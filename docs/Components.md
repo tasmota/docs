@@ -20,6 +20,9 @@ Read more about [peripherals](Supported-Peripherals.md).
 !!! tip
      GPIOs configured as User (1) are the GPIOs that can be assigned to components in the **Configure Module** page.
 
+!!! note "OptionA components"
+    `OptionA<x>` entries are virtual flags. Tasmota reads them at boot and then releases the GPIO, so the pin stays free. Assign them to any unused GPIO, including reserved (red) ones. See the GPIO tables below for what each option does.
+
 ## GPIO Overview
 
 ### Tasmota
@@ -299,12 +302,13 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 5632 | RC522 Rst      | RC522 reset                                                                                             |
 | 5664 | P9813 Clk      | P9813 Clock and Data                                                                                    |
 | 5696 | P9813 Dat      | P9813 Clock and Data                                                                                    |
-| 5728 | OptionA1       | Specific device options to be served in code                                                            |
-| 5729 | OptionA2       | Specific device options to be served in code                                                            |
-| 5730 | OptionA3       | Specific device options to be served in code                                                            |
-| 5731 | OptionA4       | Specific device options to be served in code                                                            |
-| 5732 | OptionA5       | Specific device options to be served in code                                                            |
-| 5733 | OptionA6       | Specific device options to be served in code                                                            |
+| 5728 | OptionA1       | (Light) Set PWM1 to input on power off when no fade is running (Wyze bulbs)                             |
+| 5729 | OptionA2       | (Energy) Enable dummy energy values                                                                     |
+| 5730 | OptionA3       | (Display) Enable the [Universal Display Driver](Universal-Display-Driver.md)                            |
+| 5731 | OptionA4       | (Zigbee) Enable CCLoader using the Zigbee Rx/Tx/Rst GPIOs                                               |
+| 5732 | OptionA5       | (Rotary) Full quadrature decoding of rotary encoders on both edges of A and B, see [`SetOption43`](Commands.md#setoption43) |
+| 5733 | OptionA6       | (Light) LinkInd support                                                                                 |
+| 5735 | OptionA8       | (Device) Sonoff iFan04-H                                                                                |
 | 5760 | FTC532         | FTC532 touch ctrlr serial input                                                                         |
 | 5792 | RC522 CS       |                                                                                                         |
 | 5824 | NRF24 CS       |                                                                                                         |
@@ -862,12 +866,15 @@ Read more about [peripherals](Supported-Peripherals.md).
 | 6112 | RC522 Rst      | RC522 reset                                                                                             |
 | 6144 | P9813 Clk      | P9813 Clock and Data                                                                                    |
 | 6176 | P9813 Dat      | P9813 Clock and Data                                                                                    |
-| 6208 | OptionA1       | Specific device options to be served in code                                                            |
-| 6209 | OptionA2       | Specific device options to be served in code                                                            |
-| 6210 | OptionA3       | Specific device options to be served in code                                                            |
-| 6211 | OptionA4       | Specific device options to be served in code                                                            |
-| 6212 | OptionA5       | Specific device options to be served in code                                                            |
-| 6213 | OptionA6       | Specific device options to be served in code                                                            |
+| 6208 | OptionA1       | (Light) Set PWM1 to input on power off when no fade is running (Wyze bulbs)                             |
+| 6209 | OptionA2       | (Energy) Enable dummy energy values                                                                     |
+| 6210 | OptionA3       | (Display) Enable the [Universal Display Driver](Universal-Display-Driver.md)                            |
+| 6211 | OptionA4       | (Zigbee) Enable CCLoader using the Zigbee Rx/Tx/Rst GPIOs                                               |
+| 6212 | OptionA5       | (Rotary) Full quadrature decoding of rotary encoders on both edges of A and B, see [`SetOption43`](Commands.md#setoption43) |
+| 6213 | OptionA6       | (Light) LinkInd support                                                                                 |
+| 6214 | OptionA7       | (Device) Shelly Pro                                                                                     |
+| 6215 | OptionA8       | (Device) Sonoff iFan04-H                                                                                |
+| 6216 | OptionA9       | (Energy) Enable Berry energy driver                                                                     |
 | 6240 | FTC532         | FTC532 touch ctrlr serial input                                                                         |
 | 6272 | RC522 CS       |                                                                                                         |
 | 6304 | NRF24 CS       |                                                                                                         |
