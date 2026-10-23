@@ -1,5 +1,5 @@
 {"page":0,"comment":"---------- Upper stat line ----------"}
-# {"id":0,"bg_color":"#000088"}
+  {"id":0,"bg_color":"#000088","touch_pointer":"#FF0000","touch_pointer_size":30}
 
 {"id":90,"obj":"flex","x":0,"y":0,"w%":100,"h":24,"bg_color":"#DD0000","bg_opa":255,"radius":0,"border_side":1,"border_width":1}
   {"id":91,"obj":"label","parentid":90,"x":0,"y":0,"w":100,"h%":100,"long_mode":3,"text":"HASPmota widgets explorer","flex_grow":1}
