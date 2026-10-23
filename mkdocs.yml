@@ -192,6 +192,7 @@ nav:
     - TensorFlow Lite: TFL.md
     - Touch GPIOs: TouchPin.md
     - Hardware Dump: HwDump.md
+    - Heap Map: Heap-Map.md
     - Safeboot Partition Layout: Safeboot.md
     - Supported Devices: "https://templates.blakadder.com/esp32"
   - Smart Home Integrations:
