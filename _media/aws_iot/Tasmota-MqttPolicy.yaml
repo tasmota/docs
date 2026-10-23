@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Tasmota: create the AWS IoT policy to be used by all Tasmota devices. This policy needs to be created once per AWS Region for all Tasmota devices."
+
+Parameters:
+  RetentionPolicy:
+    Type: String
+    AllowedValues: [ "Delete", "Retain" ]
+    Default: "Retain"
+    Description: When you delete the CloudFormation template, "Delete" will also delete this policy, "Retain" will keep it
+  MQTTPolicyName:
+    Type: String
+    Default: "TasmotaMqttPolicy"
+    Description: The Name of the MQTTPolicy for Tasmota devices (leave unchanged unless you have specific needs)
+
+Outputs:
+  MqttPolicyName:
+    Description: The name of the AWS IoT policy created
+    Value: !If [ Retained, !Ref TasmotaMqttPolicyRetained, !Ref TasmotaMqttPolicyNotRetained ]
+
+Conditions:
+  Retained: !Equals [ !Ref RetentionPolicy, "Retain" ]
+  NotRetained: !Not [ !Equals [ !Ref RetentionPolicy, "Retain" ] ]
+
+Resources:
+
+  ######################################################################
+  #
+  # The AWS IoT policy to be used by all Tasmota devices.
+  # It needs to be created once for all.
+  # This policy will remain if you delete the CloudFormation template
+  #
+  ######################################################################
+  TasmotaMqttPolicyRetained:
+    Type: AWS::IoT::Policy
+    Condition: Retained
+    DeletionPolicy: Retain
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: Allow
+            Action: [ "iot:Connect", "iot:Publish", "iot:Subscribe", "iot:Receive" ]
+            Resource: !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:*"
+      PolicyName: !Ref MQTTPolicyName
+
+  ######################################################################
+  #
+  # This policy will be removed if you delete the CloudFormation template
+  #
+  ######################################################################
+  TasmotaMqttPolicyNotRetained:
+    Type: AWS::IoT::Policy
+    Condition: NotRetained
+    DeletionPolicy: Delete
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: Allow
+            Action: [ "iot:Connect", "iot:Publish", "iot:Subscribe", "iot:Receive" ]
+            Resource: !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:*"
+      PolicyName: !Ref MQTTPolicyName
+
