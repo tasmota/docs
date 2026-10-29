@@ -228,7 +228,7 @@ Erase flash settings area but keep Wi-Fi and MQTT settings
 ...and you're done!
 
 
-If you can't restore configuration directly you can configure the device manually referring to the [Commands article](Commands.md) and the settings (e.g., SetOptions, Rules, etc.) in the JSON file you created in step #1. You can paste the JSON into a [JSON parser](https://jsonformatter.org/json-parser) to make it easily readable. 
+If you can't restore configuration directly you can configure the device manually referring to the [Commands article](Commands.md) and the settings (e.g., SetOptions, Rules, etc.) in the JSON file you created in step #1. You can paste the JSON into a [JSON parser](https://jsonformatter.org/json-parser) or [JSON formatter](https://jsonviewertool.com/json-formatter) to make it easily readable.
 
 !!! tip
     If ***Backup Configuration -> Restore Configuration*** fails, reset to firmware defaults and use [decode-config tool](#decode-config-tool) to restore your backed up configuration.
