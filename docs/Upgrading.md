@@ -123,6 +123,8 @@ Upload the new version over serial using the same process as in [Flashing](Getti
 [**Tasmota Device Manager**](https://github.com/jziolkowski/tdm) or TDM is a multiplatform GUI application written in Python for discovery and management of Tasmota devices.
 You can set up OTA url and initiate OTA upgrade from TDM using GUI.
 
+[**TasmoFleet**](https://github.com/nofuturekid/tasmofleet) - self-hosted web app (Docker) for managing a fleet of Tasmota devices: batch OTA upgrades with a chip-family check (1 MB ESP8266 devices go through tasmota-minimal automatically), configuration backups and restore, and settings policies.
+
 [**openHAB**](openHAB#maintenance-actions)  - implement an automation rule to upgrade devices from openHAB
 
 [**Node-RED OTA server and firmware manager**](https://flows.nodered.org/flow/888b4cd95250197eb429b2f40d188185) - [Node-RED](https://nodered.org/) flow for managing OTA updates 
