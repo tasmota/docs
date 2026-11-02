@@ -29,6 +29,10 @@ Keeping the security improvements the S3 line now again features the dual core S
 
 Use `tasmota32s3-` binaries for this line of chips.
 
+ESP32-S3 PSRAM can be connected in Quad SPI (QSPI, e.g. ESP32-S3R2, N8R2 modules) or Octal SPI (OPI, e.g. ESP32-S3R8, N16R8 modules) mode. The mode is fixed at compile time, so the firmware must match the hardware: official `tasmota32s3` binaries use QSPI PSRAM, use a build based on `esp32s3-qio_opi` (or `esp32s3-opi_opi` for octal flash) for OPI PSRAM. With the wrong build the device runs without PSRAM.
+
+To check which variant is running, look at the Information page: `Flash Chip Id` shows the flash mode and `PS-RAM Memory` shows the PSRAM mode, e.g. `8192 KB (OPI)`. The same values are reported by `Status 4` as `FlashMode` and `PsrMode`.
+
 ### ESP32-C3
 
 Unlike previous versions, C3 is a single-core Wi-Fi and Bluetooth 5 (LE) microcontroller SoC based on the open-source RISC-V architecture. It is available as [ESP32-C3-MINI-1](_media/datasheets/esp32-c3-mini-1_datasheet_en.pdf) and [ESP32-C3-WROOM-02](_media/datasheets/esp32-c3-wroom-02_datasheet_en.pdf) modules. [Product page for ESP32-C3](https://www.espressif.com/en/products/socs/esp32-c3)
