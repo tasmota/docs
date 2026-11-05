@@ -4,7 +4,7 @@ Most PIR's are single wire and they require connecting to VCC, GND and one GPIO.
 
 In the simple case of wanting PIR activity to turn on a light/fan connected to the same device, you can use `SwitchMode 13` (push to on), along with a `PulseTime` for the minimum on-period. Then you can skip the more detailed options on this page.
 
-### Tasmota Settings
+### Tasmota Settings for Rules
 In **_Configuration -> Configure Module_** menu change `GPIO13` to `Switch1`.
 ![Step 1](_media/GPIO13-switch.png)
 
@@ -27,6 +27,25 @@ Before using rules configure any GPIO that doesn't have anything connected to it
 This creates a dummy relay which is triggered by the PIR so you can see the changes in the web UI. This method is not recommended for daily use and should only be used for testing.
 
 A more [advanced example](Rules#auto-off-motion-sense-switch) of rules with PIRs.
+
+### Tasmota Settings for HomeAssistant Autodiscovery
+
+Alternatively, a PIR motion sensor can be configured as a switch with its state reported for autodiscovery by HomeAssistant.
+
+[Detach switches from relays](https://tasmota.github.io/docs/Commands/#setoption114) and send MQTT messages instead:
+
+```console
+SetOption114 1
+```
+
+To have switches discovered SwitchTopic must be set to a custom name. And the [switch mode](https://tasmota.github.io/docs/Buttons-and-Switches/#switchmode) should be set to follow.
+
+```console
+SwitchTopic1 pir
+SwitchMode1 1
+```
+
+After this, the PIR sensor "switch" will be autodiscovered in Home Assistant as a sensor.
 
 ## AM312 
 
