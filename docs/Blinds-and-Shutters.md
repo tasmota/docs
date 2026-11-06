@@ -141,7 +141,14 @@ After setup is started the shutter will move to the upper endpoint and close aga
   * If it runs too long, move it back to desired closed position with `ShutterSetPosition<x>`, reset to 0 with `ShutterSetClose<x>` and decrease open time.
 - Alternate between opening and closing the shutter until you find out the exact times needed to get the same positions multiple times
 
-After calibration is complete, you might want to enable an additional 1 second motor movement with `ShutterEnableEndStopTime<x> 1` when the shutter is asked to move to its end positions (0% and 100%). With this you can guarantee that end positions are still reached in case of inaccuracies. Take care to disable this with `ShutterEnableEndStopTime<x> 0` before further open or close duration measurements.
+After calibration is complete, you might want to enable an additional motor movement when the shutter is asked to move to its end positions (0% and 100%). With this you can guarantee that end positions are still reached in case of inaccuracies.
+
+**Since version 15.6.0.2:** Use `ShutterOpenEndStopTime<x> <seconds>` and `ShutterCloseEndStopTime<x> <seconds>` to set separate extra runtimes for opening and closing. The number specifies how many seconds the relay remains energized.
+
+**Prior to version 15.6.0.2:** Use `ShutterEnableEndStopTime<x> <seconds>` (e.g., `ShutterEnableEndStopTime<x> 1` for 1 second).
+
+Take care to disable this (set to 0) before further open or close duration measurements.
+
 
 ### Motor Movement Delays
 Some motors need up to one second after power is turned on before they start moving. You can confirm if you are having this issue if opening and closing as a single action works properly but doing this in smaller steps result in a shift of the position.  
