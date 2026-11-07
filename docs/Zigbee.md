@@ -15,7 +15,7 @@ Zigbee2Tasmota (Z2T) supports a wide variety of Zigbee MCUs from Texas Instrumen
 Flashing and installation instructions for **ESP32** based:
 
 - [Sonoff Zigbee Bridge Pro](https://zigbee.blakadder.com/Sonoff_ZBBridge-P.html)
-- [ZB-GW03 eWeLink Ethernet Zigbee Gateway (also sold as EACHEN Zigbee Smart Hub and SmartWise Zigbee Bridge Pro)](https://templates.blakadder.com/ewelink_ZB-GW03)
+- [ZB-GW03 eWeLink Ethernet Zigbee Gateway (also sold as EACHEN Zigbee Smart Hub and SmartWise Zigbee Bridge Pro)](https://templates.blakadder.com/ewelink_ZB-GW03) — [unofficial maintained firmware builds from each upstream release](https://github.com/lifaon74/tasmota-ZB-GW03) (OTA + factory images, sha256 in each release's notes)
 - [Tube's Ethernet Zigbee Gateway (EFR32 variant)](https://templates.blakadder.com/tube_TUBE013_EFR32.html)
 - [DIY Zigbee gateway/bridge device example based on Ebyte E180-ZG120B or E180-ZG120B-TB](https://github.com/zigpy/zigpy/discussions/584)
 
