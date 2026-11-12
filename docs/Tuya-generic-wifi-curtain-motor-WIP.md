@@ -1,0 +1,1 @@
+redirect: /TuyaMCU/#curtain-motor

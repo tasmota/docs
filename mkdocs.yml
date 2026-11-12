@@ -1,0 +1,229 @@
+site_name: Tasmota
+site_description: Documentation (Wiki) for Tasmota
+site_url: https://tasmota.github.io/docs/
+repo_name: 'arendst/tasmota'
+repo_url: 'https://github.com/arendst/tasmota'
+edit_uri: 'https://github.com/tasmota/docs/blob/master/docs/'
+docs_dir: docs
+# copyright: 'Copyright &copy; 2020 Tasmota Development Team'
+
+plugins:
+  - search:
+      lang:
+        - de
+        - en
+  - alternate-link
+  - minify:
+      minify_html: true
+  - redirects:
+      redirect_maps:
+        'GPIO-Locations.md': 'Pinouts.md'
+        'BMP280.md': 'BME280.md'
+        'Rule-Cookbook.md': 'Rules.md'
+        'Sensor-Configuration.md': 'Peripherals.md'
+        'Scripting-Cookbook.md': 'Scripting-Language.md'
+        'Status-LED.md': 'Lights.md'
+        'Tuya-Protocols.md': 'TuyaMCU.md'
+        'Upgrade.md': 'Upgrading.md'
+        'Berry-Scripting.md': 'Berry.md'
+# - htmlproofer
+
+# strict: true
+
+theme:
+  name: material
+  language: 'en'
+  # custom_dir: 'overrides'
+  logo: '_media/logo.svg'
+  favicon: _media/favicon.ico
+  palette:
+
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: deep purple
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - content.action.edit
+    - content.code.copy
+
+  font:
+    text: Barlow
+    code: Roboto Mono
+
+extra:
+  social:
+    - icon: fontawesome/brands/discord
+      link: 'https://discord.gg/Ks2Kzd4'
+    - icon: fontawesome/brands/telegram
+      link: 'https://t.me/tasmota'
+    - icon: fontawesome/brands/github-alt
+      link: 'https://github.com/tasmota'
+  analytics:
+    provider: google
+    property: G-8J08F8X90S
+
+markdown_extensions:
+  - admonition
+  - toc:
+     permalink: "~"
+     toc_depth: 3
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.snippets
+  - pymdownx.tilde
+  - meta
+  - def_list
+  - attr_list
+  - md_in_html
+
+extra_css:
+  - 'assets/css/anchor-fix.css'
+
+extra_javascript:
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - extra_javascript/tablesort.js
+  
+nav:
+  - Home:
+    - News: index.md
+    - About.md
+    - Getting Started: Getting-Started.md
+    - Upgrading.md
+    - MQTT.md
+    - Commands: Commands.md
+    - Templates: Templates.md
+    - Components.md
+    - Modules: Modules.md
+    - Peripherals: Peripherals.md
+    - WebUI.md
+    - Firmware-Builds.md
+    - Compiling: Compile-your-build.md
+    - Contributing: Contributing.md
+    - Download.md
+    - Project Showcase: "https://github.com/arendst/Tasmota/discussions/categories/show-and-tell"
+    - For Developers: For-Developers.md
+  - Features:
+    - Introduction: Features.md
+    - Analog Pin: ADC.md
+    - ArtNet DMX: ArtNet.md
+    - Buttons-and-Switches.md
+    - DeepSleep.md
+    - Device-Groups.md
+    - Universal-Display-Driver.md
+    - Displays.md
+    - Dynamic-Sleep.md
+    - I2C Devices: I2CDEVICES.md
+    - I2S Audio: I2S-Audio.md
+    - IPv6.md
+    - Lights.md
+    - Matter: Matter.md
+    - PIR-Motion-Sensors.md
+    - Power-Monitoring-Calibration.md
+    - PWM-dimmer-switch.md
+    - Rules.md
+    - Scripting Language: Scripting-Language.md
+    - Blinds-and-Shutters.md
+    - Protocol Bridging:
+      - Arduino MCU: TasmotaClient.md
+      - BLE Gateway: Bluetooth.md
+      - DALI.md
+      - HDMI CEC: HDMI_CEC.md
+      - IR Communication: Tasmota-IR.md
+      - LCD/DLP Projector Control: Projector.md
+      - LoRa-and-LoRaWan-Bridge.md
+      - Modbus-Bridge.md
+      - OpenTherm: OpenTherm.md
+      - RF Communication: RF-Protocol.md
+      - Serial-to-TCP-Bridge.md
+      - TWAI.md
+      - Telegram.md
+      - Zigbee.md
+    - Smart-Meter-Interface.md
+    - Thermostat.md
+    - Timers.md
+    - TLS.md
+    - TuyaMCU.md
+    - Universal File System: UFS.md
+    - Wi-Fi Range Extender: Range-Extender.md
+    - Wireguard VPN: Wireguard.md
+    - Projects and Tutorials: Tutorials.md
+  - ESP32:
+    - Tasmota32 Features: ESP32.md
+    - Berry: Berry.md
+    - Bluetooth Low Energy: Bluetooth_ESP32.md
+    - LVGL: LVGL.md
+    - HASPmota: HASPmota.md
+    - Matter.md
+    - Tasmota-Extension.md
+    - Tasmota-Application.md
+    - TensorFlow Lite: TFL.md
+    - Touch GPIOs: TouchPin.md
+    - Hardware Dump: HwDump.md
+    - Heap Map: Heap-Map.md
+    - Safeboot Partition Layout: Safeboot.md
+    - Supported Devices: "https://templates.blakadder.com/esp32"
+  - Smart Home Integrations:
+    - Introduction: Integrations.md
+    - Alexa.md
+    - AWS-IoT.md
+    - Domoticz.md
+    - Home-Assistant.md
+    - Homebridge.md
+    - Homey: "https://homey.app/en-us/app/com.paveld.tasmota/Tasmota-MQTT/"
+    - HomeSeer.md
+    - IP-Symcon.md
+    - KNX.md
+    - NodeRed.md
+    - nymea.md
+    - Octoprint.md
+    - openHAB.md
+    - otto.md
+    - IOBroker: "https://github.com/arendst/Tasmota/issues/3769"
+    - Mozilla WebThings Adapter: "https://github.com/tim-hellhake/tasmota-adapter"
+    - SmartThings: "https://github.com/hongtat/tasmota-connect"
+    - Tasmohab: "https://github.com/Gifford47/tasmohab/blob/master/README.md"
+  - Peripherals: Supported-Peripherals.md
+  - Supported Devices:
+    - Configure Unknown Device: Configuration-Procedure-for-New-Devices.md
+    - All Supported Devices: https://templates.blakadder.com/ "target=_blank"
+    - Wi-Fi Module Pinouts: Pinouts.md
+    - Supported-Modules.md
+  - Help:
+    - FAQ.md
+    - Troubleshooting.md
+    - Device-Recovery.md
+    - Discord Support: https://discord.gg/Ks2Kzd4 "target=_blank"
+  - Web Installer: "http://tasmota.github.io/install"

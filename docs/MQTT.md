@@ -1,0 +1,336 @@
+!!! info "MQTT is the main protocol for controlling Tasmota devices"
+
+After you have a working [MQTT broker](https://www.google.com/search?q=setting+up+an+mqtt+broker) you need to configure Tasmota to communicate with it. 
+If you have no knowledge of what MQTT is, you can learn about it from [MQTT Essentials](http://www.hivemq.com/mqtt-essentials/) articles. 
+
+## Warning
+All ESP32 devices (including all varaiants like `ESP32c<x>` and `ESP32s<x>`) natively support encrypted MQTT over TLS. ESP8266 do not natively support TLS unless you compile your own variant with TLS support. Unencrypted MQTT should be limited to own LAN, external unencrypted communication is a very serious security flaw, your device can become a malware bot!
+
+## MQTT protocol version
+
+Tasmota uses MQTT 3.1.1 by default. MQTT 5.0 is an optional compile-time feature; it is not selected in the WebUI or by an MQTT command. To enable it in a custom build, add this to `user_config_override.h`:
+
+```arduino
+#define MQTT_VERSION MQTT_VERSION_5_0
+```
+
+An MQTT 5 build initially connects using MQTT 5.0. If the broker explicitly reports that MQTT 5 is unsupported, Tasmota reconnects once using MQTT 3.1.1 for the lifetime of that client. Other connection failures do not cause a downgrade. The console identifies the negotiated protocol after connection, for example `MQT: Connected (MQTT 5.0)` or `MQT: Connected (MQTT 3.1.1)`.
+
+MQTT 5 support is intentionally focused on interoperable request/response operation. Standard Tasmota topics, commands, telemetry, retained messages, and existing MQTT 3.1.1 integrations continue to work unchanged.
+
+Optional MQTT 5 build flags are:
+
+| Define | Effect |
+| --- | --- |
+| `USE_MQTT_DETAILED_LOGGING` | Log MQTT 5 PUBLISH packets and their properties at `DEBUG_MORE` |
+| `USE_MQTT_DETAILED_LOGGING_BINARY` | Also log raw MQTT 5 packets as hexadecimal at `DEBUG_MORE` |
+| `USE_MQTT_QOS` | Enable outbound QoS 1 and QoS 2 acknowledged delivery; normal Tasmota publishing remains QoS 0 |
+
+## Configure MQTT 
+If you flashed a precompiled .bin or didn't enter MQTT info in `user_config_override.h` before compiling you have to configure it on your device first.
+
+### Configure MQTT using WebUI
+Go to **Configuration -> Configure Other** and make sure **"MQTT Enable"** box is checked.<BR> 
+Once MQTT is enabled you need to set it up using **Configuration -> Configure MQTT**. 
+
+!!! tip
+    While here, you might as well change the Friendly Name into something more descriptive than generic "Tasmota".<br>*This is highly recommended for Home Assistant autodiscovery feature.*
+
+![Enable MQTT](https://i.postimg.cc/6QDQnH2X/mqtt-config1.png)
+![Configure MQTT ](https://i.postimg.cc/y8LggXy1/mqtt-config2.png)
+
+For a basic setup you only need to set **Host**, **User** and **Password** but it is recommended to change **Topic** to avoid issues. Each device should have a unique **Topic**.
+
+- **Host** = your MQTT broker address or IP. `MqttHost 0` (or `MqttHost ""`) clears the configured host; `.local` is not accepted as an explicit `MqttHost` value. An empty command payload only displays the current host. Broker discovery after clearing the host requires the optional `MQTT_HOST_DISCOVERY` build flag, which is disabled by default.
+- **Port** = your MQTT broker port (default port is set to 1883)
+- **Client** = device's unique identifier. In 99% of cases it's okay to leave it as is, however some Cloud-based MQTT brokers require a ClientID connected to your account.  **Can not be identical to Topic!**
+- **User** = username for authenticating on your MQTT broker
+- **Password** = password for authenticating on your MQTT broker
+- **Topic** = unique identifying topic for your device (e.g. `hallswitch`, `kitchen-light`). `%topic%` in wiki references to this. **It is recommended to use a single word for the topic.**
+- **FullTopic** = [full topic definition](#mqtt-topic-definition). Modify it if you want to use multi-level topics for your devices, for example `lights/%prefix%/%topic%/` or `%prefix%/top_floor/bathroom/%topic%/` etc.
+
+### Configure MQTT using Backlog
+
+Using a serial connection or the WebUI Console you can issue (or even better, paste a premade) Backlog command for quick and easy MQTT setup.
+
+```haskell
+Backlog mqtthost <mqtt_broker_address>; mqttport <mqtt_broker_port>; mqttuser <username>; mqttpassword <password>; topic <device_topic>
+```
+
+After a reboot all necessary MQTT settings are configured. Don't forget, you can use Backlog for all commands!
+
+## Commands over MQTT
+To send commands and view responses you'll need an [MQTT client](http://www.hivemq.com/blog/seven-best-mqtt-client-tools).
+
+Commands over MQTT are issued to Tasmota by using topic `cmnd/%topic%/<command>` and payload `<parameter>`. If there is no `<parameter>` (an empty MQTT message/payload), a query is sent for current status of the `<command>`.
+
+!!! tip
+    If you are using `mosquitto_pub` command-line tool, you can issue an empty payload using the `-n` command line option. 
+    If your MQTT client cannot issue an empty payload, you can use the single character `?` instead.
+
+### Command flow
+
+The following example will go in depth on what happens when you send an MQTT command.
+
+A device was flashed and configured with the **FullTopic** as default `%prefix%/%topic%/` and the **Topic** set to `tasmota_switch`. We want to see the current status of the switch and change it.
+
+By looking at the commands table we can learn about the [`POWER`](Commands.md#power) command and options associated with it. 
+
+#### Ask the device for status
+
+```js
+cmnd/tasmota_switch/Power ← 	// an empty message/payload sends a status query
+    ↳ stat/tasmota_switch/RESULT → {"POWER":"OFF"}  
+    ↳ stat/tasmota_switch/POWER → OFF
+```
+  We can see that the switch (device's relay) is turned off.
+
+####Send a command to toggle the relay
+
+```js
+cmnd/tasmota_switch/Power TOGGLE
+    ↳ // Power for relay 1 is toggled
+    ↳ stat/tasmota_switch/RESULT → {"POWER":"ON"}  
+    ↳ stat/tasmota_switch/POWER → ON
+```
+  We've sent the toggle command and received confirmation that the switch is turned on.
+
+!!! tip
+    By default, Tasmota replies to all commands through `.../RESULT`.
+    This behavior can be changed using [SetOption4](Commands.md#setoption4), which makes the commands reply on the endpoint matching the command name, ex. `cmnd/tasmota/PowerOnState` will send a response on `stat/tasmota/POWERONSTATE`.
+
+### Examples
+In the following examples `%topic%` is `tasmota`, FullTopic is `%prefix%/%topic%/`, and prefixes are default `cmnd/stat/tele`:
+
+- The relay can be controlled with `cmnd/tasmota/POWER on`, `cmnd/tasmota/POWER off` or `cmnd/tasmota/POWER toggle`. Tasmota will send a MQTT status message like `stat/tasmota/POWER ON`.
+
+- Power state message can be sent with the retain flag set using [`PowerRetain 1`](Commands.md#powerretain).
+
+- Telemetry messages can also be sent with the retain flag using [`SensorRetain`](Commands.md#sensorretain).
+
+- For Sonoff Dual or Sonoff 4CH the relays need to be addressed with `cmnd/tasmota/POWER<x>`, where {x} is the relay number from 1 to 2 (Sonoff Dual) or from 1 to 4 (Sonoff 4CH). `cmnd/tasmota/POWER4 off` turns off the 4th relay on a Sonoff 4CH.
+
+- MQTT topic can be changed with `cmnd/tasmota/Topic tasmota1` which reboots Tasmota and changes the `%topic%` to `tasmota1`. From that point on MQTT commands should look like `cmnd/tasmota1/POWER on`.
+
+- The OTA firmware location can be made known to tasmota with `cmnd/tasmota/OtaUrl http://ota.tasmota.com/tasmota/release/tasmota.bin`. Reset to default with `cmnd/tasmota/OtaUrl 1`.
+
+- Upgrade OTA firmware from the OtaUrl server with `cmnd/tasmota/Upgrade 1`.
+
+- Show all status information with `cmnd/tasmota/Status 0`.
+
+- The button can send a MQTT message to the broker that in turn will switch the relay. To configure this you need to perform `cmnd/tasmota/ButtonTopic tasmota` where tasmota equals to Topic. The message can also be provided with the retain flag by `cmnd/tasmota/ButtonRetain on`.
+
+- Sonoff Pow (and any device with sensors) status can be requested manually with `cmnd/tasmota/status 8`. Additionally, Tasmota periodically sends telemetry every [TelePeriod](Commands.md#teleperiod), which defaults to 300 seconds (5 minutes).
+
+- When a Sonoff Pow (and any device with power metering sensors) threshold like PowerLow has been met a message `tele/tasmota/POWER_LOW ON` will be sent. When the error is corrected a message `tele/tasmota/POWER_LOW OFF` will be sent.
+
+While most MQTT commands will result in a message in JSON format the power status feedback will always be returned like `stat/tasmota/POWER ON` as well.
+
+Telemetry data will be sent by prefix `tele` like `tele/tasmota/SENSOR {"Time":"2017-02-16T10:13:52", "DS18B20":{"Temperature":20.6}}`
+
+### MQTT 5 request/response
+
+When MQTT 5 is enabled, an incoming MQTT command that includes a Response Topic receives an additional response on that topic. The normal Tasmota `stat/...` response is still published, so existing subscribers remain compatible. The MQTT 5 response is QoS 0, non-retained, and copies the request's Correlation Data when supplied.
+
+This is useful when one client publishes a command and needs a reply on a private topic. The Response Topic must be a valid, non-empty publish topic without MQTT wildcards. Request/response context applies only while the command is handled synchronously; it does not carry into delayed actions, timers, or later Backlog processing.
+
+Berry MQTT subscriptions can use this feature with `mqtt.is_request()` and `mqtt.respond(payload)`. In an MQTT 5 callback, `mqtt.metadata()` exposes `qos`, `retain`, and, when supplied, `response_topic` and `correlation_data`; `mqtt.protocol()` returns the effective protocol level (`5` or `4`).
+
+## MQTT Topic Definition
+
+### FullTopic
+This is the MQTT topic used to communicate with Tasmota over MQTT. It is created using tokens placed within a user definable string (100 character limit). The tokens are substituted dynamically at run-time. Available substitution tokens are:
+
+- `%prefix%` = one of three prefixes as defined by commands `Prefix1` *(default = `cmnd`)*, `Prefix2` *(default = `stat`)* and `Prefix3` *(default = `tele`)*.
+- `%topic%` = one of five topics as defined by commands [`Topic`](Commands.md#topic), [`GroupTopic`](Commands.md#grouptopic), [`ButtonTopic`](Commands.md#buttontopic), [`SwitchTopic`](Commands.md#switchtopic) and [`MqttClient`](Commands.md#mqttclient).
+- `%hostname%` = the hostname of the device as defined through the web UI *(default = `%s-%04d`)* or via [`Hostname`](Commands.md#hostname) command.
+- `%id%` =  MAC address of the device.
+
+!!! tip
+    These substitution tokens will be used in examples across the documentation
+
+If `FullTopic` does not contain the `%topic%` token, the device will not subscribe to `GroupTopic` and `FallbackTopic`.
+
+!!! tip
+    The order of _%prefix%_ and _%topic%_ doesn't matter, unless you have enabled Auto-discovery for Home Assistant ([`SetOption19`](Commands.md#setoption19)). Enabling this option re-formats the FullTopic to required order.
+
+Using the tokens the following example topics can be made:
+
+- `FullTopic %prefix%/%topic%/` _default_
+- `FullTopic tasmota/%topic%/%prefix%/`
+- `FullTopic tasmota/bedroom/%topic%/%prefix%/`
+- `FullTopic penthouse/bedroom1/bathroom2/%topic%/%prefix%/`
+- `FullTopic %prefix%/home/cellar/%topic%/`
+
+#### %prefix%
+Tasmota uses 3 prefixes for forming a FullTopic:
+
+- `cmnd` - prefix to issue commands; ask for status
+- `stat` - reports back status or configuration message
+- `tele` - reports telemetry info at specified intervals
+
+!!! warning
+    To solve possible MQTT topic loops it is strongly suggested that you use the `%prefix%` token in all of your FullTopics. Status and telemetry do not need a prefix.
+
+### %topic%
+All MQTT status messages will be sent using the configurable `%topic%` which must be made unique by the user. It can be called `bedroom` but it could also be called `XP-TS_10` as long as the user knows what it is and where to find it.
+
+!!! bug "Default Topic is `tasmota_XXXXXX` where `XXXXXX` is unique and derives from the last 6 characters of the MAC address"
+
+The use of the `%topic%` token is mandatory in case you want to use [`ButtonTopic`](Commands.md#buttontopic) and/or [`SwitchTopic`](Commands.md#switchtopic). It also provides for GroupTopic and Fallback Topic functionality.
+
+!!! tip
+    Use `%prefix%` and `%topic%` tokens at all time within your FullTopic definition!
+
+### GroupTopic
+Having two devices with the same topic allowed for MQTT commands to be sent once to make the devices act in conjunction. That inspired a third topic called GroupTopic.  Devices with the same GroupTopic will all listen to that GroupTopic and react to the same MQTT command sent to it. You can use this to take global actions like updating firmware on all devices or split up devices into different groups using a unique GroupTopic for each group.
+
+!!! bug "Default GroupTopic is `tasmotas`"
+
+### FallBack Topic
+Initially Tasmota had one MQTT configurable topic planned called Topic. It soon became apparent that when two devices come online with the same topic this would be a challenge, to say the least!
+
+Tasmota then introduced a unique, non-configurable "FallBack Topic" that allows MQTT communication regardless of the configurable topic. This fallback topic is just what it is meant to be: **a fallback topic** in case of emergency!
+
+By default the Fallback Topic is `DVES_XXXXXX_fb` where xxxxxx is derived from the last 6 characters of the device's MAC address (excluding `:`). It might look something like this: `DVES_3D5E26_fb`. You can find out the DVES code by looking at **Information** page in the webUI or issuing `Status 6`:
+```json
+12:36:17 MQT: stat/tasmota/STATUS6 = {"StatusMQT":{"MqttHost":"1.1.1.1","MqttPort":1883,"MqttClientMask":"DVES_%06X","MqttClient":"DVES_3D5E26","MqttUser":"tasmota","MqttCount":1,"MAX_PACKET_SIZE":1000,"KEEPALIVE":30}}
+```
+
+### LWT Topic (Last Will and Testament)
+On connection to the MQTT broker tasmota uses the Last Will and Testament (LWT) feature that instructs the broker to generate a notification about an ungracefully disconnect or timeout.
+    
+The topic to listen to for the state of this specific client is ```tele/<TOPIC>/LWT``` that with the mosquitto MQTT broker produces an output like:
+```
+$ mosquitto_sub -t "tele/tasmota_XXXXXX/LWT"
+Offline
+Online
+```
+
+The full LWT topic can be found in the tasmota console at boot:
+```
+15:51:51.281 MQT: tele/tasmota_XXXXXX/LWT = Online (retained)
+```
+
+### Keepalive and delayed PINGRESP
+
+Tasmota sends a PINGREQ after one configured [`MqttKeepAlive`](Commands.md#mqttkeepalive) interval without traffic. To tolerate delayed PINGRESP packets, the default build allows two unanswered PINGREQ packets before it closes the connection; a PINGRESP resets this count. Thus, with the default `MqttKeepAlive 30`, the connection normally closes only after a third idle interval without any PINGRESP.
+
+For a custom build, `MQTT_MAX_PING_OUTSTANDING` controls this limit. It accepts `1..4`; `1` restores the former single-unanswered-PINGREQ behavior. The default is `2`.
+    
+## Retained MQTT Messages
+
+If MQTT is defined and retain option is used the last state will be stored permanently in MQTT database.
+
+|Command | Description |
+|-|-|
+[`InfoRetain`](Commands.md#inforetain)	| Show current MQTT info retain state.<BR> `0` / `off` = disable MQTT info retain *(default)* <BR> `1` / `on` = enable MQTT info retain
+[`PowerRetain`](Commands.md#powerretain)	| Show current MQTT power retain state. <BR> `0` / `off` = disable MQTT power retain on status update *(default)* <BR> `1` / `on` = enable MQTT power retain on status update
+[`SensorRetain`](Commands.md#sensorretain)	| Show current MQTT sensor retain state.<BR> `0` / `off` = disable MQTT sensor retain on sensor update *(default)* <BR> `1` / `on` = enable MQTT sensor retain on sensor update
+[`StateRetain`](Commands.md#stateretain)	| Show current MQTT state retain state.<BR> `0` / `off` = disable MQTT state retain *(default)* <BR> `1` / `on` = enable MQTT state retain
+[`StatusRetain`](Commands.md#statusretain)	| Show current MQTT status retain state.<BR> `0` / `off` = disable MQTT status retain *(default)* <BR> `1` / `on` = enable MQTT status retain
+[`SwitchRetain`](Commands.md#switchretain)	| Show current MQTT switch retain state.<BR> `0` / `off` = disable MQTT switch retain on switch update *(default)* <BR> `1` / `on` = enable MQTT switch retain on switch update
+
+**BUT**, a power message in your MQTT broker flagged as 'retained' will **_always_ override the `PowerOnState`**. 
+
+This is usually the main cause for "ghost switching". Learn more in [MQTT retained messages explained](http://www.steves-internet-guide.com/mqtt-retained-messages-example/). Check out [this tutorial](https://www.youtube.com/watch?v=31IyfM1gygo) for troubleshooting switch ghosting.
+
+### Clearing Retained Messages
+To check, if there is a retain flag set for the switch's power topic, monitor `cmnd/+/power` in a MQTT client (recommended [MQTT.fx](https://mqttfx.jensd.de/) for Windows or [Eclipse Mosquitto](https://mosquitto.org/) in linux).
+
+You can use [Tasmota Device Manager](https://github.com/jziolkowski/tdm) to clear all retained messages for selected device with a single click.
+
+![Tasmota Device Manager](_media/tdm-retained.png)
+
+or use the following tutorials/forum threads:
+
+* [Clearing retained messages with mosquitto](https://community.openhab.org/t/clearing-mqtt-retained-messages/58221)
+* [Remove retained messages in Home Assistant](https://community.home-assistant.io/t/mqtt-how-to-remove-retained-messages/79029)
+* [Remove retained messages in hass.io MQTT addon](https://community.home-assistant.io/t/clear-hass-io-mosquitto-broker-add-on-retain-messages/57250/3)
+
+## Subscribe/Unsubscribe
+
+!!! failure "This feature is not included in precompiled binaries"     
+To use it you must [compile your build](Compile-your-build). Add the following to `user_config_override.h`:
+```
+#ifndef SUPPORT_MQTT_EVENT
+#define SUPPORT_MQTT_EVENT
+#endif
+```
+To default maximum MQTT message size that Tasmota can process is 256 bytes. You can increase it by redefining the following constant in `user_config_override.h`:
+```
+#ifdef RULE_MAX_MQTT_EVENTSZ
+#undef RULE_MAX_MQTT_EVENTSZ
+#endif
+#define RULE_MAX_MQTT_EVENTSZ  512
+```
+
+### Subscribe
+Subscribes to an MQTT topic and assigns an [`Event`](Commands.md#event) name to it. 
+
+`Subscribe <eventName>, <mqttTopic> [, <key>]`
+
+The `<key>` parameter is specified when you need to parse a key/value pair from a JSON payload in the MQTT message. In order to parse a value from a multi-level JSON pair, you can use one dot (`.`) syntax to split the key into sections.
+
+You subscribe to an MQTT topic and assign an event name. Once the subscribed MQTT message is received the configured event will be triggered. 
+
+Command without any parameters will list all currently subscribed topics.
+
+!!! tip "Domoticz Users"
+    As designed, `domoticz/out` (or any user defined DOMOTICZ_OUT_TOPIC) overrules the rule subscribe functionality in a way that you're unable to subscribe to `domoticz/out/1234/#`. This means that you can't subscribe to this topic, unless you remove all Domoticz relay/idx relations with command ``DzIdx0 0`` or if you had disabled the `USE_DOMOTICZ` flag when compiling your own firmware.
+
+
+You can set up a rule with `ON EVENT#<event_name> DO ... ENDON` to do what you want based on this MQTT message. The payload is passed as a parameter once the event has been triggered. If the payload is in JSON format, you are able to get the value of specified key as a parameter.  
+
+For example, if you have a Tasmota based thermostat and multiple temperature sensors in different locations, usually you have to set up a home automation system like Domoticz to control the thermostat. Right now, with this new feature, you can write a rule to do this.  
+
+#### Examples
+```console
+Rule1
+  ON mqtt#connected DO Subscribe BkLight, stat/other-device-topic/POWER ENDON
+  ON Event#BkLight=ON DO <command> ENDON
+```
+```console
+Rule1
+  ON mqtt#connected DO Subscribe DnTemp, tele/other-device-topic/SENSOR, DS18B20.Temperature ENDON
+  ON Event#DnTemp>=21 DO <command> ENDON
+```
+where the MQTT message payload is `{"Time":"2017-02-16T10:13:52", "DS18B20":{"Temperature":20.6}}`
+```console
+Rule1
+  ON mqtt#connected DO Subscribe DnTemp, tele/other-device-topic/SENSOR, DS18B20.Temperature ENDON
+  ON Event#DnTemp DO TempMeasuredSet %value% ENDON
+```
+will allow a thermostat to subscribe to a temperature sensor on another Tasmota device
+
+### Unsubscribe
+Unsubscribe from topics which were subscribed to using the [`Subscribe`](#subscribe) command.  
+
+Unsubscribe from a specific MQTT topic  
+`Unsubscribe <eventName>`  
+
+> The command without a parameter will unsubscribe from all currently subscribed topics.  
+
+## Return codes (rc)
+
+Sometimes, something wrong can happen and you might need to check return codes.
+
+A return code can be found in the console, example output for Return Code = `5` : `MQT: Connect failed to xxxx:1883, rc 5. Retry in 10 sec`
+
+Below table provides more information about the compatibility return code. MQTT 5 connection failures are mapped to these values so existing diagnostics retain their meaning.
+
+|Code |Constant name |Description |
+|-|-|-|
+|-5|MQTT_DNS_DISCONNECTED|the DNS server cannot be reached or name cannot be resolved|   
+|-4|MQTT_CONNECTION_TIMEOUT|the server didn't respond within the keepalive time|
+|-3|MQTT_CONNECTION_LOST|the network connection was broken|
+|-2|MQTT_CONNECT_FAILED|the network connection failed|
+|-1|MQTT_DISCONNECTED|the client is disconnected cleanly|
+|0|MQTT_CONNECTED|the client is connected|
+|1|MQTT_CONNECT_BAD_PROTOCOL|the server doesn't support the requested version of MQTT|
+|2|MQTT_CONNECT_BAD_CLIENT_ID|the server rejected the client identifier|
+|3|MQTT_CONNECT_UNAVAILABLE|the server was unable to accept the connection|
+|4|MQTT_CONNECT_BAD_CREDENTIALS|the username/password were rejected|
+|5|MQTT_CONNECT_UNAUTHORIZED|the client was not authorized to connect|
+
+For MQTT 5, the explicit broker connection reason codes map as follows: unsupported protocol version (`0x84`) → `1`; invalid client ID (`0x85`) → `2`; bad user name or password (`0x86`) → `4`; not authorized (`0x87`) → `5`; server unavailable (`0x88`) or busy (`0x89`) → `3`. Other MQTT 5 failure reason codes are reported as `-2` (`MQTT_CONNECT_FAILED`).

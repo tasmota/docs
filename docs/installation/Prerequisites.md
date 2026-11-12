@@ -1,0 +1,1 @@
+redirect: https://tasmota.github.io/docs/Getting-Started#prerequisites
