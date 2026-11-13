@@ -243,7 +243,7 @@ The telemetry then contains `BTMP2` (requested and acknowledged CH2 setpoint, sa
 ```
 
 !!! warning
-    Find out why the boiler locked out before resetting it. Not every boiler supports remote reset.
+    A lockout is a safety shutdown. Check the fault code and fix the cause before resetting; do not reset automatically from rules. Remote reset is optional in OpenTherm — if the boiler doesn't support it, `ot_blor` returns 0 and the boiler must be reset locally.
 
 ### ot_report command
 
