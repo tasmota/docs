@@ -57,7 +57,9 @@ You may disable this behavior by removing [OpenTherm Slave Status](https://githu
 <img src="../_media/opentherm/configure.png" width=375>
 
 !!! note
-    The integration attaches ISR to the `RX` GPIO to avoid pooling. That GPIO should support interrupts. Please consider this while working on the schematics.
+    On ESP8266 the integration attaches ISR to the `RX` GPIO to avoid pooling. That GPIO should support interrupts. Please consider this while working on the schematics.
+
+    On ESP32 the integration uses the RMT peripheral for both `RX` and `TX` (two RMT channels) instead of the interrupt. Any GPIO usable by RMT works.
 
 
 ## Troubleshooting
@@ -77,8 +79,8 @@ After restart you might see the following in the logs:
 00:00:01 [OTH]: Processing response. Status=SUCCESS, Response=0x4003011B
 00:00:01 [OTH]: getLastResponseStatus SUCCESS. Slave Cfg: 4003011B
 00:00:01 [OTH]: Processing response. Status=SUCCESS, Response=0xC0000000
-00:00:02 [OTH]: Setting Boiler Temp. Old: 0, New: 85
-00:00:02 [OTH]: Processing response. Status=SUCCESS, Response=0xD0015500
+00:00:02 [OTH]: Setting Boiler Temp. Old: 0, New: 60
+00:00:02 [OTH]: Processing response. Status=SUCCESS, Response=0xD0013C00
 00:00:02 [OTH]: Setting Hot Water Temp. Old: 0, New: 37
 12:34:58 [OTH]: Processing response. Status=INVALID, Response=0x70730000
 12:34:58 [OTH]: command OEMD is not supported by the boiler. Last status: INVALID
@@ -86,7 +88,7 @@ After restart you might see the following in the logs:
 12:35:00 [OTH]: command TOUT is not supported by the boiler. Last status: INVALID
 12:35:00 [OTH]: Processing response. Status=INVALID, Response=0x701C0000
 12:35:00 [OTH]: command TRET is not supported by the boiler. Last status: INVALID
-12:35:16 MQT: tele/boiler/SENSOR = {"Time":"2020-05-12T12:35:16","ANALOG":{"A0":7},"OPENTHERM":{"conn":"BUSY","settings":3,"SLAVE":{"FAULT":0,"CH":0,"DHW":0,"FL":0,"COOL":0,"CH2":0,"DIAG":0,"RAW":3221225472},"BTMP":{"FAULT":0,"REQ":85.0,"ACT": 85.0},"HWTMP":{"REQ":37.0,"ACT": 37.0},"ASFF":{"FC":0,"OFC":0},"FLM":0.0,"TB":31.0,"TDHW":30.0,"DHWS":37.0,"TMAX":0.0}}
+12:35:16 MQT: tele/boiler/SENSOR = {"Time":"2020-05-12T12:35:16","ANALOG":{"A0":7},"OPENTHERM":{"conn":"BUSY","settings":3,"SLAVE":{"FAULT":0,"CH":0,"DHW":0,"FL":0,"COOL":0,"CH2":0,"DIAG":0,"RAW":3221225472},"BTMP":{"FAULT":0,"REQ":60.0,"ACT": 60.0},"HWTMP":{"REQ":37.0,"ACT": 37.0},"ASFF":{"FC":0,"OFC":0},"FLM":0.0,"TB":31.0,"TDHW":30.0,"DHWS":37.0,"TMAX":0.0}}
 ```
 
 In the example, `perform handshake` was successful, and the OpenTherm integration started to fetch various OpenTherm statuses.
@@ -120,6 +122,8 @@ OpenTherm integration supports the following commands.
 - `ot_ch`               Activate/Deactivate central heating
 - `ot_tboiler2`         Get/Set the temperature of the second central heating circuit (CH2)
 - `ot_ch2`              Activate/Deactivate the second central heating circuit (CH2)
+- `ot_blor`             Send Boiler Lock-out Reset to the boiler
+- `ot_report`           Get/Set values published as soon as they change
 
 ### ot_flags command
 
@@ -133,7 +137,7 @@ OpenTherm integration supports the following flags:
 - `CH2`  - Enable auxiliary central heating. Refer to your boiler manual. Its flow temperature is set with `ot_tboiler2`
 
 !!! note
-    During the first run, `ot_flags` is set to the `CHOD,DHW`. Hot water setpoint set to 36-degree Celsius and central heating temperature set to 85 degree celsius
+    During the first run, `ot_flags` is set to the `CHOD,DHW`. Hot water setpoint set to 36-degree Celsius and central heating temperature set to 60 degree celsius
 
 
 To get OpenTherm flags, type `ot_flags`
@@ -227,6 +231,37 @@ The telemetry then contains `BTMP2` (requested and acknowledged CH2 setpoint, sa
 14:21:10 CMD: ot_ch2 0
 14:21:10 MQT: stat/boiler/RESULT = {"ot_ch2":0}
 ```
+
+### ot_blor command
+
+`ot_blor 1` sends the Boiler Lock-out Reset command (OpenTherm data-id 4, `RemoteRequest`) once, in the next polling cycle. It resets a boiler locked out after a fault, the same as the reset button on the boiler. The result is `1` if the reset was scheduled, `0` otherwise (e.g. a reset is already pending).
+
+```
+14:22:30 CMD: ot_blor 1
+14:22:30 MQT: stat/boiler/RESULT = {"ot_blor":1}
+14:22:31 [OTH]: Call Boiler Lock-out Reset
+```
+
+!!! warning
+    Find out why the boiler locked out before resetting it. Not every boiler supports remote reset.
+
+### ot_report command
+
+`ot_report` sets the list of telemetry values (names as in the `OPENTHERM` telemetry, e.g. `SLAVE`, `TB`, `ASFF`) that are published to `tele/<topic>/SENSOR` as soon as they change, without waiting for `TelePeriod`. All changes from one polling pass go out in a single message that contains only the changed values. Regular `TelePeriod` telemetry is not affected.
+
+```
+14:23:00 CMD: ot_report SLAVE,TB,ASFF
+14:23:00 MQT: stat/boiler/RESULT = {"ot_report":"SLAVE,TB,ASFF"}
+14:23:41 MQT: tele/boiler/SENSOR = {"Time":"2026-11-06T14:23:41","OPENTHERM":{"SLAVE":{"FAULT":0,"CH":1,"DHW":0,"FL":1,"COOL":0,"CH2":0,"DIAG":0,"RAW":1073742090},"TB":62.0}}
+```
+
+`ot_report` without arguments shows the current list, `ot_report 0` clears it. The list is not saved and is empty by default. To set it permanently, add it to `user_config_override.h`:
+
+```arduino
+#define OT_REPORT_ON_CHANGE "SLAVE,TB,ASFF"
+```
+
+or use a rule: `Rule1 ON System#Boot DO ot_report SLAVE,TB,ASFF ENDON`
 
 ## Setting Hot Water temperature
 
