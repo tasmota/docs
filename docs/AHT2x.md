@@ -39,6 +39,31 @@ For our example AHT25, the address might get confused with the VEML6070 UV senso
 
 An overview of all [I2C drivers](https://tasmota.github.io/docs/I2CDEVICES/#supported-i2c-devices) is available in the docs.
 
+### Deep sleep
+The AHT20 stays powered while the ESP is in `DeepSleep` and is initialized again on every wake. The driver soft-resets the sensor, checks that the measurement started and verifies the CRC of the 7-byte reading. If a reading fails, the previous values are kept and the measurement is retried a second later, up to 3 times, before the normal 11 second cycle resumes.
+
+### Diagnostics
+When [compiling your build](Compile-your-build) add the following to `user_config_override.h`:
+```arduino
+#define USE_AHT_DIAG    // Add AHT20/AHT30 diagnostics (AHT2XDiag) to the sensor JSON
+```
+The sensor JSON then contains:
+```json
+"AHT2XDiag":{"Init":"1C","Trig":"9C","Read":"1C","NoAck":0,"Crc":0,"ReadErr":0,"Reset":0}
+```
+
+| Field | Meaning |
+|---|---|
+|`Init` | Sensor status after init (hex). `18` or `1C` is calibrated and idle
+|`Trig` | Status right after the measurement trigger. Bit `0x80` set means the measurement started
+|`Read` | Status byte of the last reading
+|`NoAck` | Triggers the sensor did not start
+|`Crc` | Readings rejected because of a CRC error
+|`ReadErr` | Short, still busy or all-zero readings
+|`Reset` | Sensor resets after a failed trigger
+
+The counters start at zero on every boot, so with `DeepSleep` they only cover the current wake.
+
 ### Breakout Boards
 
 ![AHT20](_media/peripherals/AHT20.jpg)![AHT21](_media/peripherals/AHT21.jpg)![AHT25](_media/peripherals/AHT25.jpg)![AM2301B](_media/peripherals/AM2301B.jpg)
