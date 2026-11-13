@@ -333,12 +333,23 @@ Scale<x\><a class="cmnd" id="scale"></a>|Scale value from a low and high limit t
 Sub<x\><a class="cmnd" id="sub"></a>|`<value>` = subtract value to Var<x\> ([example](Rules#arithmetic-commands-used-with-var))
 Var<x\><a class="cmnd" id="var"></a>|Manage up to 16 variables stored in memory (x = `1..16`)<BR>`Var` returns all current values. `Var<x>` returns the variable's current value.<BR>`<string>` = store a string value in a variable<BR>`"` = clear stored value in Var<x\>
 
+### Location
+
+See [Location](Location.md) for details. *Introduced in version 16.0.0.4*
+
+Command|Parameters
+:---|:---
+Location<a class="cmnd" id="location"></a>|Show global anchor (`Latitude`, `Longitude`, `Altitude`) and local pose<BR>`x,y,z` = set local position (in meters when `LocationScale` is `3`)<BR>`x,y,z,alpha,beta,gamma` = set local position and orientation in degrees
+LocationClear<a class="cmnd" id="locationclear"></a>|Clear the local pose
+LocationRot<a class="cmnd" id="locationrot"></a>|`alpha,beta,gamma` = set orientation in degrees (yaw, pitch, roll in Z-Y-X order)
+LocationScale<a class="cmnd" id="locationscale"></a>|`0..6` = number of decimals for the local position (default `3` = millimeters). The position is kept when the scale changes.
+
 ### Timers
 
 Command|Parameters
 :---|:---
-Latitude<a class="cmnd" id="latitude"></a>|`<value>` = set latitude in decimal degrees format, e.g. -33.893681
-Longitude<a class="cmnd" id="longitude"></a>|`<value>` = set longitude in decimal degrees format, e.g. 18.619954
+Latitude<a class="cmnd" id="latitude"></a>|`<value>` = set latitude in decimal degrees format, e.g. -33.893681. Also part of [Location](Location.md)
+Longitude<a class="cmnd" id="longitude"></a>|`<value>` = set longitude in decimal degrees format, e.g. 18.619954. Also part of [Location](Location.md)
 Sunrise<a class="cmnd" id="sunrise"></a>|Sunrise/Sunset type<br>`0` = Normal (default)<br>`1` = Civil<br>`2` = Nautical<br>`3` = Astronomical<br>*introduced in version 12.1.1.5*
 Timers<a class="cmnd" id="timers"></a>|Timers control<br>`0` = disable all timers<BR>`1` = enable all timers<BR>`2` = toggle all timers<BR>
 Timer<x\><a class="cmnd" id="timer"></a>|Parameters for Timer<x\> where x = `1..16`<BR>`0` = clear parameters for Timer<x\><BR>`1..16` = copy Timer<y\> parameters to Timer<x\><BR>`{ "name":value ; .. }` = set all or individual parameters using JSON payload with names and values of data pairs from the [table](Timers#json-payload-anatomy)
@@ -351,7 +362,7 @@ Command|Parameters
 :---|:---
 AdcGpio<x\><a class="cmnd" id="adcgpio"></a>|[ADC](ADC) analog input tuning parameters, x is the gpio number and following 4 parameters are configration values for the type of sensor.<BR>`<param1>, <param2>, <param3>,  <param4>`<BR>See the ADC docs [ADC docs](ADC.md) for details.
 AdcParam<x\><a class="cmnd" id="adcparam"></a>|[ADC](ADC) deprecated old command for setting analog input tuning parameters. On ESP32 x is channel `1..8`<BR>`<sensor>, <param1>, <param2>, <param3>,  <param4>`<BR>complete `<sensor>` values listed [here...](ADC.md)
-Altitude<a class="cmnd" id="altitude"></a>|`-30000..30000` = altitude in meters
+Altitude<a class="cmnd" id="altitude"></a>|`-30000..30000` = altitude in meters. Also part of [Location](Location.md)
 AmpRes<a class="cmnd" id="sensors-ampres"></a>|Current sensor resolution<BR>`0..3` = maximum number of decimal places
 Bh1750Resolution<x\><a class="cmnd" id="bh1750resolution"></a>|[BH1750](BH1750.md) resolution mode. `x` = BH1750 sensor number (`1..2`) <BR>`0..2` = choose sensor resolution (`0` = high _(default)_, `1` = high2, `2` = low)
 Bh1750MTime<x\><a class="cmnd" id="bh1750mtime"></a>|[BH1750](BH1750.md) Measurement Time value. `x` = BH1750 sensor number (`1..2`) <BR>`30..255` = set Measurement Time value. Not persistent after reboot. _(default = `69`)_
@@ -651,6 +662,7 @@ SetOption162<a class="cmnd" id="setoption162"></a>|Do not add export energy to e
 SetOption163<a class="cmnd" id="setoption163"></a>|Disable display of webUI device name
 SetOption164<a class="cmnd" id="setoption164"></a>|Enable WiZ Smart Remote support
 SetOption165<a class="cmnd" id="setoption165"></a>|Allow TLS ECDSA certificates<br>`0` = allow only RSA certificates<br>`1` = allow both RSA and ECDSA certificates<br>Because letsencrypt nod defaults to ECDSA certificates, in case of TLS error 296 (unsupported cipher), `SetOption165 1` is automatically enabled.
+SetOption166<a class="cmnd" id="setoption166"></a>|`1` = add device [Location](Location.md) to the `tele/STATE` message
               
 ### TuyaMCU
 
