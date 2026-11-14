@@ -48,11 +48,11 @@ For advanced device settings, hardware configuration, or troubleshooting, the of
 
 ## Custom firmware
 
-There is a custom firmware available for the eQ-3 thermostat. Please visit the [GitHub firmware repo of David Buezas](https://github.com/dbuezas/eq3-custom-fw). Here you will find all news and information about installing and configuring the powerful firmware.
+There is a custom firmware available for the eQ-3 thermostat. Please visit the [GitHub firmware repo of David Buezas](https://github.com/dbuezas/eq3-custom-fw). Here you will find all news and information about installing and configuring the powerful firmware. Items marked with ② are only available with the custom firmware.
 
 Using this custom firmware provides significant advantages and introduces new features to Tasmota:
 
-- Passive Telemetry: The firmware periodically broadcasts its state via BTHome v2 beacons. Tasmota can read these advertisements directly from the air to update device states instantly. When the beacons are encrypted, it is indicated by the 🔑 symbol. In that case, use the [`MI32Keys`](Commands.md#mi32keys) command to tell Tasmota the decryption key, that you have configured in the custom firmware web app.
+- Passive Telemetry: The firmware periodically broadcasts its state via BTHome v2 beacons. Tasmota can read these advertisements directly from the air to update device states instantly. When the beacons are encrypted and the decryption failed, it is indicated by the <del>🔑</del> symbol. In that case, use the [`MI32Keys`](Commands.md#mi32keys) command to tell Tasmota the decryption key, that you have configured in the custom firmware web app.
 - Enhanced Data Fields: Through these broadcasts, Tasmota can now capture and display the ambient room temperature and the precise battery level as a percentage, alongside valve position and operation modes.
 - Better Battery Life: Since Tasmota processes the passive broadcasts, the need for continuous, energy-draining connection-based polling cycles is drastically reduced.
 - Pairing Options: The custom firmware offers pair-less connection options and a settable pairing PIN. Removing the requirement for a PIN makes the initial connection of the TRV to Tasmota very easy. For enhanced security, the pairing PIN can be enabled and paired later on.
@@ -155,6 +155,7 @@ The available subcommands are described in the [TRV subcommands](#trv-subcommand
 | TRVRetries<a class="cmnd" id="trvretries"></a> | `<retries>` = maximum number of command transmission retries to the TRV (`0..10`).<br>At boot time, this value is set to `4` |
 | TRVMinRSSI<a class="cmnd" id="trvminrssi"></a> | `<rssi>` = minimum RSSI signal strength threshold for discovering TRV devices (`-99..0`).<br>At boot time, this value is set to `-99` |
 | TRVOnlyAliased<a class="cmnd" id="trvonlyaliased"></a> | `<value>` = EQ3 OnlyAliased parameter.<br>`0` = all devices will be processed (default).<br>`1` = only devices with an alias will be processed.<br>`2` = only devices whose alias starts with `EQ3` will be processed. |
+| TRVAliasAsTopic<a class="cmnd" id="trvaliasastopic"></a> | `<value>` = EQ3 AliasAsTopic parameter.<br>`0` = MAC address is used as MQTT topic.<br>`1` = Alias is used as MQTT topic (default). |
 | TRVHideFailedPoll<a class="cmnd" id="trvhidefailedpoll"></a> | `<value>` = hide failed periodic polling responses.<br>`0` = send MQTT response even if polling fails.<br>`1` = hide/suppress MQTT response when a periodic polling fails (default). |
 | TRVDevList<br>TRVScan<a class="cmnd" id="trvdevlist"></a> | Display all discovered TRVs. |
 | TRVReset<a class="cmnd" id="trvreset"></a> | Remove all known devices and clear the command queue. |
@@ -166,6 +167,7 @@ Commands must follow the syntax `TRV <MAC> <subcommand> [options]` as explained 
 | Subcommand | Description and parameters |
 | :--- | :--- |
 | <a class="cmnd" id="state"></a>state | Request the current valve state without changing any settings, except for synchronizing the time on the valve.<br>Note: If your ESP32 Tasmota is not synchronized with a valid date and time, this command will set the wrong time and date on the TRV. See [settime](#settime). |
+| <a class="cmnd" id="info"></a>info | Request the firmware version without changing any settings. |
 | <a class="cmnd" id="settemp"></a>settemp | `<temperature>` = set the desired target temperature |
 | <a class="cmnd" id="valve"></a>valve | `<value>` = control the valve state<br>`off` = enable frost protection<br>`on` = open the valve completely<br>Note: If set to *auto* or *holiday*, the valve switches back to the target temperature at the next timeslot. To set the valve permanently, please use the commands [`on`](#on) or [`off`](#off). |
 | <a class="cmnd" id="on"></a>on | Set mode to *manual* and open the valve completely.<br>This can potentially extend battery life during the summer when the central heating is inactive.<br>Note: Temperature will be set to and reported as 30 °C. |
@@ -201,13 +203,17 @@ After submitting a command, you will see one or more of the following results:
 
 ## Reported values
 
-The TRV reports all values in a JSON-formatted response. Which fields are included depends on the situation, so not all fields are sent every time.  
-However, there is always a basic set of fields available:
+The TRV reports all available values in a JSON-formatted response. The included fields depend on the context, so not all fields are sent every time.  
+Here is an example of what the response for the [`settemp`](#settemp) command can look like:
+
 ```json
 {
+  "cmd": "settemp",
+  "result": "ok",
   "MAC": "001A2216A458",
   "tas": "ble-esp32-0936",
   "RSSI": -79,
+  "Firmware": "1.48",
   "stattime": 1786795200,
   "temp": 21.0,
   "posn": 95,
@@ -216,22 +222,8 @@ However, there is always a basic set of fields available:
   "boost": "inactive",
   "window": "closed",
   "state": "unlocked",
-  "battery": "GOOD"
-}
-```
-
-After executing a command, the following fields are prefixed:
-```json
-{
-  "cmd": "settemp",
-  "result": "ok"
-}
-```
-and these will be appended:
-```json
-{
+  "battery": "GOOD",
   "dst": "set",
-  "holidayend": "00-00-00 00:00",
   "windowtemp": 12.0,
   "windowdur": 15,
   "day": 21.0,
@@ -240,69 +232,38 @@ and these will be appended:
 }
 ```
 
-If the mode is set to `holiday`, the `"holidayend"` field indicates the exact expiration date and time:
-```json
-{
-  "mode": "holiday",
-  "holidayend": "28-01-02 10:00"
-}
-```
-
-In the response for the [`setprofile`](#setprofile) command, the `profiledayset` field indicates which day or group of days was updated:
-```json
-{
-  "cmd": "setprofile",
-  "profiledayset": 4
-}
-```
-
-In the response for the [`reqprofile`](#reqprofile) command, the returned JSON object includes the corresponding day-specific profile field, formatted as `profileday<n>` (where `n` ranges from `0` to `6`):
-```json
-{
-  "cmd": "reqprofile",
-  "profileday4": "17.0-07:00,23.0-10:00,17.0-17:00,21.0-23:00,17.0-24:00"
-}
-```
-
-If the TRV runs the [custom firmware](#custom-firmware), these fields are additionally included:
-```json
-{
-	"BattLevel": 91,
-	"BattVolt":2.731,
-	"Ambient": 20.6
-}
-```
-
-
 ### JSON Response Fields
 
-| Field | Description |
+| Payload Example {:style="white-space:nowrap;"} | Description |
 | :--- | :--- |
-| cmd | Recent command the response is given for. |
-| MAC | MAC address of the TRV. It always returns the actual MAC address, even if an alias was used in the command. |
-| tas | Hostname of your Tasmota device. |
-| RSSI | BLE signal strength. |
-| stattime | Timestamp in seconds since Unix Epoch (January 1st, 1970). |
-| temp | Target temperature. |
-| posn | Valve position (`0` = closed, `100` = fully opened). |
-| mode | Operating mode (`manual`, `auto` or `holiday`). |
-| hassmode | Mode mapped for Home Assistant usage: `auto` (= mode *auto*), `off` (frost protection enabled), `heat` (valve is open/heating), or `idle` (valve is closed/target temperature reached). |
-| boost | Boost mode status (`active` or `inactive`). Valve opens 80% for 5 minutes. |
-| dst | Daylight savings time status (`set` or `unset`). |
-| window | Status of the window open detection (triggered by a sudden temperature drop): `open` or `closed`. |
-| state | Child lock status (disables the physical buttons on the TRV): `locked` or `unlocked`. |
-| battery | Battery status of the TRV (`GOOD` or `LOW`). |
-| BattLevel | Battery level of the TRV in percent. |
-| BattVolt | Battery voltage of the TRV in Volt. |
-| Ambient | Ambient room temperature reported by the TRV. |
-| holidayend | End date and time of holiday mode. |
-| windowtemp | Configured temperature for the window open detection. |
-| windowdur | Configured duration (in minutes) for the window open detection. |
-| day | Configured comfort temperature. |
-| night | Configured reduction temperature. |
-| offset | Configured temperature offset for calibration. |
-| profiledayset | The day or group of days the profile was set for (`0` ... `9`). Only included after running the [`setprofile`](#setprofile) command. |
-| profileday<n> | The temperature profile for the requested day, where `<n>` ranges from `0` to `6`. Only included after running the [`reqprofile`](#reqprofile) command. |
+| `#!json "cmd":"state"` | Recent command the response is given for. |
+| `#!json "result":"ok"` | Execution result of the command: `ok` or `fail`. |
+| `#!json "MAC":"001A2216A458"` | MAC address of the TRV. It always returns the actual MAC address, even if an alias was used in the command. |
+| `#!json "Alias":"Office"` | Alias of the TRV. This is included when an alias is set for the device. |
+| `#!json "tas":"ble-esp32-0936"` {:style="white-space:nowrap;"} | Hostname of your Tasmota device. |
+| `#!json "RSSI":-79` | BLE signal strength in dBm. |
+| `#!json "Firmware":"1.48"` | Firmware version of the TRV. |
+| `#!json "stattime":1786795200` | Timestamp in seconds since Unix Epoch (January 1st, 1970). |
+| `#!json "temp":21.0` | Target temperature. |
+| `#!json "posn":95` | Valve position (`0` = closed, `100` = fully opened). |
+| `#!json "mode":"auto"` | Operating mode (`manual`, `auto` or `holiday`). |
+| `#!json "hassmode":"auto"` | Mode mapped for Home Assistant usage: `auto` (= mode *auto*), `off` (frost protection enabled), `heat` (valve is open/heating), or `idle` (valve is closed/target temperature reached). |
+| `#!json "boost":"inactive"` | Boost mode status (`active` or `inactive`). Valve opens 80% for 5 minutes. |
+| `#!json "dst":"set"` | Specifies whether daylight saving time is automatically adjusted (`set` or `unset`). |
+| `#!json "window":"closed"` | Status of the window open detection (triggered by a sudden temperature drop or via the [`window`](#window) command): `open` or `closed`. |
+| `#!json "state":"unlocked"` | Child lock status (disables the physical buttons on the TRV): `locked` or `unlocked`. |
+| `#!json "battery":"GOOD"` | Battery status of the TRV (`GOOD` or `LOW`). |
+| `#!json "BattLevel":91` | Battery level of the TRV in percent. [^②^](#custom-firmware) |
+| `#!json "BattVolt":2.731` | Battery voltage of the TRV in Volt. [^②^](#custom-firmware) |
+| `#!json "Ambient": 20.6` | Ambient room temperature reported by the TRV. [^②^](#custom-firmware) |
+| `#!json "holidayend":"28-01-02 10:00"` {:style="white-space:nowrap;"} | End date and time of the holiday mode, if the mode is active. |
+| `#!json "windowtemp":12.0` | Configured temperature for the window open detection. |
+| `#!json "windowdur":15` | Configured duration (in minutes) for the window open detection. |
+| `#!json "day":21.0` | Configured comfort temperature. |
+| `#!json "night":17.0` | Configured reduction temperature. |
+| `#!json "offset":0.0` | Configured temperature offset for calibration. |
+| `#!json "profiledayset":4` | The day or group of days the profile was set for (`0` ... `9`). Result of the [`setprofile`](#setprofile) command. |
+| `#!json "profileday<n>":"17.0-07:00,`<br>`23.0-10:00,17.0-17:00,`<br>`21.0-23:00,17.0-24:00"` | The temperature profile for the requested day, where `<n>` ranges from `0` to `6`. Result of the [`reqprofile`](#reqprofile) command. |
 
 ## Control Examples
 
