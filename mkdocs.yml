@@ -149,6 +149,7 @@ nav:
     - I2S Audio: I2S-Audio.md
     - IPv6.md
     - Lights.md
+    - Location.md
     - Matter: Matter.md
     - PIR-Motion-Sensors.md
     - Power-Monitoring-Calibration.md
