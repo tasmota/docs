@@ -68,6 +68,45 @@ Stores data that will be displayed at every boot, similar to the DisplayText com
 
 For ESP32 with [Berry scripting language](Berry.md), `autoexec.be` file will be automatically loaded and executed at boot.
 
+## Transfer files over MQTT
+
+!!! note "Requires `#define USE_UFILESYS_MQTT`, not included in any precompiled binary (about 0.9 kB of code)"
+
+With `#define USE_UFILESYS_MQTT` in `user_config_override.h`, [`FileDownload`](Commands.md#filedownload) and [`FileUpload`](Commands.md#fileupload) accept `"Type":8` and a `"File"` key to read and write a file of the file system over [MQTT](MQTT.md#transfer-files-over-mqtt). The define has no effect without `USE_UFILESYS`. Without the define, Type `8` is answered with `Error 3`. The existing transfer of the settings backup (Type `2`) works as before.
+
+The file system is the same as for `UfsDelete` and `UfsRename`: the SD card when available, otherwise the flash file system. `File` is the path with or without leading `/`.
+
+Download a file:
+
+```
+FileDownload {"Password":"<MqttPassword>","Type":8,"File":"/autoexec.bat"}
+  {"FileDownload":"Started"}
+  {"File":"autoexec.bat","Id":117,"Type":8,"Size":120}
+FileDownload
+  {"Id":117,"Data":"<base64>"}
+FileDownload
+  {"Id":117,"Md5":"<md5>"}
+  {"FileDownload":"Done"}
+```
+
+`FileDownload` without payload is repeated until the reply contains `Md5`. `"Binary":1` in the start payload selects binary chunks. A directory or a missing file answers `Error 2`.
+
+Upload a file:
+
+```
+FileUpload {"Password":"<MqttPassword>","File":"/autoexec.bat","Id":116,"Type":8,"Size":120}
+  {"FileUpload":"Started"}
+  {"Id":116,"MaxSize":850}
+FileUpload {"Id":116,"Data":"<base64>"}
+  {"Id":116,"MaxSize":850}
+FileUpload {"Id":116,"Md5":"<md5>"}
+  {"FileUpload":"Done"}
+```
+
+The data is written to the temporary file `/.fileupload` and renamed to `File` only after the MD5 matches; an existing file with that name is replaced. After `MD5 mismatch`, `Aborted` or a write error the old file is kept and the temporary file is removed. `Failed` is answered when the file cannot be written or renamed, e.g. when the target directory does not exist. `Error 2` is answered when the file does not fit into the free space, `Error 6` when no `File` is given.
+
+The reply codes are listed in [Transfer files over MQTT](MQTT.md#transfer-files-over-mqtt).
+
 ## Compiling for Universal File System
 
 Copy `platformio_override_sample.ini` as `platformio_override.ini`
