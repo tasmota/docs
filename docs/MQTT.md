@@ -334,3 +334,50 @@ Below table provides more information about the compatibility return code. MQTT 
 |5|MQTT_CONNECT_UNAUTHORIZED|the client was not authorized to connect|
 
 For MQTT 5, the explicit broker connection reason codes map as follows: unsupported protocol version (`0x84`) → `1`; invalid client ID (`0x85`) → `2`; bad user name or password (`0x86`) → `4`; not authorized (`0x87`) → `5`; server unavailable (`0x88`) or busy (`0x89`) → `3`. Other MQTT 5 failure reason codes are reported as `-2` (`MQTT_CONNECT_FAILED`).
+
+## Transfer files over MQTT
+
+The commands [`FileDownload`](Commands.md#filedownload) and [`FileUpload`](Commands.md#fileupload) transfer a file between a client and the device over MQTT. The data is sent in chunks, either base64 encoded or binary, and verified with an MD5 hash. Example scripts in Python are available in [tools/mqtt-file](https://github.com/arendst/Tasmota/tree/development/tools/mqtt-file).
+
+| Type | Content | Download | Upload |
+|------|---------|----------|--------|
+| `1` | OTA firmware | - | x |
+| `2` | Settings backup | x | x |
+| `8` | File of the [UFS](UFS.md#transfer-files-over-mqtt) file system | x | x |
+
+Type `8` is only available when compiled with `#define USE_UFILESYS_MQTT` (see [UFS](UFS.md#transfer-files-over-mqtt)).
+
+Commands are sent to `cmnd/%topic%/FileDownload` and `cmnd/%topic%/FileUpload`. Replies are published to `stat/%topic%/FILEDOWNLOAD` and `stat/%topic%/FILEUPLOAD`. Group topics are not supported (`Error 5`).
+
+**Download**
+
+| Step | Payload | Reply |
+|------|---------|-------|
+| Start | `FileDownload {"Password":"<MqttPassword>","Type":2}` | `{"FileDownload":"Started"}` and `{"File":"Config_<topic>_<version>.dmp","Id":117,"Type":2,"Size":4224}` |
+| Chunk | `FileDownload` (no payload), repeat | `{"Id":117,"Data":"<base64>"}` |
+| End | `FileDownload` (no payload) | `{"Id":117,"Md5":"<md5>"}` and `{"FileDownload":"Done"}` |
+
+`"Binary":1` in the start payload sends the chunks as binary payloads (up to 4 kB) instead of base64. `FileDownload 0` aborts the session (`{"FileDownload":"Aborted"}`).
+
+**Upload**
+
+| Step | Payload | Reply |
+|------|---------|-------|
+| Start | `FileUpload {"Password":"<MqttPassword>","File":"Config_<topic>_<version>.dmp","Id":116,"Type":2,"Size":4224}` | `{"FileUpload":"Started"}` and `{"Id":116,"MaxSize":850}` |
+| Chunk | `FileUpload {"Id":116,"Data":"<base64>"}` | `{"Id":116,"MaxSize":850}` |
+| End | `FileUpload {"Id":116,"Md5":"<md5>"}` | `{"FileUpload":"Done"}` |
+
+`Id` is chosen by the client (`1..255`) and must be the same in all messages of the session. `MaxSize` is the number of bytes of file data to send per chunk. `Size` is the total size of the file in bytes. For Type `2` and `1` the device restarts after a successful upload. `FileUpload 0` aborts the session (`{"FileUpload":"Aborted"}`).
+
+**Replies**
+
+| Reply | Meaning |
+|-------|---------|
+| `Error 1` | Wrong `Password` (must be the MQTT password of the device) |
+| `Error 2` | Download: file not found or no memory. Upload: not enough space or no memory |
+| `Error 3` | Invalid `Type`. Also the reply for Type `8` when not compiled with `USE_UFILESYS_MQTT` |
+| `Error 5` | Group topic used |
+| `Error 6` | Upload buffer or file could not be created, e.g. no `File` for Type `8` |
+| `MD5 mismatch` | The MD5 sent does not match the data received. Nothing is applied |
+| `Failed` | Upload received but could not be applied |
+| `Aborted` | Session aborted with `0` or by a message with a different `Id` |

@@ -9,6 +9,7 @@ Note: the `minimal` variant is not listed as it shouldn't be used outside of the
 | MY_LANGUAGE en_GB         | x | x / x | x | x | x | x |
 | USE_IMPROV                | x | x / x | x | x | x | x |
 | USE_UFILESYS              | - | - / x | - | - | - | - |
+| USE_UFILESYS_MQTT         | - | - / - | - | - | - | - | Requires USE_UFILESYS. [FileDownload / FileUpload Type 8](UFS.md#transfer-files-over-mqtt)
 | USE_ARDUINO_OTA           | - | - / - | - | - | - | - |
 | USE_DOMOTICZ              | - | x / x | x | x | x | - |
 | USE_HOME_ASSISTANT        | - | - / - | - | - | - | - |
