@@ -1,3 +1,5 @@
+# Berry Cryptography
+
 ## `crypto` module
 
 Module `import crypto` support for common cryptographic algorithms.  
@@ -31,6 +33,7 @@ Currently supported algorithms:
 - MD5
 - PKKDF2 with HMAC SHA256 key derivation - requires `#define USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256`
 - SHA256
+- SHA384
 - JWT RS256 (RSASSA-PKCS1-v1_5 with SHA256) - requires `#define USE_BERRY_CRYPTO_RSA`
 
 ### `crypto.AES_CTR` class
@@ -39,7 +42,7 @@ Encrypt and decrypt, using AES CTR (Counter mode) with 256 bits keys.
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_ctr_init"></a>|`AES_CTR.init(secret_key:bytes(32)) -> instance`<br>Initialise AES CTR instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
+init<a class="cmnd" id="aes_ctr_init"></a>|`AES_CTR.init(secret_key:bytes(32)) -> instance`<br>Initialize AES CTR instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
 encrypt<a class="cmnd" id="aes_ctr_encrypt"></a>|`encrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Encrypt the ciphertext. The `iv` (Initialization Vector) must be 12 bytes, it can be the concatenation of 4 bytes Nonce and 8 bytes iv. `cc` is the counter (4 bytes) incremented for each block of 16 bytes.<BR>Note: the last counter value is not returned, so it is advised to encrypt all data at once.
 decrypt<a class="cmnd" id="aes_ctr_decrypt"></a>|`decrypt(ciphertext:bytes, iv:bytes(12), cc:int) -> bytes`<br>Identical to `encrypt` above.
 
@@ -65,7 +68,7 @@ Encrypt, decrypt and verify, using AES GCM (Galois Counter Mode) with 256 bits k
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_gcm_init"></a>|`AES_GCM.init(secret_key:bytes(32), iv:bytes(12)) -> instance`<br>Initialise AES GCM instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
+init<a class="cmnd" id="aes_gcm_init"></a>|`AES_GCM.init(secret_key:bytes(32), iv:bytes(12)) -> instance`<br>Initialize AES GCM instance with `secret_key` (256 bits) and `iv` (initialization vector or nonce, 96 bits)
 encrypt<a class="cmnd" id="aes_gcm_encrypt"></a>|`encrypt(ciphertext:bytes) -> bytes`<br>Encrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
 decrypt<a class="cmnd" id="aes_gcm_decrypt"></a>|`decrypt(ciphertext:bytes) -> bytes`<br>Decrypt the ciphertext. Can be called multiple times, the tag is updated accordingly
 tag<a class="cmnd" id="aes_gcm_tag"></a>|`tag() -> bytes`<br>Compute the verification tag for the object encrypted or decrypted (128 bits).
@@ -97,7 +100,7 @@ Encrypt and decrypt, using AES CCM with 256 bits keys.
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_ccm_init"></a>|`AES_CCM.init(secret_key:bytes(16 or 32), iv:bytes(7..13), aad:bytes(), data_len:int, tag_len:int) -> instance`<br>Initialise AES CCM instance with `secret_key` (128 or 256 bits), `iv` (initialization vector or nonce, 56 to 104 bits), `aad` is the associated data, `data_len` is the size of the payload that you need to announce in advance, `tag_len` is the lenght in bytes of the tag (normally 16).
+init<a class="cmnd" id="aes_ccm_init"></a>|`AES_CCM.init(secret_key:bytes(16 or 32), iv:bytes(7..13), aad:bytes(), data_len:int, tag_len:int) -> instance`<br>Initialize AES CCM instance with `secret_key` (128 or 256 bits), `iv` (initialization vector or nonce, 56 to 104 bits), `aad` is the associated data, `data_len` is the size of the payload that you need to announce in advance, `tag_len` is the length in bytes of the tag (normally 16).
 encrypt<a class="cmnd" id="aes_ccm_encrypt"></a>|`encrypt(ciphertext:bytes) -> bytes`<br>Encrypt the ciphertext.
 decrypt<a class="cmnd" id="aes_ccm_decrypt"></a>|`decrypt(ciphertext:bytes) -> bytes`<br>Identical to `encrypt` above.
 tag<a class="cmnd" id="aes_ccm_tag"></a>|`tag() -> bytes`<br>Returns the tag or MIC.
@@ -169,15 +172,15 @@ aes.decrypt1(key, iv, b)
 print("decrypted data:",b.asstring()) # "hello world_____"
 ```
 
-### `crypto.CHACH20_POLY1305` class
+### `crypto.CHACHA20_POLY1305` class
 
 Encrypt and decrypt using stream cipher ChaCha20 and compute MAC (= message authentication code aka integrity tag) using Poly1305.  
 The reason to split this module into relatively low level functions is to have support for ssh-chacha20-poly1305@openssh. Thus the implementation for Chacha20-Poly1305-AEAD has to be completed in Berry.  
  
 General Function|Parameters and details
 :---|:---
-chacha_run|`CHACH20_POLY1305.chacha_run(secret_key:bytes(32),iv:bytes(12),cipher:bytes(n*16),)-> int counter`<br>En/Decrypt in a single call in-place, returns counter
-poly_run|`CHACH20_POLY1305.poly_run(data:bytes(),poly_key:bytes(32),)-> tag:bytes(16)`<br>Computes tag on (encrypted) data.
+chacha_run|`CHACHA20_POLY1305.chacha_run(secret_key:bytes(32),iv:bytes(12),cipher:bytes(n*16),)-> int counter`<br>En/Decrypt in a single call in-place, returns counter
+poly_run|`CHACHA20_POLY1305.poly_run(data:bytes(),poly_key:bytes(32),)-> tag:bytes(16)`<br>Computes tag on (encrypted) data.
   
 Example:
 ```berry
@@ -308,7 +311,7 @@ shared_key<a class="cmnd" id="ec_p256_shared_key"></a>|`crypto.EC_P256().shared_
 Specific Functions|Parameters and details
 :---|:---
 mod<a class="cmnd" id="ec_p256_mod"></a>|`crypto.EC_P256().mod(data:bytes()) -> bytes(32)`<br>Computes the modulus of an arbitrary large number. The modulus is done towards the order of the curve.
-neg<a class="cmnd" id="ec_p256_neg"></a>|`crypto.EC_P256().neg(data:bytes(32)) -> bytes(32)`<br>`-x mod p` or `p - x` if `x` is lower than `p`<br>Computes the opposite (negate) of a number modulus the order of the curve (it's actuall modulus - data).
+neg<a class="cmnd" id="ec_p256_neg"></a>|`crypto.EC_P256().neg(data:bytes(32)) -> bytes(32)`<br>`-x mod p` or `p - x` if `x` is lower than `p`<br>Computes the opposite (negate) of a number modulus the order of the curve (it's actually modulus - data).
 mul<a class="cmnd" id="ec_p256_mul"></a>|`crypto.EC_P256().mul(x:bytes(), A:bytes(65)) -> bytes(65)`<br>`x * A`<br>Computes multiplication of a number and a point on the curve.<br>`x` needs to be smaller than `p`, use `mod()` if not sure<br>The function checks that the point `A` is on the curve, or raises an error
 muladd<a class="cmnd" id="ec_p256_muladd"></a>|`crypto.EC_P256().muladd(x:bytes(), A:bytes(65), y:bytes(), B:bytes(65)) -> bytes(65)`<br>`x * A + y * B`<br>`x` and `y` need to be smaller than `p`, use `mod()` if not sure<br>The function checks that the points `A` and `B` are on the curve, or raises an error<br>If `B` is empty `bytes()`, the Generator `P` of the curve is used instead.
 
@@ -436,7 +439,7 @@ Provides SHA256 hashing function
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_sha256_init"></a>|`HMAC_SHA256.init() -> instance`<br>Initialise SHA256 hashing function
+init<a class="cmnd" id="aes_sha256_init"></a>|`HMAC_SHA256.init() -> instance`<br>Initialize SHA256 hashing function
 update<a class="cmnd" id="aes_sha256_update"></a>|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
 out<a class="cmnd" id="aes_sha256_out"></a>|`out() -> bytes(32)`<br>Output the value of the hash
 
@@ -454,13 +457,38 @@ h.update(bytes("de188941a3375d3a8a061e67576e926d"))
 assert(h.out() == bytes("067c531269735ca7f541fdaca8f0dc76305d3cada140f89372a410fe5eff6e4d"))
 ```
 
+### `crypto.SHA384` class
+Provides SHA384 hashing function. Requires `#define USE_BERRY_CRYPTO_SHA384` (enabled by default), starting with version 16.0.0.6
+General Function|Parameters and details
+:---|:---
+init<a class="cmnd" id="aes_sha384_init"></a>|`SHA384.init() -> instance`<br>Initialize SHA384 hashing function
+update<a class="cmnd" id="aes_sha384_update"></a>|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
+out<a class="cmnd" id="aes_sha384_out"></a>|`out() -> bytes(48)`<br>Output the value of the hash. More content can be added afterwards
+Example test vectors from NIST FIPS 180-2:
+``` berry
+import crypto
+# SHA384 of empty message
+assert(crypto.SHA384().out() == bytes("38B060A751AC96384CD9327EB1B1E36A21FDB71114BE07434C0CC7BF63F6E1DA274EDEBFE76F65FBD51AD2F14898B95B"))
+# SHA384 of "abc"
+assert(crypto.SHA384().update(bytes().fromstring("abc")).out() == bytes("CB00753F45A35E8BB5A03D699AC65007272C32AB0EDED1631A8B605A43FF5BED8086072BA1E7CC2358BAECA134C825A7"))
+```
+SHA384 of one million 'a' (1,000,000 bytes, takes about one second on ESP32):
+``` berry
+import crypto
+var a1000 = bytes()
+for i: 1..1000  a1000.add(0x61)  end      # 1000 x 'a'
+var h = crypto.SHA384()
+for i: 1..1000  h.update(a1000)  end      # 1,000,000 x 'a'
+print(h.out().tohex())
+# 9D0E1809716474CB086E834E310A4A1CED149E9C00F248527972CEC5704C2A5B07B8B3DC38ECC4EBAE97DDD87F3D8985
+```
 ### `crypto.HMAC_SHA256` class
 
 Provides HMAC SHA256 hashing function
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_hmac_sha256_init"></a>|`HMAC_SHA256.init(key:bytes) -> instance`<br>Initialise HMAC_SHA256 hashing function with a provided key
+init<a class="cmnd" id="aes_hmac_sha256_init"></a>|`HMAC_SHA256.init(key:bytes) -> instance`<br>Initialize HMAC_SHA256 hashing function with a provided key
 update<a class="cmnd" id="aes_hmac_sha256_update"></a>|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained
 out<a class="cmnd" id="aes_hmac_sha256_out"></a>|`out() -> bytes(32)`<br>Output the value of the hash
 
@@ -585,7 +613,7 @@ Provides MD5 hashing function.
 
 General Function|Parameters and details
 :---|:---
-init<a class="cmnd" id="aes_md5_init"></a>|`MD5.init() -> instance`<br>Initialise MD5 hashing function
+init<a class="cmnd" id="aes_md5_init"></a>|`MD5.init() -> instance`<br>Initialize MD5 hashing function
 update<a class="cmnd" id="aes_md5_update"></a>|`update(data:bytes) -> self`<br>Add content to the hash. Calls can be chained.
 finish<a class="cmnd" id="aes_md5_finish"></a>|`finish() -> bytes(16)`<br>Finish the MD5 calculation and output the result (16 bytes)
 

@@ -185,6 +185,7 @@ nav:
   - ESP32:
     - Tasmota32 Features: ESP32.md
     - Berry: Berry.md
+    - Berry Cryptography: Berry-crypto.md
     - Bluetooth Low Energy: Bluetooth_ESP32.md
     - LVGL: LVGL.md
     - HASPmota: HASPmota.md

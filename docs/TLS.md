@@ -6,6 +6,7 @@ Starting with version 10.0.0.4, TLS now support dual mode, depending of the valu
 
 - `SetOption132 0` (default): the server's identity is checked against pre-defined Certificate Authorities. There is no further configuration needed. Tasmota includes the following CAs:
   - [Let's Encrypt ISRG Root X1](https://letsencrypt.org/certificates/), RSA 4096 bits SHA 256, valid until 20300604, starting with Tasmota version 13.4.1.2
+  - [Let's Encrypt ISRG Root X2](https://letsencrypt.org/certificates/), EC P-384 SHA 384, valid until 20400917, starting with Tasmota version 16.0.0.5. Required for Let's Encrypt ECDSA certificates (intermediates E5 to E9), since the cross-signature of Root X2 by Root X1 expired on 20250915. On ESP8266 it requires `USE_MQTT_TLS_ECDSA`
   - [Amazon Root CA](https://www.amazontrust.com/repository/), RSA 2048 bits SHA 256, valid until 20380117, used by AWS IoT
 - `SetOption132 1`: Fingerprint validation. This method works for any server certificate, including self-signed certificates. The server's public key is hashed into a fingerprint and compared to a pre-recorded value. This method is more universal but requires an additional configuration (see below)
 
@@ -83,9 +84,40 @@ If you are using LetsEncrypt to generate your server certificates, you should ac
 
 Main limitations are:
 
-- Your SSL/TLS server must support TLS 1.2 and the `ECDHE_RSA_WITH_AES_128_GCM_SHA256` cipher - which is the case with the default Mosquitto configuration
-- The server certificate must have an RSA private key (max 2048 bits for ESP8266) or ECDSA private key and the certificate must be signed with RSA or ECDSA and SHA256 hash. This is the case with default LetsEncrypt certificates. ESP32 supports by default RSA private keys up to 4096 bits, ESP8266 must be compiled with option `-DUSE_4K_RSA` to support 4096 private keys.
+- Your SSL/TLS server must support TLS 1.2 and one of the cipher suites listed below - which is the case with the default Mosquitto configuration
+- The server certificate must have an RSA private key (max 2048 bits for ESP8266) or an ECDSA private key on curve P-256 or P-384, and the certificates must be signed with RSA or ECDSA and a SHA256 or SHA384 hash. This is the case with default LetsEncrypt certificates, RSA and ECDSA. ESP32 supports by default RSA private keys up to 4096 bits, ESP8266 must be compiled with option `-DUSE_4K_RSA` to support 4096 private keys. Curve P-521 is not supported.
+- On ESP8266, ECDSA certificates require `#define USE_MQTT_TLS_ECDSA` (enabled by default in `my_user_config.h`), otherwise only RSA is supported
 - Your SSL/TLS should support TLS 1.2 MFLN to limit buffer to 1024 bytes. If MFLN is not supported, it will still work well, as long as the server does not send any message above 1024 bytes. On ESP32 buffers are raised to 2048 bytes.
+
+### Cipher suites
+
+Tasmota offers the following TLS 1.2 cipher suites, in order of preference:
+
+| Cipher suite | Since | Notes |
+|---|---|---|
+| `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256` | | always |
+| `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256` | | ESP32, or ESP8266 with `USE_MQTT_TLS_ECDSA` |
+| `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384` | 16.0.0.6 | requires `USE_MQTT_TLS_SHA384` |
+| `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` | 16.0.0.6 | requires `USE_MQTT_TLS_SHA384`, and `USE_MQTT_TLS_ECDSA` on ESP8266 |
+
+Tasmota proposes the AES-128 suites first, which most servers accept. The AES-256 suites are for servers that only accept AES-256.
+
+### SHA384 support
+
+`#define USE_MQTT_TLS_SHA384` (enabled by default in `my_user_config.h`, starting with version 16.0.0.5) adds SHA-384 to the TLS client. It is needed to:
+
+- validate certificates signed with SHA-384 (`ecdsa-with-SHA384` or `sha384WithRSAEncryption`). This is the case of most ECDSA P-384 Certificate Authorities, including Let's Encrypt ISRG Root X2 and the E5 to E9 intermediates
+- use the `*_AES_256_GCM_SHA384` cipher suites above
+
+It costs about 5.5KB of flash on ESP8266 and 2.3KB on ESP32. On ESP32-S2, S3 and P4 the SHA-384 computation uses the hardware accelerator; on ESP8266, ESP32, C3 and C6 it is done in software.
+
+If all your servers use certificates signed with SHA-256, you can remove it with:
+
+```C
+#undef USE_MQTT_TLS_SHA384
+```
+
+Without it, a certificate chain containing a certificate signed with SHA-384 fails with error 49 (`BR_ERR_X509_UNSUPPORTED`). Fingerprint validation (`SetOption132 1`) is not affected.
 
 
 -----------
@@ -102,12 +134,12 @@ Thanks to BearSSL's compactness and aggressive optimization, the minimal TLS con
 Here are the tips and tricks used to reduce Flash and Memory:
 
 * **MFLN** (Maximum Fragment Length Negotiation): TLS normally uses 16k buffers for send and receive. 32k looks very small on a server, but immensely huge for ESP8266. TLS 1.2 introduced MFLN, which allows the TLS Client to reduce both buffers down to 512 bytes. MFLN is not widely supported yet, but it is by recent OpenSSL versions and by AWS IoT. This is a huge improvement in memory footprint. If your server does not support MFLN, it will still work as long as the messages sent by the server do not exceed the buffer length. In Tasmota the buffer length is 1024 bytes for send buffer and 1024 bytes for receive buffer. Going below creates message fragmentation and much longer TLS connection times (above 3s). If your server does not support MFLN, you'll see a message to that effect in the logs.
-* **Max Certificate size**: BearSSL normally supports server certificates of up to RSA 4096 bits and EC 521 bits. These certificates are very uncommon currently. To save extra memory, the included BearSSL library is trimmed down to maximum RSA 2048 bit certificate and EC 256 bit certificate. This should not have any impact for you.
+* **Max Certificate size**: BearSSL normally supports server certificates of up to RSA 4096 bits and EC 521 bits. These certificates are very uncommon currently. To save extra memory, the included BearSSL library is trimmed down to maximum RSA 2048 bit certificate (4096 bits on ESP32 or with `USE_4K_RSA`) and EC 384 bit certificate (curves P-256 and P-384). This should not have any impact for you.
 
 !!! bug "Tasmota will crash if the server serves a 4096 bit RSA certificate. The crash will likely be in `br_rsa_i15_pkcs1_vrfy`. Enable `USE_4K_RSA` to avoid this behaviour."
     
 * **EC private key**: AWS IoT requires the client to authenticate with its own Private Key and Certificate. By default AWS IoT will generate an RSA 2048 bit private key. In Tasmota, we moved to an EC (Elliptic Curve) Private Key of 256 bits. EC keys are much smaller, and handshake is significantly faster. Note: the key being 256 bits does not mean it's less secure than RSA 2048, it's actually the opposite.
-* **Single Cipher**: to reduce code size, we only support a single TLS cipher and embed only the code strictly necessary. When using TLS (e.g. LetsEncrypt on Mosquitto) the supported cipher is `ECDHE_RSA_WITH_AES_128_GCM_SHA256`. Additionally, ECDHE offers Perfect Forward Secrecy which means extra security.
+* **Few Ciphers**: to reduce code size, we only support a few TLS ciphers (see [Cipher suites](#cipher-suites)), all ECDHE with AES-GCM, and embed only the code strictly necessary. When using TLS (e.g. LetsEncrypt on Mosquitto) the preferred cipher is `ECDHE_RSA_WITH_AES_128_GCM_SHA256`. Additionally, ECDHE offers Perfect Forward Secrecy which means extra security.
 * **Adaptive Thunk Stack**: BearSSL does not allocate memory on its own. It's either the caller's responsibility or memory is taken on the Stack. Stack usage can go above 5k, more than the ESP8266 stack. Arduino created a **Thunk Stack**, a secondary stack of 5.6k, allocated on Heap, and activated when a TLS connection is active. Actually the stack is mostly used during TLS handshake, and much less memory is required during TLS message processing. Tasmota only allocates the Thunk Stack during TLS handshake and switches back to the normal Stack afterwards. See below for details of actual memory usage.
 * **Keys and CA in PROGMEM**: BearSSL was adapted from original source code to push most on the tables and static data into PROGMEM:
 https://github.com/earlephilhower/bearssl-esp8266. Additional work now allows us to put the Client Private Key, Certificate and CA in PROGMEM too, saving at least 3k of Memory.
@@ -202,6 +234,7 @@ Here are most common TLS errors:
 | 28 | BR_ERR_WRONG_KEY_USAGE |
 | 29 | BR_ERR_NO_CLIENT_AUTH |
 | 31 | BR_ERR_IO |
+| 49 | BR_ERR_X509_UNSUPPORTED X.509 status: unsupported algorithm, for example a certificate signed with SHA-384 when `USE_MQTT_TLS_SHA384` is disabled |
 | 54 | BR_ERR_X509_EXPIRED X.509 status: certificate is expired or not yet valid. |
 | 56 | BR_ERR_X509_BAD_SERVER_NAME X.509 status: expected server name was not found in the chain. |
 | 62 | X509 not trusted, the server certificate is not signed by the CA (AWS IoT or LetsEncrypt) |
