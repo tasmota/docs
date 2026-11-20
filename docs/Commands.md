@@ -558,9 +558,9 @@ SetOption33<a class="cmnd" id="setoption33"></a>|Number of times to retry applyi
 SetOption34<a class="cmnd" id="setoption34"></a>|`0..255` = set [Backlog](#backlog) inter-command delay in milliseconds *(default = `200`)*
 SetOption35<a class="cmnd" id="setoption35"></a>|`0..255` = skip number of received messages in [Serial Bridge](#serial-bridge) *(default = `0`)*
 SetOption36<a class="cmnd" id="setoption36"></a>|Boot loop defaults restoration control.<BR>`0` = disable boot loop control<BR> `1..200` = set number of boot loops (a restart caused by any exception or watchdog timer within less than `BOOT_LOOP_TIME` (default 10 seconds) before beginning to restore settings  *(default = `1`)*. Once this number is reached, subsequent restarts will:<ul><li>1<sup>st</sup> restart: disable ESP8285 generic GPIOs interfering with flash SPI</li><li>2<sup>nd</sup> restart: disable rules causing boot loop</li><li>3<sup>rd</sup> restart: disable all rules, disable shutters `setoption80 0` (and [`autoexec.bat`](UFS#autoexecbat))</li><li>4<sup>th</sup> restart: reset user defined GPIOs to disable any attached peripherals</li><li>5<sup>th</sup> restart: reset module to Sonoff Basic (1)</li></ul>
-SetOption38<a class="cmnd" id="setoption38"></a>|`6..255 ` = set IRReceive protocol detection sensitivity minimizing UNKNOWN protocols
+SetOption38<a class="cmnd" id="setoption38"></a>|`6..255 ` = set IRReceive protocol detection sensitivity minimizing UNKNOWN protocols _(default 6)_
 SetOption39<a class="cmnd" id="setoption39"></a>|Control handling of invalid power measurements. [Read more...](Power-Monitoring-Calibration#known-issues)<BR>`0` = reset to default on next restart<BR>`1..255` = number of invalid power readings before reporting no load *(default =`128`)*.
-SetOption40<a class="cmnd" id="setoption40"></a>|Stop detecting input change on the button GPIO. Solves [#5449](https://github.com/arendst/Tasmota/issues/5449)<br>Active only when [`SetOption1 1`](#setoption1) and [`SetOption13 0`](#setoption13). **This disables all long press functionality.**<BR>`0..250` = button hold time in 0.1 seconds after which button functionality is disabled.*(default =`1`)* <BR>Example: `Backlog SetOption1 1; SetOption13 0; SetOption40 10` = discard any button press over 1 second
+SetOption40<a class="cmnd" id="setoption40"></a>|Stop detecting input change on the button GPIO. Solves [#5449](https://github.com/arendst/Tasmota/issues/5449)<br>Active only when [`SetOption1 1`](#setoption1) and [`SetOption13 0`](#setoption13). **This disables all long press functionality.**<BR>`0..250` = button hold time in 0.1 seconds after which button functionality is disabled.*(default =`0`)* <BR>Example: `Backlog SetOption1 1; SetOption13 0; SetOption40 10` = discard any button press over 1 second
 SetOption41<a class="cmnd" id="setoption41"></a>|`0` = Disable ARP<BR>`<x>` = Force sending gratuitous ARP (Wi-Fi keep alive) every `<x>` seconds *(default = `60`)*<BR>If `<x>` is below `100` it is the number of seconds, if `<x>` is above `100`, it is the number of minutes after subtracting 100. Ex: `105` is every 5 minutes, while `90` is every 90 seconds.
 SetOption42<a class="cmnd" id="setoption42"></a>|`0..255` = set over-temperature (Celsius only) threshold resulting in power off on all energy monitoring devices *(default = `90`)*
 SetOption43<a class="cmnd" id="setoption43"></a>|`0..255` = to control Rotary step. Details [#10407](https://github.com/arendst/Tasmota/issues/10407)<BR>By default, Tasmota decodes a rotary encoder on the falling edge of Rotary A only. This fits encoders that make a full quadrature cycle per detent. If your encoder moves half a cycle per detent, the knob can alternate direction on successive clicks, because contact bounce on the rising-A detent is read as a falling edge. Assign an unused GPIO to `OptionA5` ([Components](Components.md)) to switch to full quadrature decoding (both edges of A and B). In this mode, light-control steps are multiplied by 3.
@@ -586,7 +586,7 @@ SetOption64<a class="cmnd" id="setoption64"></a>|Switch between `-` or `_` as se
 SetOption65<a class="cmnd" id="setoption65"></a>|Device recovery using [fast power cycle detection](Device-Recovery.md#fast-power-cycle-device-recovery)<BR>`0` = enabled *(default)*<BR>`1` = disabled
 SetOption66<a class="cmnd" id="setoption66"></a>|Set publishing TuyaReceived to MQTT<BR>`0` = disable publishing `TuyaReceived` over MQTT *(default)*<BR>`1` = enable publishing `TuyaReceived` over MQTT
 SetOption68<a class="cmnd" id="setoption68"></a>|See Light->MultiPWM
-SetOption69<a class="cmnd" id="setoption69"></a>|Invert Serial receive on SerialBridge<BR>In older versions: **Deprecated** in favor of [DimmerRange](#dimmerrange) <br>By default Tuya dimmers won't dim below 10% because some don't function very well that way.<BR>`0` = disable Tuya dimmer 10% lower limit<BR>`1` = enable Tuya dimmer 10% lower limit *(default)*
+SetOption69<a class="cmnd" id="setoption69"></a>|Invert Serial receive on SerialBridge<BR>`0` = no invert _(default)_<BR>`1` = invert<BR><BR>In older versions: **Deprecated** in favor of [DimmerRange](#dimmerrange) <br>By default Tuya dimmers won't dim below 10% because some don't function very well that way.<BR>`0` = disable Tuya dimmer 10% lower limit<BR>`1` = enable Tuya dimmer 10% lower limit *(default)*
 SetOption71<a class="cmnd" id="setoption71"></a>|Set DDS238 Modbus register for active energy<BR>`0` = set primary register *(default)*<BR>`1` = set alternate register
 SetOption72<a class="cmnd" id="setoption72"></a>|Set reference used for total energy <BR>`0` = use firmware counter *(default)*<BR>`1` = use energy monitor (e.g., PZEM-0xx, SDM120, SDM630, DDS238, DDSU666) hardware counter
 SetOption73<a class="cmnd" id="setoption73"></a>|Detach buttons from relays and send multi-press and hold MQTT messages instead<BR>`0` = disable *(default)*<BR>`1` = enable <BR>Example message: `{"Button1":{"Action":"SINGLE"}}`
@@ -606,7 +606,7 @@ SetOption86<a class="cmnd" id="setoption86"></a>|**PWM Dimmer only!** Turn brigh
 SetOption87<a class="cmnd" id="setoption87"></a>|**PWM Dimmer only!** Turn red LED on when powered off<BR>`0` = disable _(default)_<BR>`1` = enable
 SetOption88<a class="cmnd" id="setoption88"></a>|Make each relay part of a separate device group. Relay 1 updates are sent to/received from device group 1, relay 2 updates are sent to/received from device group 2, etc. For the PWM Dimmer module, make each button be associated with a different device group.<BR>`0` = disable _(default)_<BR>`1` = enable
 SetOption90<a class="cmnd" id="setoption90"></a>|Disable sending MQTT with non-JSON messages<BR>`0` = publish all MQTT _(default)_ <BR>`1` = publish only MQTT messages with JSON payloads
-SetOption93<a class="cmnd" id="setoption93"></a>|Control caching of compressed rules<BR>`0` = Disable memory caching of uncompressed rules <BR>`1` = Keep uncompressed rules in memory to avoid CPU load of uncompressing at each tick _(default)_
+SetOption93<a class="cmnd" id="setoption93"></a>|Control caching of compressed rules<BR>`0` = Disable memory caching of uncompressed rules _(default)_<BR>`1` = Keep uncompressed rules in memory to avoid CPU load of uncompressing at each tick
 SetOption94<a class="cmnd" id="setoption94"></a>|Select MAX31855 or MAX6675 thermocouple support<BR>`0` = Use MAX31855 protocol _(default)_ <BR>`1` = Use simpler MAX6675 protocol instead of MAX31855
 SetOption97<a class="cmnd" id="setoption97"></a>|Set TuyaMCU serial baudrate<BR>`0` = 9600 bps _(default)_ <BR>`1` = 115200 bps
 SetOption98<a class="cmnd" id="setoption98"></a>|Provide rotary dimmer rule triggers<BR>`0` = disable _(default)_ <BR>`1` = enable
@@ -614,6 +614,7 @@ SetOption99<a class="cmnd" id="setoption99"></a>|Enable zero-cross capable AC di
 SetOption101<a class="cmnd" id="setoption101"></a>|Add Zigbee source endpoint as suffix to attributes<BR>`0` = disable _(default)_ <BR>`1` = enable<BR>e.g. `Power3` instead of `Power` if sent from endpoint `3`.
 SetOption103<a class="cmnd" id="setoption103"></a>|Set TLS mode<BR>`0` = disable TLS<BR>`1` = enable TLS
 SetOption104<a class="cmnd" id="setoption104"></a>|Disable MQTT retained messages (some brokers don't support them)<BR>`0` = retained messages enabled _(default)_ <BR>`1` = retained messages disabled
+SetOption106<a class="cmnd" id="setoption106"></a>|Set virtual CT White ColorTemp for RGBW lights (experimental feature)<BR>`0` = Off <BR>`1` = On
 SetOption107<a class="cmnd" id="setoption107"></a>|Set virtual CT channel light type (experimental feature)<BR>`0` = Warm White <BR>`1` = Cold White
 SetOption108<a class="cmnd" id="setoption108"></a>|`0` = Teleinfo telemetry only sent into Energy MQTT JSON _(default)_<BR>`1` = Each Teleinfo received frame is also sent by MQTT (mainly to be able to display real time data)
 SetOption109<a class="cmnd" id="setoption109"></a>|`0` = _(default)_<BR>`1` = force gen1 Alexa mode, for Echo Dot 2nd gen devices only
@@ -627,7 +628,7 @@ SetOption124<a class="cmnd" id="setoption124"></a>|Wiegand key pad stroke format
 SetOption125<a class="cmnd" id="setoption125"></a>|_ZbBridge only_ Hide bridge topic from zigbee topic (use with [`SetOption89`](#setoption89))<br>`1` = enable
 SetOption126<a class="cmnd" id="setoption126"></a>|Enable arithmetic mean over teleperiod for JSON temperature for DS18x20 sensors<BR>`1` = enable
 SetOption127<a class="cmnd" id="setoption127"></a>|Force Wi-Fi in no-sleep mode even if Sleep 0 is not enabled<BR>`1` = enable
-SetOption128<a class="cmnd" id="setoption128"></a>|Web referrer check for HTTP API commands<BR>`0` = disabled<BR>`1` = enabled *(default)*
+SetOption128<a class="cmnd" id="setoption128"></a>|Allow HTTP API access without Web referer check<BR>`0` = disabled *(default)*<BR>`1` = enabled
 SetOption129<a class="cmnd" id="setoption129"></a>|Enable split total energy results [#13030](https://github.com/arendst/Tasmota/issues/13030)<BR>`1` = enable
 SetOption130<a class="cmnd" id="setoption130"></a>|Add heap size (and ESP32 fragmentation) to logging timestamp for debugging<BR>`1` = enable
 SetOption131<a class="cmnd" id="setoption131"></a>|(Tuya) Allow save dimmer = 0 received by MCU<BR>`1` = enable
@@ -664,7 +665,7 @@ SetOption162<a class="cmnd" id="setoption162"></a>|Do not add export energy to e
 SetOption163<a class="cmnd" id="setoption163"></a>|Disable display of webUI device name
 SetOption164<a class="cmnd" id="setoption164"></a>|Enable WiZ Smart Remote support
 SetOption165<a class="cmnd" id="setoption165"></a>|Allow TLS ECDSA certificates<br>`0` = allow only RSA certificates<br>`1` = allow both RSA and ECDSA certificates<br>Because letsencrypt nod defaults to ECDSA certificates, in case of TLS error 296 (unsupported cipher), `SetOption165 1` is automatically enabled.
-SetOption166<a class="cmnd" id="setoption166"></a>|`1` = add device [Location](Location.md) to the `tele/STATE` message
+SetOption166<a class="cmnd" id="setoption166"></a>|Add device [Location](Location.md) to the `tele/STATE` message _(default 0)_
               
 ### TuyaMCU
 
