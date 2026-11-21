@@ -343,15 +343,15 @@ ShutterPos|`v_garage`|Current position: `0` closed to `100` open
 ShutterTarget|`v_garage`|Target position: `0` closed to `100` open
 ShutterDirection|`v_garage`|`-1` closing, `0` stopped, `1` opening
 SystemMode|`v_hvac`|Thermostat mode: `0` Off, `1` Auto, `3` Cool, `4` Heat, `7` Fan only, `8` Dry
-Temp|`v_hvac`|Set both cooling and heating setpoints, in hundredths of °C
-CoolSetpoint|`v_hvac`|Cooling setpoint, in hundredths of °C
-HeatSetpoint|`v_hvac`|Heating setpoint, in hundredths of °C
-LocalTemperature|`v_hvac`|Measured local temperature, in hundredths of °C
-Temperature|`v_temperature`|Temperature in Tasmota's configured unit; Matter reports hundredths of °C
-Humidity|`v_humidity`|Relative humidity in hundredths of percent (`0..10000`)
-Pressure|`v_pressure`|Pressure in hPa
-Illuminance|`v_illuminance`|Raw illuminance in lux; Matter reports `log10(value + 1) * 10000`
-Flow|`v_flow`|Flow in m³/h; Matter reports the value ×10
+Temp|`v_hvac`|Set both cooling and heating setpoints, in hundredths of °C, or a string with a `C` or `F` suffix (`"22.5C"`)
+CoolSetpoint|`v_hvac`|Cooling setpoint, in hundredths of °C, or a string with a `C` or `F` suffix
+HeatSetpoint|`v_hvac`|Heating setpoint, in hundredths of °C, or a string with a `C` or `F` suffix
+LocalTemperature|`v_hvac`|Measured local temperature, in hundredths of °C, or a string with a `C` or `F` suffix
+Temperature|`v_temp`|Number: temperature in hundredths of °C (`2250` is 22.50 °C). String with a `C` or `F` suffix: temperature in that unit, converted to hundredths of °C (`"22.5C"`, `"72.5F"`)
+Humidity|`v_humidity`|Number: relative humidity in hundredths of percent (`0..10000`). String with a `%` suffix: percent (`"45.5%"`)
+Pressure|`v_pressure`|Number: pressure in hPa. String with a unit suffix: `hPa`, `kPa`, `mmHg` or `inHg` (`"29.92inHg"`)
+Illuminance|`v_illuminance`|Number: Matter encoded value `10000 * log10(lux) + 1` (`0..65534`). String with a `lx` or `lux` suffix: illuminance in lux (`"350lx"`)
+Flow|`v_flow`|Flow in tenths of m³/h (`15` is 1.5 m³/h), sent to Matter unchanged
 Moisture|`v_soil`|Soil moisture in percent (`0..100`)
 Contact|`v_contact`|`0`/`1` contact state
 Occupancy|`v_occupancy`|`0`/`1` occupancy state
@@ -368,6 +368,8 @@ TVOC|`v_airquality`|Total volatile organic compounds concentration
 
 
 Keep in mind that many values are in the range `0..254` because `255` is an invalid value (this comes from Zigbee).
+
+For `v_temp`, `v_humidity`, `v_pressure`, `v_illuminance` and the `v_hvac` temperatures, a value that is not a number, or is out of range, is rejected with `Invalid '<attribute>'` and nothing is changed. Unit suffixes are case-insensitive and may be preceded by a space (`"22.5 c"`). Values are rounded to the nearest unit. Pressure strings are converted using the unit in the string; the local `SetOption24` and `SetOption139` are ignored.
 
 ### Virtual Generic Switch/Button
 
